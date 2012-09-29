@@ -72,50 +72,50 @@ function menu_iniziale:createScene( event )
   a_long = create_globulo('long-a',vocali[1])
   a_long.audio_url = a_l
   create_button_to_go(a_long, vocali[1])
-  a_long:addEventListener('touch',play_sound)
+  a_long:addEventListener('tap',play_sound)
   -- e
   e_long = create_globulo('long-e',vocali[2])
   e_long.audio_url = e_l
   create_button_to_go(e_long, vocali[2])
-  e_long:addEventListener('touch',play_sound)
+  e_long:addEventListener('tap',play_sound)
   -- i
   i_long = create_globulo('long-i',vocali[3]) 
   i_long.audio_url = i_l
   create_button_to_go(i_long, vocali[3])
-  i_long:addEventListener('touch',play_sound)
+  i_long:addEventListener('tap',play_sound)
   -- o
   o_long = create_globulo('long-o',vocali[4])
   o_long.audio_url = o_l
   create_button_to_go(o_long, vocali[4])
-  o_long:addEventListener('touch',play_sound)
+  o_long:addEventListener('tap',play_sound)
   -- u
   u_long = create_globulo('long-u',vocali[5])
   u_long.audio_url = u_l
   create_button_to_go(u_long, vocali[5])
-  u_long:addEventListener('touch',play_sound)
+  u_long:addEventListener('tap',play_sound)
 
   -- SHORT
   -- a
   a_short = create_globulo('short-a',vocali[1])
   a_short.audio_url = a_s
-  a_short:addEventListener('touch',play_sound)
+  a_short:addEventListener('tap',play_sound)
   -- e
   e_short = create_globulo('short-e',vocali[2])
   e_short.audio_url = e_s
-  e_short:addEventListener('touch',play_sound)
+  e_short:addEventListener('tap',play_sound)
   -- i
   i_short = create_globulo('short-i',vocali[3])
   i_short.audio_url = i_s
-  i_short:addEventListener('touch',play_sound)
+  i_short:addEventListener('tap',play_sound)
   -- o
   o_short = create_globulo('short-o',vocali[4])
   o_short.audio_url = o_s
-  o_short:addEventListener('touch',play_sound)
+  o_short:addEventListener('tap',play_sound)
   -- u
   u_short = create_globulo('short-u',vocali[5])
   u_short.audio_url = u_s
-  u_short:addEventListener('touch',play_sound)
-  
+  u_short:addEventListener('tap',play_sound)
+
 end
 
 --Add the createScene listener
