@@ -2,6 +2,7 @@ local storyboard = require ( "storyboard" )
 local movieclip = require("movieclip")
 local menu_iniziale = storyboard.newScene()
 
+  
 --Create the scene
 function menu_iniziale:createScene( event )
 
@@ -13,6 +14,10 @@ function menu_iniziale:createScene( event )
   globulo_size = 100
   
   local group = self.view
+
+  function goto_confronto(event)
+    storyboard.gotoScene("confronto")
+  end
   
   function create_button_to_go(globulo, vocale)
     local cerchio_container = display.newGroup()
@@ -21,10 +26,9 @@ function menu_iniziale:createScene( event )
     testo:setTextColor(0, 0, 0)
     cerchio_container:insert(cerchio)
     cerchio_container:insert(testo)
+    cerchio_container:addEventListener("tap", goto_confronto)
     group:insert(cerchio_container)
   end
-
-  
   
   function create_globulo( file_name , vocale)
     -- dati
