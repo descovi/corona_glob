@@ -48,6 +48,7 @@ function menu_iniziale:createScene( event )
     end
     counter = counter+1
     globulo.audio_url = 'caio'
+    group:insert(globulo)
     return globulo
   end
  
@@ -124,6 +125,7 @@ end
 
 --Add the createScene listener
 menu_iniziale:addEventListener( "createScene", menu_iniziale )
+
 
 
 return menu_iniziale

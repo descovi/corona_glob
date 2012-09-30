@@ -1,13 +1,20 @@
 local storyboard = require( "storyboard" )
 local confronto = storyboard.newScene()
+local size_torna_indietro = "80"
+
 
 function confronto:createScene( event )
-  print "ho visto cose riservate"
-  local globulo = display.newImage('media/torna_indietro.png')
-  globulo.width = "30"
-  globulo.height = "30"
+  local group = self.view
+  local torna_indietro = display.newImage('media/torna_indietro.png')
+  torna_indietro.width = size_torna_indietro
+  torna_indietro.height = size_torna_indietro
+function goto_menuiniziale(e)
+  storyboard.gotoScene("menu_iniziale")
+end
+  torna_indietro:addEventListener("tap", goto_menuiniziale)
+  group:insert(torna_indietro)
 end
 
-confronto:addEventListener( "createScene", menu_iniziale )
+confronto:addEventListener( "createScene", confronto )
 
 return confronto
