@@ -1,9 +1,9 @@
 require('utils.button_to_go')
+require('utils.button_to_go_back')
 
 local storyboard = require( "storyboard" )
 local confronto = storyboard.newScene()
-local size_torna_indietro = 80
-local size_pulsantoni = 300
+
 
 function play_sound( event )
   audio.play( event.target.audio )
@@ -27,23 +27,19 @@ function confronto:createScene( event )
   local path_audio = 'media/audio/vocali/'
 
   -- torna indietro
-  local torna_indietro = display.newImage('media/torna_indietro.png')
-  torna_indietro.width = size_torna_indietro
-  torna_indietro.height = size_torna_indietro
-  torna_indietro.x = display.contentWidth -size_torna_indietro*.5 - 20
-  torna_indietro.y = size_torna_indietro +210
+  local torna_indietro = button_to_go_back()
 
   -- mostra le lettere selezioante
-  
+  local size_pulsantoni = 300
   -- LUNGA
-  local lettera_lunga = display.newImage( group, "media/menu_iniziale/long-a.png")
+  local lettera_lunga = display.newImage( group, "media/menu_iniziale/long-".. _G.vocale ..".png")
   lettera_lunga.width = size_pulsantoni
   lettera_lunga.height = size_pulsantoni
   lettera_lunga.x = 200
   lettera_lunga.y = 550
   lettera_lunga.audio = audio.loadSound( path_audio .. _G.vocale:upper() ..'_L.mp3' )
   lettera_lunga:addEventListener("tap", play_sound)
-  create_button_to_go(lettera_lunga,'a')
+  create_button_to_go(lettera_lunga,_G.vocale)
   lettera_lunga.cerchio_container:addEventListener("tap", go_to_confronto_lunga)
 
   -- CORTA
@@ -55,7 +51,7 @@ function confronto:createScene( event )
   lettera_corta.y = 550
   lettera_corta.audio = audio.loadSound( path_audio.. _G.vocale:upper() .. '_S.mp3' )
   lettera_corta:addEventListener("tap", play_sound)
-  create_button_to_go(lettera_corta,'a')
+  create_button_to_go(lettera_corta,_G.vocale)
   lettera_corta.cerchio_container:addEventListener("tap", go_to_confronto_corto)
 
   torna_indietro:addEventListener("tap", goto_menuiniziale)

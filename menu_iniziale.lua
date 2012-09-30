@@ -5,13 +5,15 @@ local movieclip = require("movieclip")
 local menu_iniziale = storyboard.newScene()
 
 local counter = 1
-local x_pos = {0, 100, 200, 300, 400, 0, 100, 200, 300, 400}
-local y_pos = {550,350}
+
+
 local vocali = {"a","e","i","o","u"}
-local globulo_size = 100
 local group
 
 function create_globulo( file_name , vocale)
+  local x_pos = {0, 100, 200, 300, 400, 0, 100, 200, 300, 400}
+  local y_pos = {550,350}
+  local globulo_size = 100
   -- dati
   local path = 'media/menu_iniziale/'
   local end_path = '.png'
@@ -39,6 +41,7 @@ function play_sound(event)
   audio.play( url ) 
 end
 
+-- imposta un evento che deriva da utils.button_to_go
 function go_to(event)
   _G.vocale = event.target.vocale
   storyboard.gotoScene("confronto")
