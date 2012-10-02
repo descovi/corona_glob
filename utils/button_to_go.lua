@@ -6,7 +6,6 @@
     testo:setTextColor(0, 0, 0)
     cerchio_container:insert(cerchio)
     cerchio_container:insert(testo)
-    cerchio_container:addEventListener("tap", go_to)
     cerchio_container.vocale = vocale
     globulo.parent:insert(cerchio_container)
     globulo.cerchio_container = cerchio_container
