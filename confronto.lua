@@ -14,11 +14,19 @@ function goto_menuiniziale(e)
 end
 
 function go_to_confronto_lunga(event)
-  storyboard.gotoScene("colonna")
+  if _G.vocale == 'a' or _G.vocale == 'e' or _G.vocale == 'o' then
+    storyboard.gotoScene("scegli_combinazione")
+  else
+    storyboard.gotoScene("colonna")
+  end
 end
 
 function go_to_confronto_corto(event)
-  storyboard.gotoScene("colonna")
+  if _G.vocale == 'a' or _G.vocale == 'e' or _G.vocale == 'o' then
+    storyboard.gotoScene("scegli_combinazione")
+  else
+    storyboard.gotoScene("colonna")
+  end
 end
 
 function confronto:createScene( event )
@@ -43,7 +51,6 @@ function confronto:createScene( event )
   lettera_lunga.cerchio_container:addEventListener("tap", go_to_confronto_lunga)
 
   -- CORTA
-
   local lettera_corta = display.newImage( group, "media/menu_iniziale/short-a.png")
   lettera_corta.width = size_pulsantoni
   lettera_corta.height = size_pulsantoni
