@@ -14,6 +14,7 @@ function goto_menuiniziale(e)
 end
 
 function go_to_confronto_lunga(event)
+  _G.tipo = 'lunga'
   if _G.vocale == 'a' or _G.vocale == 'e' or _G.vocale == 'o' then
     storyboard.gotoScene("scegli_combinazione")
   else
@@ -22,6 +23,7 @@ function go_to_confronto_lunga(event)
 end
 
 function go_to_confronto_corto(event)
+  _G.tipo = 'corta'
   if _G.vocale == 'a' or _G.vocale == 'e' or _G.vocale == 'o' then
     storyboard.gotoScene("scegli_combinazione")
   else
