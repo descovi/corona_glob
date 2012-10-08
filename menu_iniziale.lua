@@ -1,11 +1,11 @@
-require('utils.button_to_go')
+require 'utils.button_to_go'
+require 'movieclip'
 
 local storyboard = require ( "storyboard" )
 local movieclip = require("movieclip")
 local menu_iniziale = storyboard.newScene()
 
 local counter = 1
-
 
 local vocali = {"a","e","i","o","u"}
 local group
@@ -71,7 +71,6 @@ function menu_iniziale:createScene( event )
   a_long = create_globulo('long-a',vocali[1])
   a_long.audio_url = a_l
   create_button_to_go(a_long, vocali[1])
-  
   -- e
   e_long = create_globulo('long-e',vocali[2])
   e_long.audio_url = e_l
