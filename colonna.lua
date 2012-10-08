@@ -1,24 +1,28 @@
 local storyboard = require( "storyboard" )
 local colonna = storyboard.newScene()
-local group 
+local group
 
-function generate_background()
-  local background = display.newImage("media/sfondi/".._G.vocale..".png")
-  group:insert(background)
+function torna_indietro(event)
+  storyboard.gotoScene("confronto")
 end
 
-function go_to_confronto(event)
-  storyboard.gotoScene("confronto")
+function go_next_anim(event)
+  print "prossima animazione"
 end
 
 function colonna:createScene( event )
   group = self.view
-  generate_background()
-  local anim1 = display.newImage(group,"media/colonna/a-e/fadfade/full.png")
+  -- background
+  local background = display.newImage("media/sfondi/".._G.vocale..".png")
+  group:insert(background)
+  -- anim
+  local anim = display.newImage(group, "media/colonna/a_e/1/full.png")
+  anim:addEventListener("tap", go_next_anim)
+  -- torna indietro
   local torna_indietro = button_to_go_back()
-  torna_indietro:addEventListener("tap", go_to_confronto)
+  torna_indietro:addEventListener("tap", torna_indietro)
 end
 
-colonna:addEventListener( "createScene", scene )
+colonna:addEventListener( "createScene" , scene )
 
 return colonna
