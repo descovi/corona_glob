@@ -1,4 +1,4 @@
-require('utils.button_to_go_back')
+require('src.utils.button_to_go_back')
 
 local storyboard = require( "storyboard" )
 local scegli_combinazione = storyboard.newScene()
