@@ -13,11 +13,20 @@ function go_next_anim(event)
 end
 
 function generate_sprite()
-  local sheet1 = graphics.newImageSheet("media/colonna/a_e/1/full.png",{ width=1024, height=256, numFrames=8 })
-  local instance1 = display.newSprite( sheet1, { name="cat", start=1, count=8, time=1000 } )
+  local _totalFrames = 11
+  local sheet1 = graphics.newImageSheet("media/colonna/a_e/1/full.png",{ width=1024, height=256, numFrames=_totalFrames })
+  local sequenceData =
+  {
+      name="vocal_change",
+      start=1,
+      count=_totalFrames,
+      time=1000,        -- Optional. In ms.  If not supplied, then sprite is frame-based.
+      loopCount = 1,    -- Optional. Default is 0 (loop indefinitely)
+  }
+  local instance1 = display.newSprite( sheet1, sequenceData )
   instance1:play()
   instance1.x = 1024/2
-  instance1.y = 256
+  instance1.y = 256*2
   anim_container:insert(instance1)
 end
 
@@ -38,4 +47,5 @@ colonna:addEventListener( "createScene" , scene )
 function torna_indietro(event)
   storyboard.gotoScene("confronto")
 end
+
 return colonna
