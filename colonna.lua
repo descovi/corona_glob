@@ -14,21 +14,36 @@ end
 
 function generate_sprite()
   local _totalFrames = 11
-  local sheet1 = graphics.newImageSheet("media/colonna/a_e/1/full.png",{ width=1024, height=256, numFrames=_totalFrames })
-  local sequenceData =
-  {
+  local sheet1_options = { width=1024, height=256, numFrames=_totalFrames }
+  local sheet1 = graphics.newImageSheet("media/colonna/a_e/1/full.png", sheet1_options)
+  local sequenceData = {
       name="vocal_change",
       start=1,
-      count=_totalFrames,
-      time=1000,        -- Optional. In ms.  If not supplied, then sprite is frame-based.
-      loopCount = 1,    -- Optional. Default is 0 (loop indefinitely)
+      count=_totalFrames,   -- Frame that count total frame.
+      time=1000,            -- Optional. In ms.  If not supplied, then sprite is frame-based.
+      loopCount = 1,        -- Optional. Default is 0 (loop indefinitely)
   }
   local instance1 = display.newSprite( sheet1, sequenceData )
   instance1:play()
-  instance1.x = 1024/2
-  instance1.y = 256*2
+
+  instance1.x = 1024*.5
+  instance1.y = 768*.5
   anim_container:insert(instance1)
 end
+
+local function spriteListener( event )
+    if event.phase == "began" then
+      print "startato"
+        -- sequence has began playing; do something
+
+    elseif event.phase == "ended" then
+        -- sequence has reached the last frame; do something
+    end
+end
+ 
+-- Add sprite listener
+spriteObject:addEventListener( "sprite", spriteListener )
+
 
 function colonna:createScene( event )
   group = self.view

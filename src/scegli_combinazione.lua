@@ -25,10 +25,10 @@ function scegli_combinazione:createScene( event )
   local white_circle_1  = display.newImage( group_sopra, "media/sfondi/white_circle.png")
   local white_circle_2  = display.newImage( group_sotto, "media/sfondi/white_circle.png")
 
-  white_circle_1.x      = 380
-  white_circle_2.x      = 380
-  white_circle_1.y      = 400
-  white_circle_2.y      = 650
+  white_circle_1.x      = display.contentWidth / 2
+  white_circle_2.x      = display.contentWidth / 2
+  white_circle_1.y      = display.contentHeight / 2 - 150
+  white_circle_2.y      = display.contentHeight / 2 + 150
   
   local _lettera_sx_0   = "a"
   local _plus           = "+"
@@ -41,11 +41,11 @@ function scegli_combinazione:createScene( event )
   local _font           = "Arial"
 
   local y1              = 310
-  local y2              = 540
+  local y2              = display.contentHeight / 2
 
   local x1              = 40
   local x_plus          = 150
-  local x2              = 340
+  local x2              = display.contentWidth / 2
   local x_equal         = 500
   local x3              = 630
   

@@ -1,9 +1,10 @@
 function button_to_go_back()
-  local size_torna_indietro = 80
-  torna_indietro = display.newImage('media/torna_indietro.png')
-  torna_indietro.width = size_torna_indietro
-  torna_indietro.height = size_torna_indietro
-  torna_indietro.x = display.contentWidth -size_torna_indietro*.5 - 20
-  torna_indietro.y = size_torna_indietro +210
-  return torna_indietro
+  local graphics  = display.newImage('media/torna_indietro.png')
+  local size_wh   = 80
+  local margin    = 20
+  graphics.width  = size_wh
+  graphics.height = size_wh
+  graphics.x = display.contentWidth - (size_wh/2) - margin
+  graphics.y = size_wh
+  return graphics
 end
