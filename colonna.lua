@@ -16,24 +16,27 @@ function generate_sprite()
   local _totalFrames = 11
   local sheet1_options = { width=1024, height=256, numFrames=_totalFrames }
   local sheet1 = graphics.newImageSheet("media/colonna/a_e/1/full.png", sheet1_options)
-  local sequenceData = {
-      name="vocal_change",
-      start=1,
-      count=_totalFrames,   -- Frame that count total frame.
-      time=1000,            -- Optional. In ms.  If not supplied, then sprite is frame-based.
-      loopCount = 1,        -- Optional. Default is 0 (loop indefinitely)
+  print (sheet1_options)
+  local sequence_data = {
+    { name="forward", start=1, count=_totalFrames, time=1000,  loopCount = 1}, 
+    { name="bounce",  start=1, count=_totalFrames, time=1000,  loopCount = 1, loopDirection = "bounce" },
+    { name="counter", frames= {11,10,9,8,7,6,5,4,3,2,1}, time=1000,  loopCount = 1}
   }
-  local instance1 = display.newSprite( sheet1, sequenceData )
+  local instance1 = display.newSprite( sheet1, sequence_data )
+  instance1:setSequence( "counter" )
   instance1:play()
   instance1.x = display.contentWidth / 2
   instance1.y = display.contentHeight / 2
   anim_container:insert(instance1)
+  prima = true
   local function spriteListener( event )
-    print (event.phase)
     if event.phase == "began" then
-      print "startato"
+      local gurgle = audio.loadSound('media/audio/a-e/fadfade/1.mp3')
+      audio.play( gurgle )
     elseif event.phase == "ended" then
-      print "finito"
+      local gurgle = audio.loadSound('media/audio/a-e/fadfade/2.mp3')
+      audio.play( gurgle )
+
     end
   end
   -- Add sprite listener
