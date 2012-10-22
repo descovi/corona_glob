@@ -25,25 +25,21 @@ function generate_sprite()
   }
   local instance1 = display.newSprite( sheet1, sequenceData )
   instance1:play()
-
-  instance1.x = 1024*.5
-  instance1.y = 768*.5
+  instance1.x = display.contentWidth / 2
+  instance1.y = display.contentHeight / 2
   anim_container:insert(instance1)
-end
-
-local function spriteListener( event )
+  local function spriteListener( event )
+    print (event.phase)
     if event.phase == "began" then
       print "startato"
-        -- sequence has began playing; do something
-
     elseif event.phase == "ended" then
-        -- sequence has reached the last frame; do something
+      print "finito"
     end
-end
- 
--- Add sprite listener
-spriteObject:addEventListener( "sprite", spriteListener )
+  end
+  -- Add sprite listener
+  instance1:addEventListener( "sprite", spriteListener )
 
+end
 
 function colonna:createScene( event )
   group = self.view
