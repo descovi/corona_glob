@@ -1,11 +1,14 @@
 require 'sprite'
--- dati
+
 local storyboard = require( "storyboard" )
 local colonna = storyboard.newScene()
+
+-- dati
 local group
 local anim_container = display.newGroup()
 local background = display.newImage("media/sfondi/".._G.vocale..".png")
 local torna_indietro_btn = button_to_go_back()
+
 -- dati anim
 local totalFrames = 11
 local sheet1_options = { width=1024, height=256, numFrames=totalFrames }
@@ -19,9 +22,10 @@ local anim = display.newSprite( sheet1, sequence_data )
 -- dati audio
 local audio_1 = audio.loadSound('media/audio/a-e/fadfade/1.mp3')
 local audio_2 = audio.loadSound('media/audio/a-e/fadfade/2.mp3')
-
-
 local anim_toogle = true
+
+-- START
+
 local function go_next_anim(event)
   if anim_toogle then
     anim_toogle = false
@@ -46,7 +50,9 @@ local function intro( event )
     anim_container:addEventListener("tap", go_next_anim)
   end
 end
-
+local function torna_indietro(event)
+  storyboard.gotoScene("src.confronto")
+end
 function colonna:createScene( event )
   group = self.view
   group:insert(background)
@@ -56,13 +62,9 @@ function colonna:createScene( event )
   anim.y = display.contentHeight / 2
   anim_container:insert(anim)
   anim:addEventListener( "sprite", intro )
-  -- torna indietro
   torna_indietro_btn:addEventListener("tap", torna_indietro)
 end
-
 colonna:addEventListener( "createScene" , scene )
-function torna_indietro(event)
-  storyboard.gotoScene("confronto")
-end
+
 
 return colonna
