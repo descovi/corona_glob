@@ -1,11 +1,10 @@
 require('src.utils.button_to_go_back')
 
 local storyboard = require( "storyboard" )
-
 local scegli_combinazione = storyboard.newScene()
 
 function goto_confronto( event )
-   storyboard.gotoScene("confronto")
+   --storyboard.gotoScene("confronto")
 end
 
 function goto_sopra( event )

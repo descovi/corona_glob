@@ -24,7 +24,6 @@ local audio_1 = audio.loadSound('media/audio/a-e/fadfade/1.mp3')
 local audio_2 = audio.loadSound('media/audio/a-e/fadfade/2.mp3')
 local anim_toogle = true
 
--- START
 
 local function go_next_anim(event)
   if anim_toogle then
@@ -51,11 +50,15 @@ local function intro( event )
   end
 end
 local function torna_indietro(event)
-  storyboard.gotoScene("src.confronto")
+  storyboard.gotoScene( "src.scegli_combinazione" )
 end
+
+-- START
 function colonna:createScene( event )
   group = self.view
   group:insert(background)
+  group:insert(anim_container)
+
   -- anim
   anim:play()
   anim.x = display.contentWidth / 2

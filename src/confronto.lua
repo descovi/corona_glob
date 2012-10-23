@@ -1,5 +1,5 @@
-require('utils.button_to_go')
-require('utils.button_to_go_back')
+require('src.utils.button_to_go')
+require('src.utils.button_to_go_back')
 
 local storyboard = require( "storyboard" )
 local confronto = storyboard.newScene()

@@ -1,4 +1,5 @@
 require ('src.scegli_combinazione')
+require ('src.confronto')
 local storyboard = require "storyboard"
 display.setStatusBar( display.HiddenStatusBar )
 
