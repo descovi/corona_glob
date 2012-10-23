@@ -1,66 +1,66 @@
 require 'sprite'
-
+-- dati
 local storyboard = require( "storyboard" )
 local colonna = storyboard.newScene()
 local group
 local anim_container = display.newGroup()
 local background = display.newImage("media/sfondi/".._G.vocale..".png")
 local torna_indietro_btn = button_to_go_back()
-
-
-function go_next_anim(event)
-  print("prossima animazione")
-end
-
-function generate_sprite()
-  local _totalFrames = 11
-  local sheet1_options = { width=1024, height=256, numFrames=_totalFrames }
-  local sheet1 = graphics.newImageSheet("media/colonna/a_e/1/full.png", sheet1_options)
-  local sequence_data = {
-    { name="forward", start=1, count=_totalFrames, time=1000,  loopCount = 1}, 
-    { name="bounce",  start=1, count=_totalFrames, time=1000,  loopCount = 1, loopDirection = "bounce" },
+-- dati anim
+local totalFrames = 11
+local sheet1_options = { width=1024, height=256, numFrames=totalFrames }
+local sheet1 = graphics.newImageSheet("media/colonna/a_e/1/full.png", sheet1_options)
+local sequence_data = {
+    { name="forward", start=1, count=totalFrames, time=1000,  loopCount = 1}, 
+    { name="bounce",  start=1, count=totalFrames, time=1000,  loopCount = 1, loopDirection = "bounce" },
     { name="counter", frames= {11,10,9,8,7,6,5,4,3,2,1}, time=1000,  loopCount = 1}
-  }
-  local anim = display.newSprite( sheet1, sequence_data )
-  anim:setSequence( "forward" )
-  anim:play()
-  anim.x = display.contentWidth / 2
-  anim.y = display.contentHeight / 2
-  anim_container:insert(anim)
+}
+local anim = display.newSprite( sheet1, sequence_data )
+-- dati audio
+local audio_1 = audio.loadSound('media/audio/a-e/fadfade/1.mp3')
+local audio_2 = audio.loadSound('media/audio/a-e/fadfade/2.mp3')
 
-  local function intro( event )
-    if event.phase == "began" then
-      local gurgle = audio.loadSound('media/audio/a-e/fadfade/1.mp3')
-      audio.play( gurgle )
-    elseif event.phase == "ended" then
-      local gurgle = audio.loadSound('media/audio/a-e/fadfade/2.mp3')
-      
-      audio.play( gurgle )
-      local thisSprite = event.target
-      thisSprite:setSequence( "counter" )
-      thisSprite:play()
-      anim:removeEventListener( "sprite", intro )
-    end
+
+local anim_toogle = true
+local function go_next_anim(event)
+  if anim_toogle then
+    anim_toogle = false
+    audio.play( audio_1 )
+    anim:setSequence( "forward" )
+  else
+    anim_toogle = true
+    audio.play( audio_2 )
+    anim:setSequence("counter")
   end
-  -- Add sprite listener
-  anim:addEventListener( "sprite", intro )
-
+  anim:play()
+end
+local function intro( event )
+  if event.phase == "began" then
+    audio.play( audio_1 )
+  elseif event.phase == "ended" then
+    audio.play( audio_2 )
+    local thisSprite = event.target
+    thisSprite:setSequence( "counter" )
+    thisSprite:play()
+    anim:removeEventListener( "sprite", intro )
+    anim_container:addEventListener("tap", go_next_anim)
+  end
 end
 
 function colonna:createScene( event )
   group = self.view
-  -- background
   group:insert(background)
   -- anim
-  generate_sprite()
-  anim_container:addEventListener("tap", go_next_anim)
-  group:insert(anim_container)
+  anim:play()
+  anim.x = display.contentWidth / 2
+  anim.y = display.contentHeight / 2
+  anim_container:insert(anim)
+  anim:addEventListener( "sprite", intro )
   -- torna indietro
   torna_indietro_btn:addEventListener("tap", torna_indietro)
 end
 
 colonna:addEventListener( "createScene" , scene )
-
 function torna_indietro(event)
   storyboard.gotoScene("confronto")
 end
