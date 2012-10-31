@@ -1,4 +1,4 @@
-function button_to_go_back()
+button_to_go_back = function ()
   local graphics  = display.newImage('media/torna_indietro.png')
   local size_wh   = 80
   local margin    = 20
