@@ -1,0 +1,60 @@
+local Anim = {}
+Anim.newSprite = function()
+  -- dati anim
+  local totalFrames = 11
+  local sheet1_options = { width=1024, height=256, numFrames=totalFrames }
+  local sheet1 = graphics.newImageSheet("media/colonna/a_e/1/full.png", sheet1_options)
+  local sequence_data = {
+      { name="forward", start=1, count=totalFrames, time=1000,  loopCount = 1}, 
+      { name="bounce",  start=1, count=totalFrames, time=1000,  loopCount = 1, loopDirection = "bounce" },
+      { name="counter", frames= {11,10,9,8,7,6,5,4,3,2,1}, time=1000,  loopCount = 1}
+  }
+  local anim = display.newSprite( sheet1, sequence_data )
+  local toogle = true
+  local audio_1 = audio.loadSound('media/audio/a-e/fadfade/1.mp3')
+  local audio_2 = audio.loadSound('media/audio/a-e/fadfade/2.mp3')
+  
+  anim.x = display.contentWidth / 2
+  anim.y = display.contentHeight / 2
+
+  function anim.loadSound(url)
+    audio_1 = audio_1.loadSound
+  end
+  function anim.change_audio_2(url)
+    audio_2 = audio_2.loadSound
+  end
+
+  local function go_next_anim(event)
+    if toogle == true then
+      toogle = false
+      audio.play( audio_1 )
+      anim:setSequence( "forward" )
+      anim:play()
+    else
+      toogle = true
+      audio.play( audio_2 )
+      anim:setSequence("counter")
+      anim:play()
+    end
+  end
+
+  local function intro( event )
+    if event.phase == "began" then
+      audio.play( audio_1 )
+    elseif event.phase == "ended" then
+      audio.play( audio_2 )
+      local thisSprite = event.target
+      thisSprite:setSequence( "counter" )
+      thisSprite:play()
+      anim:removeEventListener( "sprite", intro )
+    end
+  end
+  
+  anim:addEventListener( "sprite", intro )
+  anim:addEventListener("tap", go_next_anim)
+  anim:play()
+
+  return anim
+end
+
+return Anim
