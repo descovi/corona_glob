@@ -1,5 +1,5 @@
 local Arrow = {}
-function Arrow.new()
+Arrow.newSprite = function()
   local group = display.newGroup()
   local myRectangle = display.newRect(0, 0, 150, 50)
   myRectangle.strokeWidth = 3
@@ -16,6 +16,7 @@ function Arrow.new()
     myRectangle.alpha = 0
   end
   group:addEventListener("touch", group)
+  group.x = display.contentWidth / 2 - group.width / 2
   return group
 end
 return Arrow
