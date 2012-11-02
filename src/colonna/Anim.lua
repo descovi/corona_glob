@@ -1,27 +1,32 @@
 local Anim = {}
 Anim.newSprite = function()
-  -- dati anim
+  local anim = {}
   local totalFrames = 11
-  local sheet1_options = { width=1024, height=256, numFrames=totalFrames }
-  local sheet1 = graphics.newImageSheet("media/colonna/a_e/1/full.png", sheet1_options)
-  local sequence_data = {
-      { name="forward", start=1, count=totalFrames, time=1000,  loopCount = 1}, 
-      { name="bounce",  start=1, count=totalFrames, time=1000,  loopCount = 1, loopDirection = "bounce" },
-      { name="counter", frames= {11,10,9,8,7,6,5,4,3,2,1}, time=1000,  loopCount = 1}
-  }
-  local anim = display.newSprite( sheet1, sequence_data )
+  local sheet_options  = { width=1024, height=256, numFrames=totalFrames }
+  local counter = 1
   local toogle = true
   local audio_1 = audio.loadSound('media/audio/a-e/fadfade/1.mp3')
   local audio_2 = audio.loadSound('media/audio/a-e/fadfade/2.mp3')
-  
-  anim.x = display.contentWidth / 2
-  anim.y = display.contentHeight / 2
 
-  function anim.loadSound(url)
-    audio_1 = audio_1.loadSound
+  function anim.image_sheet_load()
+    local sheet = graphics.newImageSheet("media/colonna/a_e/"+counter+"/full.png", sheet_options)
+    local sequence_data = {
+      { name="forward", start=1, count=totalFrames, time=1000,  loopCount = 1}, 
+      { name="bounce",  start=1, count=totalFrames, time=1000,  loopCount = 1, loopDirection = "bounce" },
+      { name="counter", frames= {11,10,9,8,7,6,5,4,3,2,1}, time=1000,  loopCount = 1}
+    }
+    anim = display.newSprite( sheet1, sequence_data )
   end
-  function anim.change_audio_2(url)
-    audio_2 = audio_2.loadSound
+  
+  function anim.prev()
+    counter = counter -1
+    --anim.image_sheet_load()
+  end
+
+  function anim.next()
+    print "ciao"
+    --counter++
+    --anim.image_sheet_load()
   end
 
   local function go_next_anim(event)
@@ -49,8 +54,11 @@ Anim.newSprite = function()
       anim:removeEventListener( "sprite", intro )
     end
   end
-  
-  anim:addEventListener( "sprite", intro )
+
+  anim.image_sheet_load()
+  anim.x = display.contentWidth / 2
+  anim.y = display.contentHeight / 2
+  anim:addEventListener("sprite", intro)
   anim:addEventListener("tap", go_next_anim)
   anim:play()
 
