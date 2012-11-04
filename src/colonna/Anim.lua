@@ -8,7 +8,7 @@ Anim.newSprite = function()
   anim.toogle = true
   anim.current_combination = "/a_e/"
   anim.group = display.newGroup()
-  
+
   -- path audio
   anim.audio_path = 'media/audio'..anim.current_combination
   anim.audio_1 = audio.loadSound(anim.audio_path..anim.counter..'/1.mp3')
@@ -35,6 +35,7 @@ Anim.newSprite = function()
   end 
   function anim.prev()
     anim.counter = anim.counter -1
+    anim.group:remove(anim.sprite)
     anim.load_image()
   end
   function anim.next()
@@ -64,6 +65,7 @@ Anim.newSprite = function()
       audio.play( anim.audio_2 )
       local thisSprite = event.target
       thisSprite:setSequence( "counter" )
+      print "io capito?"
       thisSprite:play()
       anim.sprite:removeEventListener( "sprite", anim.intro )
     end
