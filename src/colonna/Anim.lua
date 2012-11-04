@@ -65,7 +65,6 @@ Anim.newSprite = function()
       audio.play( anim.audio_2 )
       local thisSprite = event.target
       thisSprite:setSequence( "counter" )
-      print "io capito?"
       thisSprite:play()
       anim.sprite:removeEventListener( "sprite", anim.intro )
     end
