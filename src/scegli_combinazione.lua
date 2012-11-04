@@ -8,10 +8,12 @@ goto_confronto = function ( event )
 end
 
 goto_sopra = function ( event )
+  _G.combinazione = "a_e"
   storyboard.gotoScene("src.colonna")
 end
 
 goto_sotto = function ( event )
+  _G.combinazione = "a_i"
   storyboard.gotoScene("src.colonna")
 end
 
@@ -33,8 +35,8 @@ function scegli_combinazione:createScene( event )
   
   local _lettera_sx_0   = "a"
   local _plus           = "+"
-  local _lettera_ml_1   = "i"
-  local _lettera_ml_2   = "e"
+  local _lettera_ml_1   = "e"
+  local _lettera_ml_2   = "i"
   local _equal          = "="
   local _lettera_dx_1   = "a"
   local _lettera_dx_2   = "a"

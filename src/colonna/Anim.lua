@@ -6,7 +6,7 @@ Anim.newSprite = function()
   anim.counter = 1
   anim.limit = 5
   anim.toogle = true
-  anim.current_combination = "/a_e/"
+  anim.current_combination = "/".._G.combinazione.."/"
   anim.group = display.newGroup()
 
   -- path audio

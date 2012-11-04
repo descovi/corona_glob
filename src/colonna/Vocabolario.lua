@@ -8,7 +8,7 @@ Vocabolario.newSprite = function()
       local spiegazione = display.newRect( event.target, 0, 0, display.contentWidth, display.contentHeight )
       local testo = display.newText(event.target,"string", 0, 0, "Helvetica", 180)
       testo:setTextColor(255, 0, 0, 255)
-      spiegazione.alpha = 0.9
+      spiegazione.alpha = 1
       show = true
     else
       show = false
