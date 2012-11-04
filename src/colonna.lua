@@ -10,8 +10,20 @@ local arrow_dn    = Arrow.newSprite()
 local anim        = Anim.newSprite()
 
 local function go_bk(event) Storyboard.gotoScene( "src.scegli_combinazione" ) end
-local function go_up(event) anim.prev() end
-local function go_dn(event) anim.next() end
+local function go_up(event)
+  anim.prev()
+  if (anim.counter == 1) then
+    arrow_up.alpha = 0
+  end
+  arrow_dn.alpha = 1
+end
+local function go_dn(event) 
+  anim.next()
+  if (anim.counter >= anim.limit) then
+    arrow_dn.alpha = 0
+  end
+  arrow_up.alpha = 1
+end
 
 function colonna:createScene( event )
   self.view:insert(background)

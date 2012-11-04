@@ -4,7 +4,7 @@ local storyboard = require( "storyboard" )
 local scegli_combinazione = storyboard.newScene()
 
 goto_confronto = function ( event )
-   --storyboard.gotoScene("confronto")
+  storyboard.gotoScene("src.confronto")
 end
 
 goto_sopra = function ( event )

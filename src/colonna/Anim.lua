@@ -4,6 +4,7 @@ Anim.newSprite = function()
   anim.totalFrames = 11
   anim.sheet_options  = { width=1024, height=256, numFrames=anim.totalFrames }
   anim.counter = 1
+  anim.limit = 5
   anim.toogle = true
   anim.audio_1 = audio.loadSound('media/audio/a-e/fadfade/1.mp3')
   anim.audio_2 = audio.loadSound('media/audio/a-e/fadfade/2.mp3')
