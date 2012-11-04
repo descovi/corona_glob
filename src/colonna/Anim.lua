@@ -1,66 +1,65 @@
 local Anim = {}
 Anim.newSprite = function()
   local anim = {}
-  local totalFrames = 11
-  local sheet_options  = { width=1024, height=256, numFrames=totalFrames }
-  local counter = 1
-  local toogle = true
-  local audio_1 = audio.loadSound('media/audio/a-e/fadfade/1.mp3')
-  local audio_2 = audio.loadSound('media/audio/a-e/fadfade/2.mp3')
-
-  function anim.image_sheet_load()
-    local sheet = graphics.newImageSheet("media/colonna/a_e/"+counter+"/full.png", sheet_options)
-    local sequence_data = {
-      { name="forward", start=1, count=totalFrames, time=1000,  loopCount = 1}, 
-      { name="bounce",  start=1, count=totalFrames, time=1000,  loopCount = 1, loopDirection = "bounce" },
+  anim.totalFrames = 11
+  anim.sheet_options  = { width=1024, height=256, numFrames=anim.totalFrames }
+  anim.counter = 1
+  anim.toogle = true
+  anim.audio_1 = audio.loadSound('media/audio/a-e/fadfade/1.mp3')
+  anim.audio_2 = audio.loadSound('media/audio/a-e/fadfade/2.mp3')
+  anim.group = display.newGroup()
+  function anim.load_image()
+    anim.path = "media/colonna/a_e/"..anim.counter.."/full.png"
+    anim.sheet = graphics.newImageSheet(anim.path, anim.sheet_options)
+    anim.sequence_data = {
+      { name="forward", start=1, count=anim.totalFrames, time=1000,  loopCount = 1}, 
+      { name="bounce",  start=1, count=anim.totalFrames, time=1000,  loopCount = 1, loopDirection = "bounce" },
       { name="counter", frames= {11,10,9,8,7,6,5,4,3,2,1}, time=1000,  loopCount = 1}
     }
-    anim = display.newSprite( sheet1, sequence_data )
-  end
-  
+    anim.sprite = display.newSprite( anim.sheet, anim.sequence_data )
+    anim.group:insert(anim.sprite)
+    anim.sprite.x = display.contentWidth / 2
+    anim.sprite.y = display.contentHeight / 2
+    anim.sprite:addEventListener("sprite", anim.intro)
+    anim.sprite:addEventListener("tap", anim.go_next_anim)
+    anim.sprite:play()
+  end 
   function anim.prev()
-    counter = counter -1
-    --anim.image_sheet_load()
+    anim.counter = anim.counter -1
+    anim.load_image()
   end
-
   function anim.next()
-    print "ciao"
-    --counter++
-    --anim.image_sheet_load()
+    anim.counter = anim.counter+1
+    anim.group:remove(anim.sprite)
+    anim.load_image()
   end
-
-  local function go_next_anim(event)
-    if toogle == true then
-      toogle = false
-      audio.play( audio_1 )
-      anim:setSequence( "forward" )
-      anim:play()
+  function anim.go_next_anim(event)
+    if anim.toogle == true then
+      anim.toogle = false
+      audio.play( anim.audio_1 )
+      anim.sprite:setSequence( "forward" )
+      anim.sprite:play()
     else
-      toogle = true
-      audio.play( audio_2 )
-      anim:setSequence("counter")
-      anim:play()
+      anim.toogle = true
+      audio.play( anim.audio_2 )
+      anim.sprite:setSequence("counter")
+      anim.sprite:play()
+
     end
   end
 
-  local function intro( event )
+  function anim.intro( event )
     if event.phase == "began" then
-      audio.play( audio_1 )
+      audio.play( anim.audio_1 )
     elseif event.phase == "ended" then
-      audio.play( audio_2 )
+      audio.play( anim.audio_2 )
       local thisSprite = event.target
       thisSprite:setSequence( "counter" )
       thisSprite:play()
-      anim:removeEventListener( "sprite", intro )
+      anim.sprite:removeEventListener( "sprite", anim.intro )
     end
   end
-
-  anim.image_sheet_load()
-  anim.x = display.contentWidth / 2
-  anim.y = display.contentHeight / 2
-  anim:addEventListener("sprite", intro)
-  anim:addEventListener("tap", go_next_anim)
-  anim:play()
+  anim.load_image()
 
   return anim
 end

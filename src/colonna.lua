@@ -1,6 +1,6 @@
 local Anim        = require('src.colonna.Anim')
 local Arrow       = require('src.colonna.Arrow')
-local Storyboard  = require( "storyboard" )
+local Storyboard  = require("storyboard")
 -- display objects
 local colonna     = Storyboard.newScene()
 local background  = display.newImage("media/sfondi/".._G.vocale..".png")
