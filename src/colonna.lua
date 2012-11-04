@@ -27,6 +27,10 @@ end
 
 function colonna:createScene( event )
   self.view:insert(background)
+  self.view:insert(anim.group)
+  self.view:insert(back_btn)
+  self.view:insert(arrow_up)
+  self.view:insert(arrow_dn)
   back_btn:addEventListener("tap", go_bk)
   arrow_up:addEventListener("tap", go_up)
   arrow_dn:addEventListener("tap", go_dn)
