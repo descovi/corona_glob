@@ -6,11 +6,19 @@ Anim.newSprite = function()
   anim.counter = 1
   anim.limit = 5
   anim.toogle = true
-  anim.audio_1 = audio.loadSound('media/audio/a-e/fadfade/1.mp3')
-  anim.audio_2 = audio.loadSound('media/audio/a-e/fadfade/2.mp3')
+  anim.current_combination = "/a_e/"
   anim.group = display.newGroup()
+  
+  -- path audio
+  anim.audio_path = 'media/audio'..anim.current_combination
+  anim.audio_1 = audio.loadSound(anim.audio_path..anim.counter..'/1.mp3')
+  anim.audio_2 = audio.loadSound(anim.audio_path..anim.counter..'/2.mp3')
+  -- path animation
+  anim.animation_path = 'media/colonna'..anim.current_combination
+  anim.path = anim.animation_path..anim.counter.."/full.png"
+  
   function anim.load_image()
-    anim.path = "media/colonna/a_e/"..anim.counter.."/full.png"
+    anim.path = anim.animation_path..anim.counter.."/full.png"
     anim.sheet = graphics.newImageSheet(anim.path, anim.sheet_options)
     anim.sequence_data = {
       { name="forward", start=1, count=anim.totalFrames, time=1000,  loopCount = 1}, 

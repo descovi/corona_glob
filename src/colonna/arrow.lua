@@ -7,7 +7,7 @@ Arrow.newSprite = function()
   myRectangle:setStrokeColor(180, 180, 180)
   group:insert(myRectangle)
   function group:touch(event)
-    print("toccato")
+    print("Arrow touch")
   end
   function group.show_rect_red()
     myRectangle.alpha = 1

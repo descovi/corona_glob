@@ -9,7 +9,10 @@ local arrow_up    = Arrow.newSprite()
 local arrow_dn    = Arrow.newSprite()
 local anim        = Anim.newSprite()
 
-local function go_bk(event) Storyboard.gotoScene( "src.scegli_combinazione" ) end
+local function go_bk(event) 
+  Storyboard.gotoScene( "src.scegli_combinazione" ) 
+end
+
 local function go_up(event)
   anim.prev()
   if (anim.counter == 1) then
@@ -17,6 +20,7 @@ local function go_up(event)
   end
   arrow_dn.alpha = 1
 end
+
 local function go_dn(event) 
   anim.next()
   if (anim.counter >= anim.limit) then
