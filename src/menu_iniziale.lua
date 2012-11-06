@@ -1,8 +1,6 @@
-require 'utils.button_to_go'
-require 'movieclip'
+require 'src.utils.button_to_go'
 
 local storyboard = require ( "storyboard" )
-local movieclip = require("movieclip")
 local menu_iniziale = storyboard.newScene()
 
 local counter = 1
