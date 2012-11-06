@@ -10,24 +10,24 @@ function play_sound( event )
 end
 
 function goto_menuiniziale(e)
-  storyboard.gotoScene("menu_iniziale")
+  storyboard.gotoScene("src.menu_iniziale")
 end
 
 function go_to_confronto_lunga(event)
   _G.tipo = 'lunga'
   if _G.vocale == 'a' or _G.vocale == 'e' or _G.vocale == 'o' then
-    storyboard.gotoScene("scegli_combinazione")
+    storyboard.gotoScene("src.scegli_combinazione")
   else
-    storyboard.gotoScene("colonna")
+    storyboard.gotoScene("src.colonna")
   end
 end
 
 function go_to_confronto_corto(event)
   _G.tipo = 'corta'
   if _G.vocale == 'a' or _G.vocale == 'e' or _G.vocale == 'o' then
-    storyboard.gotoScene("scegli_combinazione")
+    storyboard.gotoScene("src.scegli_combinazione")
   else
-    storyboard.gotoScene("colonna")
+    storyboard.gotoScene("src.colonna")
   end
 end
 
@@ -45,8 +45,8 @@ function confronto:createScene( event )
   local lettera_lunga = display.newImage( group, "media/menu_iniziale/long-".. _G.vocale ..".png")
   lettera_lunga.width = size_pulsantoni
   lettera_lunga.height = size_pulsantoni
-  lettera_lunga.x = 200
-  lettera_lunga.y = 550
+  lettera_lunga.x = display.contentWidth / 2 - size_pulsantoni 
+  lettera_lunga.y = display.contentHeight / 2 
   lettera_lunga.audio = audio.loadSound( path_audio .. _G.vocale:upper() ..'_L.mp3' )
   lettera_lunga:addEventListener("tap", play_sound)
   create_button_to_go(lettera_lunga,_G.vocale)
@@ -56,8 +56,8 @@ function confronto:createScene( event )
   local lettera_corta = display.newImage( group, "media/menu_iniziale/short-a.png")
   lettera_corta.width = size_pulsantoni
   lettera_corta.height = size_pulsantoni
-  lettera_corta.x = 550
-  lettera_corta.y = 550
+  lettera_corta.x = display.contentWidth / 2 + size_pulsantoni 
+  lettera_corta.y = display.contentHeight / 2
   lettera_corta.audio = audio.loadSound( path_audio.. _G.vocale:upper() .. '_S.mp3' )
   lettera_corta:addEventListener("tap", play_sound)
   create_button_to_go(lettera_corta,_G.vocale)
