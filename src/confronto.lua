@@ -31,6 +31,10 @@ function go_to_confronto_corto(event)
   end
 end
 
+function confronto:enterScene( event )
+  print "CIAO forno"
+end
+
 function confronto:createScene( event )
   -- variabili generiche
   local group = self.view

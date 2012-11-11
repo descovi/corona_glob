@@ -10,7 +10,7 @@ local group
 
 function create_globulo( file_name , vocale)
   local x_pos = {0, 100, 200, 300, 400, 0, 100, 200, 300, 400}
-  local y_pos = {550,350}
+  local y_pos = {350,150}
   local globulo_size = 100
   -- dati
   local path = 'media/menu_iniziale/'
@@ -21,8 +21,8 @@ function create_globulo( file_name , vocale)
   globulo.width = globulo_size
   globulo.height = globulo_size
 
-  local pos_x = x_pos[counter] 
-  globulo.x = pos_x + 180
+  local pos_x = x_pos[counter]*2
+  globulo.x = pos_x + globulo_size
   if counter > 5 then
     globulo.y = y_pos[1]
   else
@@ -42,7 +42,7 @@ end
 -- imposta un evento che deriva da utils.button_to_go
 function go_to(event)
   _G.vocale = event.target.vocale
-  storyboard.gotoScene("confronto")
+  storyboard.gotoScene("src.confronto")
 end
 
 --Create the scene

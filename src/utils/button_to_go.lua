@@ -6,6 +6,7 @@ function create_button_to_go(globulo, vocale)
   cerchio_container:insert(cerchio)
   cerchio_container:insert(testo)
   cerchio_container.vocale = vocale
+  cerchio_container:addEventListener("tap", go_to)
   globulo.parent:insert(cerchio_container)
   globulo.cerchio_container = cerchio_container
 end

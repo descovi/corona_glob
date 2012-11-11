@@ -2,7 +2,7 @@ local storyboard = require( "storyboard" )
 local intro = storyboard.newScene()
 
 function click_over_video( event )
-  storyboard.gotoScene("menu_iniziale")
+  storyboard.gotoScene("src.menu_iniziale")
 end
 
 function intro:createScene( event )

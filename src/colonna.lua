@@ -41,6 +41,7 @@ function colonna:createScene( event )
   back_btn:addEventListener("tap", go_bk)
   arrow_up:addEventListener("tap", go_up)
   arrow_dn:addEventListener("tap", go_dn)
+  arrow_up.alpha = 0
   arrow_dn.y = display.contentHeight - arrow_dn.height
 end
 colonna:addEventListener( "createScene" , scene )
