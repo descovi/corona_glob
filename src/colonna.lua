@@ -44,6 +44,10 @@ function colonna:createScene( event )
   arrow_up.alpha = 0
   arrow_dn.y = display.contentHeight - arrow_dn.height
 end
-colonna:addEventListener( "createScene" , scene )
+function colonna:enterScene( event )
+  print "sgombre"
+end
+colonna:addEventListener( "createScene" , colonna )
+colonna:addEventListener( "enterScene",  colonna )
 
 return colonna

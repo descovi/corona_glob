@@ -9,11 +9,13 @@ end
 
 goto_sopra = function ( event )
   _G.combinazione = "a_e"
+  storyboard.removeScene("src.colonna")
   storyboard.gotoScene("src.colonna")
 end
 
 goto_sotto = function ( event )
   _G.combinazione = "a_i"
+  storyboard.removeScene("src.colonna")
   storyboard.gotoScene("src.colonna")
 end
 
