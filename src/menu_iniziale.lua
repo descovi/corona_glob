@@ -42,6 +42,7 @@ end
 -- imposta un evento che deriva da utils.button_to_go
 function go_to(event)
   _G.vocale = event.target.vocale
+  storyboard.removeScene("src.confronto")
   storyboard.gotoScene("src.confronto")
 end
 
