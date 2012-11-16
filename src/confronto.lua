@@ -33,13 +33,13 @@ function go_to_confronto_corto(event)
 end
 local lettera_lunga
 local lettera_corta 
-local size_pulsantoni = 300
+local size_pulsantoni = 500
 local group
 function create_lettera_lunga()
     lettera_lunga = display.newImage( group, "media/menu_iniziale/long-".. _G.vocale ..".png")
     lettera_lunga.width = size_pulsantoni
     lettera_lunga.height = size_pulsantoni
-    lettera_lunga.x = display.contentWidth / 2 - size_pulsantoni 
+    lettera_lunga.x = display.contentWidth / 2 - 250
     lettera_lunga.y = display.contentHeight / 2 
     lettera_lunga.audio = audio.loadSound( path_audio .. _G.vocale:upper() ..'_L.mp3' )
     lettera_lunga:addEventListener("tap", play_sound)
@@ -51,7 +51,7 @@ function create_lettera_corta()
   lettera_corta= display.newImage( group, "media/menu_iniziale/short-a.png")
   lettera_corta.width = size_pulsantoni
   lettera_corta.height = size_pulsantoni
-  lettera_corta.x = display.contentWidth / 2 + size_pulsantoni 
+  lettera_corta.x = display.contentWidth / 2 + 250 
   lettera_corta.y = display.contentHeight / 2
   lettera_corta.audio = audio.loadSound( path_audio.. _G.vocale:upper() .. '_S.mp3' )
   lettera_corta:addEventListener("tap", play_sound)
