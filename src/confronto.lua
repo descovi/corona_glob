@@ -11,14 +11,17 @@ function play_sound( event )
 end
 
 function goto_menuiniziale(e)
+  storyboard.removeScene("src.menu_iniziale")
   storyboard.gotoScene("src.menu_iniziale")
 end
 
 function go_to_confronto_lunga(event)
   _G.tipo = 'lunga'
   if _G.vocale == 'a' or _G.vocale == 'e' or _G.vocale == 'o' then
+    storyboard.removeScene("src.scegli_combinazione")
     storyboard.gotoScene("src.scegli_combinazione")
   else
+    storyboard.removeScene("src.colonna")
     storyboard.gotoScene("src.colonna")
   end
 end
@@ -26,8 +29,10 @@ end
 function go_to_confronto_corto(event)
   _G.tipo = 'corta'
   if _G.vocale == 'a' or _G.vocale == 'e' or _G.vocale == 'o' then
+    storyboard.removeScene("src.scegli_combinazione")
     storyboard.gotoScene("src.scegli_combinazione")
   else
+    storyboard.removeScene("src.colonna")
     storyboard.gotoScene("src.colonna")
   end
 end
@@ -59,15 +64,11 @@ function create_lettera_corta()
   lettera_corta.cerchio_container:addEventListener("tap", go_to_confronto_corto)
   torna_indietro:addEventListener("tap", goto_menuiniziale)
 end
-function confronto:enterScene( event )
-  group = self.view
-  lettera_lunga:removeSelf()
-  lettera_corta:removeSelf()
-  create_lettera_lunga()
-  create_lettera_corta()
-end
+
 function confronto:createScene( event )
-  print("tuu")
+  print("confronto:createScene")
+  print("VOCALE ATTUALE:")
+  print(_G.vocale)
   -- variabili generiche
   group = self.view
   -- torna indietro
