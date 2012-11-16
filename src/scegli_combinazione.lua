@@ -20,7 +20,9 @@ goto_sotto = function ( event )
 end
 
 function scegli_combinazione:createScene( event )
-  
+  print("scegli_combinazione:createScene")
+  print("VOCALE ATTUALE:")
+  print(_G.vocale)
   local group           = self.view
   local group_sopra     = display.newGroup()
   local group_sotto     = display.newGroup()
@@ -44,8 +46,7 @@ function scegli_combinazione:createScene( event )
   local _lettera_dx_2   = "a"
   local _size           = 160
   local _font           = "Arial"
-  print("peccato")
-  
+
   if _G.vocale == "e" then
     _lettera_sx_0 = "e"
     _lettera_ml_1 = "a"
@@ -72,7 +73,6 @@ function scegli_combinazione:createScene( event )
   if _G.vocale == "u" then
     _lettera_sx_0 = "u"
     _lettera_dx_1 = "u"
-    
   end
 
   local y1              = white_circle_1.y -white_circle_1.height/2
