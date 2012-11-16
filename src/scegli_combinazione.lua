@@ -44,6 +44,36 @@ function scegli_combinazione:createScene( event )
   local _lettera_dx_2   = "a"
   local _size           = 160
   local _font           = "Arial"
+  print("peccato")
+  
+  if _G.vocale == "e" then
+    _lettera_sx_0 = "e"
+    _lettera_ml_1 = "a"
+    _lettera_ml_2 = "e"
+    _lettera_dx_1 = "e"
+    _lettera_dx_2 = "e"
+  end
+
+  if _G.vocale == "i" then
+    _lettera_sx_0 = "i"
+    _lettera_ml_1 = "e"
+    _lettera_dx_1 = "o"
+    print ("VA MOSTRATA UNA SOLA RIGA!!!")
+  end
+
+  if _G.vocale == "o" then
+    _lettera_sx_0 = "o"
+    _lettera_ml_1 = "e"
+    _lettera_ml_2 = "a"
+    _lettera_dx_1 = "o"
+    _lettera_dx_2 = "o"
+  end
+
+  if _G.vocale == "u" then
+    _lettera_sx_0 = "u"
+    _lettera_dx_1 = "u"
+    
+  end
 
   local y1              = white_circle_1.y -white_circle_1.height/2
   local y2              = white_circle_2.y -white_circle_1.height/2
