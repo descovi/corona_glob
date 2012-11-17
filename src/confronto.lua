@@ -11,7 +11,7 @@ function play_sound( event )
 end
 
 function play_anim( event )
-  event.target.play()
+  event.target:play({loop=1})
   
 end
 
@@ -39,7 +39,11 @@ local lettera_corta
 local size_pulsantoni = 500
 local group
 function create_lettera(anim_path,audio_path)
-  local lettera = movieclip.newAnim({anim_path})
+  anim_list = {}
+  for i=1,24 do
+    anim_list[i] = string.gsub (anim_path, "1", i)
+  end
+  local lettera = movieclip.newAnim(anim_list)
   group:insert(lettera)
   local long_audio_path = path_audio .. _G.vocale:upper() .. audio_path ..'.mp3'
   lettera.width = size_pulsantoni
@@ -51,14 +55,14 @@ function create_lettera(anim_path,audio_path)
   return lettera
 end
 function create_lettera_lunga()
-  lettera_lunga = create_lettera("media/menu_iniziale/long-".. _G.vocale ..".png","_L")
+  lettera_lunga = create_lettera("media/menu_iniziale/long-".. _G.vocale .."/1.png","_L")
   lettera_lunga.x = display.contentWidth / 2 - 250
   create_button_to_go(lettera_lunga,_G.vocale)
   lettera_lunga.cerchio_container:addEventListener("tap", go_to_confronto_lunga)
 end
 function create_lettera_corta()
   -- CORTA
-  lettera_corta = create_lettera( "media/menu_iniziale/short-".._G.vocale..".png","_S")
+  lettera_corta = create_lettera( "media/menu_iniziale/short-".._G.vocale.."/1.png","_S")
   lettera_corta.x = display.contentWidth / 2 + 250 
   create_button_to_go(lettera_corta,_G.vocale)
   lettera_corta.cerchio_container:addEventListener("tap", go_to_confronto_corto)
