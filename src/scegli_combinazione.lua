@@ -2,22 +2,16 @@ require('src.utils.button_to_go_back')
 
 local storyboard = require( "storyboard" )
 local scegli_combinazione = storyboard.newScene()
+local _lettera_sx_0   = "a"
+local _plus           = "+"
+local _lettera_ml_1   = "e"
+local _lettera_ml_2   = "i"
+local _equal          = "="
+local _lettera_dx_1   = "a"
+local _lettera_dx_2   = "a"
+local _size           = 160
+local _font           = "Arial"
 
-goto_confronto = function ( event )
-  storyboard.gotoScene("src.confronto")
-end
-
-goto_sopra = function ( event )
-  _G.combinazione = "a_e"
-  storyboard.removeScene("src.colonna")
-  storyboard.gotoScene("src.colonna")
-end
-
-goto_sotto = function ( event )
-  _G.combinazione = "a_i"
-  storyboard.removeScene("src.colonna")
-  storyboard.gotoScene("src.colonna")
-end
 
 function scegli_combinazione:createScene( event )
   print("scegli_combinazione:createScene")
@@ -36,16 +30,7 @@ function scegli_combinazione:createScene( event )
   white_circle_2.x      = display.contentWidth / 2
   white_circle_1.y      = display.contentHeight / 2 - 150
   white_circle_2.y      = display.contentHeight / 2 + 150
-  
-  local _lettera_sx_0   = "a"
-  local _plus           = "+"
-  local _lettera_ml_1   = "e"
-  local _lettera_ml_2   = "i"
-  local _equal          = "="
-  local _lettera_dx_1   = "a"
-  local _lettera_dx_2   = "a"
-  local _size           = 160
-  local _font           = "Arial"
+
 
   if _G.vocale == "e" then
     _lettera_sx_0 = "e"
@@ -119,5 +104,19 @@ function scegli_combinazione:createScene( event )
 end
   
 scegli_combinazione:addEventListener( "createScene", scene )
+goto_confronto = function ( event )
+  storyboard.gotoScene("src.confronto")
+end
 
+goto_sopra = function ( event )
+  _G.combinazione = _lettera_sx_0.."_".._lettera_ml_1
+  storyboard.removeScene("src.colonna")
+  storyboard.gotoScene("src.colonna")
+end
+
+goto_sotto = function ( event )
+  _G.combinazione = _lettera_sx_0.."_".._lettera_ml_2
+  storyboard.removeScene("src.colonna")
+  storyboard.gotoScene("src.colonna")
+end
 return scegli_combinazione
