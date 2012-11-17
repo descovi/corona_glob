@@ -1,19 +1,26 @@
 require('src.utils.button_to_go')
 require('src.utils.button_to_go_back')
-
+local movieclip = require('src.utils.movieclip')
 local storyboard = require( "storyboard" )
 local confronto = storyboard.newScene()
 local path_audio = 'media/audio/vocali/'
 local torna_indietro
+
 function play_sound( event )
   audio.play( event.target.audio )
 end
+
 function play_anim( event )
-  print("cernuca")
+  event.target.play()
+  
 end
+
 function goto_menuiniziale(e)
   storyboard.removeScene("src.menu_iniziale")
   storyboard.gotoScene("src.menu_iniziale")
+end
+function go_to(event)
+  print("gotoooooo")
 end
 
 function go_to_confronto_lunga(event)
@@ -32,7 +39,8 @@ local lettera_corta
 local size_pulsantoni = 500
 local group
 function create_lettera(anim_path,audio_path)
-  local lettera = display.newImage( group, anim_path)
+  local lettera = movieclip.newAnim({anim_path})
+  group:insert(lettera)
   local long_audio_path = path_audio .. _G.vocale:upper() .. audio_path ..'.mp3'
   lettera.width = size_pulsantoni
   lettera.height = size_pulsantoni
