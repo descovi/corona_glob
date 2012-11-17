@@ -17,24 +17,14 @@ end
 
 function go_to_confronto_lunga(event)
   _G.tipo = 'lunga'
-  if _G.vocale == 'a' or _G.vocale == 'e' or _G.vocale == 'o' then
-    storyboard.removeScene("src.scegli_combinazione")
-    storyboard.gotoScene("src.scegli_combinazione")
-  else
-    storyboard.removeScene("src.colonna")
-    storyboard.gotoScene("src.colonna")
-  end
+  storyboard.removeScene("src.scegli_combinazione")
+  storyboard.gotoScene("src.scegli_combinazione") 
 end
 
 function go_to_confronto_corto(event)
   _G.tipo = 'corta'
-  if _G.vocale == 'a' or _G.vocale == 'e' or _G.vocale == 'o' then
-    storyboard.removeScene("src.scegli_combinazione")
-    storyboard.gotoScene("src.scegli_combinazione")
-  else
-    storyboard.removeScene("src.colonna")
-    storyboard.gotoScene("src.colonna")
-  end
+  storyboard.removeScene("src.scegli_combinazione")
+  storyboard.gotoScene("src.scegli_combinazione")
 end
 local lettera_lunga
 local lettera_corta 
