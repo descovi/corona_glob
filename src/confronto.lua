@@ -3,13 +3,14 @@ require('src.utils.button_to_go_back')
 
 local storyboard = require( "storyboard" )
 local confronto = storyboard.newScene()
-storyboard.purgeAll()
-  local path_audio = 'media/audio/vocali/'
+local path_audio = 'media/audio/vocali/'
 local torna_indietro
 function play_sound( event )
   audio.play( event.target.audio )
 end
-
+function play_anim( event )
+  print("cernuca")
+end
 function goto_menuiniziale(e)
   storyboard.removeScene("src.menu_iniziale")
   storyboard.gotoScene("src.menu_iniziale")
@@ -30,29 +31,29 @@ local lettera_lunga
 local lettera_corta 
 local size_pulsantoni = 500
 local group
+function create_lettera(anim_path,audio_path)
+  local lettera = display.newImage( group, anim_path)
+  local long_audio_path = path_audio .. _G.vocale:upper() .. audio_path ..'.mp3'
+  lettera.width = size_pulsantoni
+  lettera.height = size_pulsantoni
+  lettera.y = display.contentHeight / 2 
+  lettera.audio = audio.loadSound( long_audio_path )
+  lettera:addEventListener("tap", play_sound)
+  lettera:addEventListener("tap", play_anim)
+  return lettera
+end
 function create_lettera_lunga()
-    lettera_lunga = display.newImage( group, "media/menu_iniziale/long-".. _G.vocale ..".png")
-    lettera_lunga.width = size_pulsantoni
-    lettera_lunga.height = size_pulsantoni
-    lettera_lunga.x = display.contentWidth / 2 - 250
-    lettera_lunga.y = display.contentHeight / 2 
-    lettera_lunga.audio = audio.loadSound( path_audio .. _G.vocale:upper() ..'_L.mp3' )
-    lettera_lunga:addEventListener("tap", play_sound)
-    create_button_to_go(lettera_lunga,_G.vocale)
-    lettera_lunga.cerchio_container:addEventListener("tap", go_to_confronto_lunga)
+  lettera_lunga = create_lettera("media/menu_iniziale/long-".. _G.vocale ..".png","_L")
+  lettera_lunga.x = display.contentWidth / 2 - 250
+  create_button_to_go(lettera_lunga,_G.vocale)
+  lettera_lunga.cerchio_container:addEventListener("tap", go_to_confronto_lunga)
 end
 function create_lettera_corta()
   -- CORTA
-  lettera_corta= display.newImage( group, "media/menu_iniziale/short-a.png")
-  lettera_corta.width = size_pulsantoni
-  lettera_corta.height = size_pulsantoni
+  lettera_corta = create_lettera( "media/menu_iniziale/short-".._G.vocale..".png","_S")
   lettera_corta.x = display.contentWidth / 2 + 250 
-  lettera_corta.y = display.contentHeight / 2
-  lettera_corta.audio = audio.loadSound( path_audio.. _G.vocale:upper() .. '_S.mp3' )
-  lettera_corta:addEventListener("tap", play_sound)
   create_button_to_go(lettera_corta,_G.vocale)
   lettera_corta.cerchio_container:addEventListener("tap", go_to_confronto_corto)
-  torna_indietro:addEventListener("tap", goto_menuiniziale)
 end
 
 function confronto:createScene( event )
@@ -66,6 +67,7 @@ function confronto:createScene( event )
   -- mostra le lettere selezioante
   create_lettera_lunga()
   create_lettera_corta()
+  torna_indietro:addEventListener("tap", goto_menuiniziale)
   group:insert(torna_indietro)
 end
 
