@@ -17,18 +17,18 @@ end
 
 local function go_up(event)
   anim.prev()
-  if (anim.counter == 1) then
-    arrow_up.alpha = 0
+  if (anim.counter <= 1) then
+    arrow_up.hide()
   end
-  arrow_dn.alpha = 1
+  arrow_dn.show()
 end
 
 local function go_dn(event) 
   anim.next()
   if (anim.counter >= anim.limit) then
-    arrow_dn.alpha = 0
+    arrow_dn.hide()
   end
-  arrow_up.alpha = 1
+  arrow_up.show()
 end
 
 function colonna:createScene( event )
@@ -39,10 +39,12 @@ function colonna:createScene( event )
   self.view:insert(arrow_dn)
   self.view:insert(vocabolario)
   back_btn:addEventListener("tap", go_bk)
-  arrow_up:addEventListener("tap", go_up)
   arrow_dn:addEventListener("tap", go_dn)
-  arrow_up.alpha = 0
-  arrow_dn.y = display.contentHeight - arrow_dn.height
+  arrow_up:addEventListener("tap", go_up)
+  arrow_dn.show()
+  arrow_up.hide()
+  arrow_up.y = 20
+  arrow_dn.y = display.contentHeight - arrow_dn.height - 20
 end
 
 colonna:addEventListener( "createScene" , colonna )
