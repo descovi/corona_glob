@@ -18,7 +18,7 @@ function create_globulo( file_name , vocale)
   local final_path = path .. file_name .. end_path
   local globulo = display.newImage(final_path)
   -- posizionamento
-  globulo.width = globulo_size
+  globulo.width  = globulo_size
   globulo.height = globulo_size
 
   local pos_x = x_pos[counter]*2
