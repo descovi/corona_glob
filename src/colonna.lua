@@ -39,6 +39,11 @@ function colonna:createScene( event )
   self.view:insert(arrow_dn)
   self.view:insert(vocabolario)
   back_btn:addEventListener("tap", go_bk)
+  back_btn.alpha = 0.01
+  back_btn.width = 200
+  back_btn.height = 200
+  back_btn.y = 100
+  back_btn.x = back_btn.x - 45
   arrow_dn:addEventListener("tap", go_dn)
   arrow_up:addEventListener("tap", go_up)
   arrow_dn.show()

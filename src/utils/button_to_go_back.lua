@@ -6,5 +6,8 @@ button_to_go_back = function ()
   graphics.height = size_wh
   graphics.x = display.contentWidth - (size_wh/2) - margin
   graphics.y = size_wh
+  if (nascondi) then
+    graphics.alpha = 0
+  end
   return graphics
 end
