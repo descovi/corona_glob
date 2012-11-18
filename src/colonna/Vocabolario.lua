@@ -2,7 +2,7 @@ local Vocabolario = {}
 Vocabolario.newSprite = function()
   local group = display.newGroup()
   local myRectangle = display.newRect(group,0, display.contentHeight-150, 150, 150)
-  myRectangle.alpha = 0.1
+  myRectangle.alpha = 0.01
   local show = false
   group:addEventListener("tap", function(event)
     if (show == false) then

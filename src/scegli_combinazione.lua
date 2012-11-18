@@ -79,6 +79,15 @@ function scegli_combinazione:createScene( event )
   lettera_sx_1:setTextColor(200, 0, 0, 255)
   lettera_ml_1:setTextColor(0, 0, 0, 255)
   lettera_dx_1:setTextColor(0, 180, 0, 255)
+  if _lettera_ml_1 == "a" then
+    lettera_ml_1.x = lettera_ml_1.x - 25
+  elseif _lettera_ml_1 == "e" then
+    lettera_ml_1.x = lettera_ml_1.x - 25
+  elseif _lettera_ml_1 == "i" then
+    lettera_ml_1.x = lettera_ml_2.x + 20
+  elseif _lettera_ml_1 == "o" then
+    lettera_ml_1.x = lettera_ml_2.x + 20
+  end
   
   --- riga 2
   if _G.vocale == 'a' or _G.vocale == 'e' or _G.vocale == 'o' then
@@ -89,7 +98,16 @@ function scegli_combinazione:createScene( event )
     local lettera_dx_2    = display.newText(group_sotto, _lettera_dx_2, x3,      y2-19, _font, _size)  
     lettera_sx_2:setTextColor(200, 0, 0, 255)
     lettera_ml_2:setTextColor(0, 0, 0, 255)
-    lettera_dx_2:setTextColor(0, 180, 0, 255)
+    lettera_dx_2:setTextColor(0, 180, 0, 255)  
+    if _lettera_ml_2 == "a" then
+      lettera_ml_2.x = lettera_ml_2.x 
+    elseif _lettera_ml_2 == "e" then
+      lettera_ml_2.x = lettera_ml_2.x - 5
+    elseif _lettera_ml_2 == "i" then
+      lettera_ml_2.x = lettera_ml_2.x + 20
+    elseif _lettera_ml_2 == "o" then
+      lettera_ml_2.x = lettera_ml_2.x + 20
+    end
   else
     white_circle_2.alpha = 0
     group_sopra.y = display.contentHeight / 2 - group_sopra.height
@@ -101,7 +119,6 @@ function scegli_combinazione:createScene( event )
   -- torna indietro
   local torna_indietro = button_to_go_back()
   torna_indietro:addEventListener("tap", goto_confronto)
-
 end
   
 scegli_combinazione:addEventListener( "createScene", scene )
