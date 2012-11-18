@@ -40,14 +40,20 @@ Anim.newSprite = function()
     anim.sprite:play()
   end 
   function anim.prev()
-    anim.counter = anim.counter -1
-    anim.group:remove(anim.sprite)
-    anim.load_image()
+    print(anim.counter)
+    if (anim.counter > 1 ) then
+      anim.counter = anim.counter -1
+      anim.group:remove(anim.sprite)
+      anim.load_image()
+    end
   end
   function anim.next()
-    anim.counter = anim.counter+1
-    anim.group:remove(anim.sprite)
-    anim.load_image()
+    print(anim.counter)
+    if (anim.counter < anim.limit) then  
+      anim.counter = anim.counter+1
+      anim.group:remove(anim.sprite)
+      anim.load_image()
+    end
   end
   function anim.go_next_anim(event)
     if anim.toogle == true then
