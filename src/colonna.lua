@@ -17,6 +17,7 @@ end
 
 local function go_up(event)
   anim.prev()
+  vocabolario.set(anim.counter)
   if (anim.counter <= 1) then
     arrow_up.hide()
   end
@@ -25,6 +26,7 @@ end
 
 local function go_dn(event) 
   anim.next()
+  vocabolario.set(anim.counter)
   if (anim.counter >= anim.limit) then
     arrow_dn.hide()
   end
@@ -53,5 +55,5 @@ function colonna:createScene( event )
 end
 
 colonna:addEventListener( "createScene" , colonna )
-
+colonna.name ="colonna"
 return colonna
