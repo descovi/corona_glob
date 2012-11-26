@@ -1,5 +1,4 @@
 local Vocabolario = {}
-local inspect = require 'inspect'
 
 Vocabolario.newSprite = function()
 
