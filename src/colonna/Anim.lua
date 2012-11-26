@@ -40,7 +40,6 @@ Anim.newSprite = function()
     anim.sprite:play()
   end 
   function anim.prev()
-    print(anim.counter)
     if (anim.counter > 1 ) then
       anim.counter = anim.counter -1
       anim.group:remove(anim.sprite)
@@ -48,7 +47,6 @@ Anim.newSprite = function()
     end
   end
   function anim.next()
-    print(anim.counter)
     if (anim.counter < anim.limit) then  
       anim.counter = anim.counter+1
       anim.group:remove(anim.sprite)
@@ -81,7 +79,6 @@ Anim.newSprite = function()
     end
   end
   anim.load_image()
-
   return anim
 end
 
