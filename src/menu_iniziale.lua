@@ -2,7 +2,7 @@ require 'src.utils.button_to_go'
 
 local storyboard = require ( "storyboard" )
 local menu_iniziale = storyboard.newScene()
-
+local movieclip = require('src.utils.movieclip')
 local counter = 1
 
 local vocali = {"a","e","i","o","u"}
@@ -11,24 +11,28 @@ local group
 function create_globulo( file_name , vocale)
   local x_pos = {0, 100, 200, 300, 400, 0, 100, 200, 300, 400}
   local y_pos = {350,150}
-  local globulo_size = 100
+  local globulo_size = 150
   -- dati
   local path = 'media/menu_iniziale/'
   local end_path = '.png'
-  local final_path = path .. file_name .. end_path
-  local globulo = display.newImage(final_path)
+  local final_path = path .. file_name .. "/1".. end_path
+  anim_list = {}
+  for i=1,24 do
+    anim_list[i] = string.gsub (final_path, "1", i) 
+  end
+  local globulo = movieclip.newAnim(anim_list)
   -- posizionamento
   globulo.width  = globulo_size
   globulo.height = globulo_size
-
-  local pos_x = x_pos[counter]*2
+  local pos_x = (x_pos[counter]*2) - 50
   globulo.x = pos_x + globulo_size
   if counter > 5 then
-    globulo.y = y_pos[1]
-  else
     globulo.y = y_pos[2]
+  else
+    globulo.y = y_pos[1]
   end
   globulo:addEventListener('tap',play_sound)
+  globulo:addEventListener('tap',play_anim)
   counter = counter+1
   group:insert(globulo)
   return globulo
@@ -37,6 +41,9 @@ end
 function play_sound(event)
   local url = event.target.audio_url
   audio.play( url ) 
+end
+function play_anim(event)
+  event.target:play({loop=1})
 end
 
 -- imposta un evento che deriva da utils.button_to_go

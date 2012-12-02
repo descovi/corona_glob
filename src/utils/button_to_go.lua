@@ -1,7 +1,7 @@
 function create_button_to_go(globulo, vocale)
   local cerchio_container = display.newGroup()
   local cerchio = display.newCircle(globulo.x, 600, 30)
-  local testo = display.newText(vocale, cerchio.x-30, cerchio.y-14, "Courier New", 100)
+  local testo = display.newText(vocale, cerchio.x-30, cerchio.y-14, "Hiragino Maru Gothic Pro", 100)
   testo:setTextColor(255, 255, 255)
   testo:setReferencePoint( display.CenterLeftReferencePoint )
   cerchio:setFillColor(0, 0, 0, 0)
