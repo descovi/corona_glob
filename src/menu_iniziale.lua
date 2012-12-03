@@ -14,11 +14,10 @@ function create_globulo( file_name , vocale)
   local globulo_size = 150
   -- dati
   local path = 'media/menu_iniziale/'
-  local end_path = '.png'
-  local final_path = path .. file_name .. "/1".. end_path
+  local final_path = path .. file_name .. "-150/1.png"
   anim_list = {}
   for i=1,24 do
-    anim_list[i] = string.gsub (final_path, "1", i) 
+    anim_list[i] = string.gsub (final_path, "1.png", i..".png") 
   end
   local globulo = movieclip.newAnim(anim_list)
   -- posizionamento
