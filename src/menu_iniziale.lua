@@ -3,11 +3,11 @@ require 'src.utils.button_to_go'
 local storyboard = require ( "storyboard" )
 local menu_iniziale = storyboard.newScene()
 local movieclip = require('src.utils.movieclip')
-local counter = 1
 
 local vocali = {"a","e","i","o","u"}
 local group
 
+local counter = 1
 function create_globulo( file_name , vocale)
   local x_pos = {0, 100, 200, 300, 400, 0, 100, 200, 300, 400}
   local y_pos = {350,150}

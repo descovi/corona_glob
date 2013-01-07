@@ -60,7 +60,7 @@ end
 
 function create_lettera_lunga()
   lettera_lunga = create_lettera("media/menu_iniziale/long-".. _G.vocale .."/1.png","_L")
-  lettera_lunga.x = display.contentWidth / 2 - 250
+  lettera_lunga.x = display.contentWidth / 2 + 250
   create_button_to_go(lettera_lunga,_G.vocale)
   lettera_lunga.cerchio_container:addEventListener("tap", go_to_confronto_lunga)
 end
@@ -68,7 +68,7 @@ end
 function create_lettera_corta()
   -- CORTA
   lettera_corta = create_lettera( "media/menu_iniziale/short-".._G.vocale.."/1.png","_S")
-  lettera_corta.x = display.contentWidth / 2 + 250 
+  lettera_corta.x = display.contentWidth / 2 - 250 
   create_button_to_go(lettera_corta,_G.vocale)
   lettera_corta.cerchio_container:addEventListener("tap", go_to_confronto_corto)
 end
