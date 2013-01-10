@@ -39,7 +39,10 @@ function play_sound(event)
   audio.play( url ) 
 end
 function play_anim(event)
-  transition.to(rect, {time=1000, alpha=0})
+  y_start = event.target.y
+  transition.to(event.target, { time=400, y=y_start+10, transition })
+  transition.to(event.target, { time=400, y=y_start-10, delay=400, transition})
+  transition.to(event.target, { time=400, y=y_start, delay=800 })
 end
 
 -- imposta un evento che deriva da utils.button_to_go
