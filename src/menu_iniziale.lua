@@ -2,38 +2,35 @@ require 'src.utils.button_to_go'
 
 local storyboard = require ( "storyboard" )
 local menu_iniziale = storyboard.newScene()
-local movieclip = require('src.utils.movieclip')
 
 local vocali = {"a","e","i","o","u"}
 local group
+local group_1 = display.newGroup()
+local group_2 = display.newGroup()
 
 local counter = 1
+local y_pos = {350,150}
+
 function create_globulo( file_name , vocale)
   local x_pos = {0, 100, 200, 300, 400, 0, 100, 200, 300, 400}
-  local y_pos = {350,150}
   local globulo_size = 150
   -- dati
   local path = 'media/menu_iniziale/'
   local final_path = path .. file_name .. "-150/1.png"
-  anim_list = {}
-  for i=1,24 do
-    anim_list[i] = string.gsub (final_path, "1.png", i..".png") 
-  end
-  local globulo = movieclip.newAnim(anim_list)
+  local globulo = display.newImage(final_path)
   -- posizionamento
   globulo.width  = globulo_size
   globulo.height = globulo_size
   local pos_x = (x_pos[counter]*2) - 50
   globulo.x = pos_x + globulo_size
   if counter > 5 then
-    globulo.y = y_pos[2]
+    group_1:insert(globulo)
   else
-    globulo.y = y_pos[1]
+    group_2:insert(globulo)
   end
   globulo:addEventListener('tap',play_sound)
   globulo:addEventListener('tap',play_anim)
   counter = counter+1
-  group:insert(globulo)
   return globulo
 end
 
@@ -42,7 +39,7 @@ function play_sound(event)
   audio.play( url ) 
 end
 function play_anim(event)
-  event.target:play({loop=1})
+  transition.to(rect, {time=1000, alpha=0})
 end
 
 -- imposta un evento che deriva da utils.button_to_go
@@ -56,6 +53,10 @@ end
 function menu_iniziale:createScene( event )
 
   group = self.view
+  group:insert(group_1)
+  group:insert(group_2)
+  group_1.y = 50
+  group_2.y = 250
 
   -- Loading sound
   local path_audio = 'media/audio/vocali/'
@@ -72,26 +73,27 @@ function menu_iniziale:createScene( event )
 
 
   -- LONG
+  y_pos_letter = 300
   -- a
   a_long = create_globulo('long-a',vocali[1])
   a_long.audio_url = a_l
-  create_button_to_go(a_long, vocali[1])
+  create_button_to_go(a_long, vocali[1], y_pos_letter)
   -- e
   e_long = create_globulo('long-e',vocali[2])
   e_long.audio_url = e_l
-  create_button_to_go(e_long, vocali[2])
+  create_button_to_go(e_long, vocali[2], y_pos_letter)
   -- i
   i_long = create_globulo('long-i',vocali[3]) 
   i_long.audio_url = i_l
-  create_button_to_go(i_long, vocali[3])
+  create_button_to_go(i_long, vocali[3], y_pos_letter)
   -- o
   o_long = create_globulo('long-o',vocali[4])
   o_long.audio_url = o_l
-  create_button_to_go(o_long, vocali[4])
+  create_button_to_go(o_long, vocali[4], y_pos_letter)
   -- u
   u_long = create_globulo('long-u',vocali[5])
   u_long.audio_url = u_l
-  create_button_to_go(u_long, vocali[5])
+  create_button_to_go(u_long, vocali[5], y_pos_letter)
 
   -- SHORT
   -- a
