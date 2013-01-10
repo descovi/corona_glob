@@ -9,7 +9,7 @@ _G.combinazione = "a_e"
 -- Create a storyboard scene for this module
 local scene = storyboard.newScene()
 storyboard.isDebug = true
-storyboard.gotoScene( "src.game" )
+storyboard.gotoScene( "src.colonna" )
 
 local gurgle = audio.loadSound('media/audio/GURGLE.wav')
 --audio.play( gurgle )

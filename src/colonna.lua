@@ -10,6 +10,8 @@ local arrow_up    = Arrow.newSprite()
 local arrow_dn    = Arrow.newSprite()
 local vocabolario = Vocabolario.newSprite()
 local anim        = Anim.newSprite()
+local gioca       = display.newText("gioca",100,480,"Hiragino Maru Gothic Pro",40)
+
 
 local function go_bk(event) 
   Storyboard.gotoScene( "src.scegli_combinazione" ) 
@@ -21,6 +23,7 @@ local function go_up(event)
   if (anim.counter <= 1) then
     arrow_up.hide()
   end
+  gioca.isVisible = false
   arrow_dn.show()
 end
 
@@ -29,8 +32,13 @@ local function go_dn(event)
   vocabolario.set(anim.counter)
   if (anim.counter >= anim.limit) then
     arrow_dn.hide()
+    gioca.isVisible = true
   end
   arrow_up.show()
+end
+
+local function load_game()
+  Storyboard.gotoScene("src.game")
 end
 
 function colonna:createScene( event )
@@ -52,6 +60,11 @@ function colonna:createScene( event )
   arrow_up.hide()
   arrow_up.y = 20
   arrow_dn.y = display.contentHeight - arrow_dn.height - 20
+  gioca.x = arrow_dn.x + 80
+  gioca.y = arrow_dn.y + 100
+  gioca.isVisible = false
+  self.view:insert(gioca)
+  gioca:addEventListener("tap", load_game)
 end
 
 colonna:addEventListener( "createScene" , colonna )

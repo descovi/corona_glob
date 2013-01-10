@@ -12,14 +12,15 @@ local globulo_scelto
 local score = 0
 local punteggio = display.newText("0", 100,350,"Hiragino Maru Gothic Pro",40)
 local ri_ascolta = display.newText("ascolta di nuovo", 380,350,"Hiragino Maru Gothic Pro",40)
-local short = display.newText("short", 100,240,"Hiragino Maru Gothic Pro",40)
-local long = display.newText("long", 100,480,"Hiragino Maru Gothic Pro",40)
+local short = display.newText("short", 830,140,"Hiragino Maru Gothic Pro",40)
+local long = display.newText("long", 830,580,"Hiragino Maru Gothic Pro",40)
 local audio_right= audio.loadSound("media/audio/right.mp3")
 local audio_wrong = audio.loadSound("media/audio/wrong.mp3")
 -- Loading sound
 function choose_random_globulo_and_play_audio()
-  print "pulsantone clicked!!"
-  globulo_scelto = all_globuli[ math.random(#all_globuli) ]
+  
+  globulo_scelto = all_globuli[math.random(#all_globuli)]
+  print("NEW RANDOM LETTER !! -->"..globulo_scelto.vocale)
   play_audio_globulo_attuale()
 end
 function play_audio_globulo_attuale()

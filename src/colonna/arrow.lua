@@ -23,7 +23,7 @@ Arrow.newSprite = function()
   function group.hide()
     myRectangle.alpha = 1
   end
-  group:addEventListener("touch", group)
+  group:addEventListener("tap", group)
   group.x = display.contentWidth / 2 - group.width / 2
   return group
 end
