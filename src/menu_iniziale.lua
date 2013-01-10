@@ -40,9 +40,11 @@ function play_sound(event)
 end
 function play_anim(event)
   y_start = event.target.y
-  transition.to(event.target, { time=400, y=y_start+10, transition })
-  transition.to(event.target, { time=400, y=y_start-10, delay=400, transition})
-  transition.to(event.target, { time=400, y=y_start, delay=800 })
+  difference = 20
+  _time = 300
+  transition.to(event.target, { time=_time, y=y_start+difference, transition })
+  transition.to(event.target, { time=_time, y=y_start-difference, delay=_time, transition})
+  transition.to(event.target, { time=_time, y=y_start, delay=_time*2 })
 end
 
 -- imposta un evento che deriva da utils.button_to_go
