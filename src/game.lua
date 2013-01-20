@@ -11,14 +11,21 @@ local punteggio
 local globulo_scelto
 local score = 0
 local punteggio = display.newText("0", 100,350,"Hiragino Maru Gothic Pro",40)
-local ri_ascolta = display.newText("ascolta di nuovo", 380,350,"Hiragino Maru Gothic Pro",40)
+--local ri_ascolta = display.newText("ascolta di nuovo", 380,350,"Hiragino Maru Gothic Pro",40)
 local short = display.newText("short", 830,140,"Hiragino Maru Gothic Pro",40)
 local long = display.newText("long", 830,580,"Hiragino Maru Gothic Pro",40)
 local audio_right= audio.loadSound("media/audio/right.mp3")
 local audio_wrong = audio.loadSound("media/audio/wrong.mp3")
+
+local tentativo_debug = display.newText("3", 200, 350, "Hiragino Maru Gothic Pro", 40)
+local tentativi_rimasti = 3
+local blocca_interazione = false
+
 -- Loading sound
 function choose_random_globulo_and_play_audio()
-  
+  blocca_interazione = false
+  tentativi_rimasti = 3
+  tentativo_debug.text = tentativi_rimasti
   globulo_scelto = all_globuli[math.random(#all_globuli)]
   print("NEW RANDOM LETTER !! -->"..globulo_scelto.vocale)
   play_audio_globulo_attuale()
@@ -27,32 +34,39 @@ function play_audio_globulo_attuale()
   audio.play(globulo_scelto.audio)
 end
 
-local blocca_interazione = false
-
 function fx_true_or_right_handler(event)
-  choose_random_globulo_and_play_audio()
+  tentativi_rimasti = tentativi_rimasti -1
+  if tentativi_rimasti == 0 then
+    tentativo_debug.text = tentativi_rimasti
+    choose_random_globulo_and_play_audio()
+  else
+    tentativo_debug.text = tentativi_rimasti
+    play_audio_globulo_attuale()
+  end
   blocca_interazione = false
 end
 
 function answer_clicked(event)
-  blocca_interazione = true
-  print("- obbiettivo:")
-  print(globulo_scelto.vocale)
-  print("- scelto:")
-  print(event.target.vocale)
-  print(" ")
-  if globulo_scelto == event.target then
-    print "giusto!"
-    score = score+1
-    audio.play(audio_right, {onComplete=fx_true_or_right_handler })
-    punteggio.text = score
-  else
-    print "cacca!"
-    if score > 0 then
-      score = score-1
+  if blocca_interazione == false then
+    blocca_interazione = true
+    print("- obbiettivo:")
+    print(globulo_scelto.vocale)
+    print("- scelto:")
+    print(event.target.vocale)
+    print(" ")
+    if globulo_scelto == event.target then
+      print "giusto!"
+      score = score+1
+      audio.play(audio_right, {onComplete=choose_random_globulo_and_play_audio })
+      punteggio.text = score
+    else
+      print "cacca!"
+      if score > 0 then
+        score = score-1
+      end
+      audio.play(audio_wrong, {onComplete=fx_true_or_right_handler })
+      punteggio.text = score
     end
-    audio.play(audio_wrong, {onComplete=fx_true_or_right_handler })
-    punteggio.text = score
   end
 end
 
@@ -104,7 +118,6 @@ function game:createScene(event)
   fila_short.y = y_pos[2]
   fila_long.y = y_pos[1]
   crea_pulsantone()
-  ri_ascolta:addEventListener("tap", play_audio_globulo_attuale)
 end
 game:addEventListener( "createScene", game_created )
 
