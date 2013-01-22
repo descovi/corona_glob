@@ -2,23 +2,35 @@ local storyboard = require ( "storyboard" )
 local game = storyboard.newScene()
 
 local vocali = {"a","e","i","o","u"}
-
 local x_pos = {0, 100, 200, 300, 400}
 local y_pos = {550,100}
 local all_globuli = {}
 local path = 'media/menu_iniziale/'
-local punteggio
+
 local globulo_scelto
 local score = 0
+
+-- punteggio / score
 local punteggio = display.newText("0", 100,350,"Hiragino Maru Gothic Pro",40)
---local ri_ascolta = display.newText("ascolta di nuovo", 380,350,"Hiragino Maru Gothic Pro",40)
 local short = display.newText("short", 830,140,"Hiragino Maru Gothic Pro",40)
 local long = display.newText("long", 830,580,"Hiragino Maru Gothic Pro",40)
+
+-- punteggio massimo / record
+local record_group = display.newGroup()
+local punteggio_massimo = 0
+local record_label = display.newText(record_group,"record", 0, 0, "Hiragino Maru Gothic Pro", 40)
+local record = display.newText(record_group,"0", record_label.x + 90, 0, "Hiragino Maru Gothic Pro", 40)
+
+-- audio - right - wrong
 local audio_right= audio.loadSound("media/audio/right.mp3")
 local audio_wrong = audio.loadSound("media/audio/wrong.mp3")
 
+-- tentativi
 local tentativo_debug = display.newText("3", 200, 350, "Hiragino Maru Gothic Pro", 40)
+tentativo_debug.alpha = 0
 local tentativi_rimasti = 3
+
+-- blocco
 local blocca_interazione = false
 
 -- Loading sound
@@ -57,6 +69,10 @@ function answer_clicked(event)
     if globulo_scelto == event.target then
       print "giusto!"
       score = score+1
+      if score > punteggio_massimo then
+        punteggio_massimo = score
+        record.text = punteggio_massimo
+      end
       audio.play(audio_right, {onComplete=choose_random_globulo_and_play_audio })
       punteggio.text = score
     else
