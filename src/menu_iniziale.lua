@@ -53,6 +53,11 @@ function go_to(event)
   storyboard.removeScene("src.confronto")
   storyboard.gotoScene("src.confronto")
 end
+local ascolta_tutti = function (event)
+  print("dimmi che lo farai")
+  
+  
+end
 
 --Create the scene
 function menu_iniziale:createScene( event )
@@ -78,7 +83,7 @@ function menu_iniziale:createScene( event )
 
 
   -- LONG
-  y_pos_letter = 300
+  y_pos_letter = 360
   -- a
   a_long = create_globulo('long-a',vocali[1])
   a_long.audio_url = a_l
@@ -117,6 +122,9 @@ function menu_iniziale:createScene( event )
   u_short = create_globulo('short-u',vocali[5])
   u_short.audio_url = u_s
 
+  -- ascolta tutti
+  local ascolta_tutti_label = display.newText("ascolta tutti",display.contentWidth/2-150,470,"Hiragino Maru Gothic Pro",50)
+  ascolta_tutti_label:addEventListener("tap",ascolta_tutti)
 end
 
 --Add the createScene listener
