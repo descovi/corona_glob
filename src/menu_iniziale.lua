@@ -53,10 +53,21 @@ function go_to(event)
   storyboard.removeScene("src.confronto")
   storyboard.gotoScene("src.confronto")
 end
-local ascolta_tutti = function (event)
-  print("dimmi che lo farai")
-  
-  
+
+-- timeline audio
+local audio_anim_number = 1
+
+local audio_play_actual_number = function()
+  audio.play(group_1[audio_anim_number].audio_url, {onComplete=next_audio})
+end
+
+local next_audio = function(event)
+  audio_anim_number = audio_anim_number+1
+  audio_play_actual_number()
+end
+
+local ascolta_tutti_clicked = function (event)
+  audio.play(group_1[1].audio_url, {onComplete=next_audio}) 
 end
 
 --Create the scene
@@ -124,7 +135,7 @@ function menu_iniziale:createScene( event )
 
   -- ascolta tutti
   local ascolta_tutti_label = display.newText("ascolta tutti",display.contentWidth/2-150,470,"Hiragino Maru Gothic Pro",50)
-  ascolta_tutti_label:addEventListener("tap",ascolta_tutti)
+  ascolta_tutti_label:addEventListener("tap",ascolta_tutti_clicked)
 end
 
 --Add the createScene listener
