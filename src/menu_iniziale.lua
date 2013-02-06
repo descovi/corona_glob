@@ -7,9 +7,14 @@ local vocali = {"a","e","i","o","u"}
 local group
 local group_1 = display.newGroup()
 local group_2 = display.newGroup()
-
+local contenitore_funzioni
 local counter = 1
 local y_pos = {350,150}
+local all_globuli = {}
+
+local ascolta_tutti_label = {}
+
+local animazione_partita = false
 
 function create_globulo( file_name , vocale)
   local x_pos = {0, 100, 200, 300, 400, 0, 100, 200, 300, 400}
@@ -28,6 +33,8 @@ function create_globulo( file_name , vocale)
   else
     group_2:insert(globulo)
   end
+  table.insert(all_globuli,globulo)
+  
   globulo:addEventListener('tap',play_sound)
   globulo:addEventListener('tap',play_anim)
   counter = counter+1
@@ -35,17 +42,29 @@ function create_globulo( file_name , vocale)
 end
 
 function play_sound(event)
-  local url = event.target.audio_url
-  audio.play( url ) 
+  if animazione_partita == false then
+    local url = event.target.audio_url
+    audio.play( url ) 
+  end
 end
-function play_anim(event)
-  y_start = event.target.y
+function anim_completed(event)
+  animazione_partita = false
+end
+function go_anim(target)
+  y_start = target.y
   difference = 20
   _time = 300
-  transition.to(event.target, { time=_time, y=y_start+difference, transition })
-  transition.to(event.target, { time=_time, y=y_start-difference, delay=_time, transition})
-  transition.to(event.target, { time=_time, y=y_start, delay=_time*2 })
+  transition.to(target, { time=_time, y=y_start+difference, transition })
+  transition.to(target, { time=_time, y=y_start-difference, delay=_time, transition})
+  transition.to(target, { time=_time, y=y_start, delay=_time*2, onComplete=anim_completed })
 end
+function play_anim(event)
+  if animazione_partita == false then
+    animazione_partita = true
+    go_anim(event.target)
+  end
+end
+
 
 -- imposta un evento che deriva da utils.button_to_go
 function go_to(event)
@@ -55,19 +74,23 @@ function go_to(event)
 end
 
 -- timeline audio
-local audio_anim_number = 1
-local audio_play_actual_number = function()
-  print("audio_play_actual_number")
-  audio.play(group_1[audio_anim_number].audio_url, {onComplete=next_audio})
-end
-local next_audio = function(event)
-  print("next audio")
+local audio_anim_number = 0
+local function onSoundComplete(event)
   audio_anim_number = audio_anim_number+1
-  audio_play_actual_number()
+  if audio_anim_number < 11 then
+    audio.play(all_globuli[audio_anim_number].audio_url, {onComplete=onSoundComplete})
+    go_anim(all_globuli[audio_anim_number])
+  else
+    audio_anim_number = 0
+  end
 end
 -- quando si clicca
-local ascolta_tutti = function (event)
-  audio.play(group_1[1].audio_url, {onComplete=next_audio}) 
+local function ascolta_tutti(event)
+  if audio_anim_number == 0 then
+    audio_anim_number = 1
+    audio.play(all_globuli[audio_anim_number].audio_url, {onComplete=onSoundComplete})
+    go_anim(all_globuli[audio_anim_number]) 
+  end
 end
 
 --Create the scene
@@ -134,7 +157,7 @@ function menu_iniziale:createScene( event )
   u_short.audio_url = u_s
 
   -- ascolta tutti
-  local ascolta_tutti_label = display.newText("ascolta tutti",display.contentWidth/2-150,470,"Hiragino Maru Gothic Pro",50)
+  ascolta_tutti_label = display.newText(group,"ascolta tutti",display.contentWidth/2-150,470,"Hiragino Maru Gothic Pro",50)
   ascolta_tutti_label:addEventListener("tap",ascolta_tutti)
 end
 
