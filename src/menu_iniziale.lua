@@ -51,9 +51,10 @@ function anim_completed(event)
   animazione_partita = false
 end
 function go_anim(target)
+  print("go_anim")
   y_start = target.y
   difference = 20
-  _time = 300
+  _time = 500
   transition.to(target, { time=_time, y=y_start+difference, transition })
   transition.to(target, { time=_time, y=y_start-difference, delay=_time, transition})
   transition.to(target, { time=_time, y=y_start, delay=_time*2, onComplete=anim_completed })
