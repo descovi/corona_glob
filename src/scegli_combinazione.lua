@@ -119,6 +119,7 @@ function scegli_combinazione:createScene( event )
   -- torna indietro
   local torna_indietro = button_to_go_back()
   torna_indietro:addEventListener("tap", goto_confronto)
+  group:insert(torna_indietro)
 end
   
 scegli_combinazione:addEventListener( "createScene", scene )

@@ -158,7 +158,7 @@ function menu_iniziale:createScene( event )
   u_short.audio_url = u_s
 
   -- ascolta tutti
-  ascolta_tutti_label = display.newImage(group,"media/ascolta_tutti.png")--display.newText(group,"ascolta tutti",display.contentWidth/2-150,470,"Hiragino Maru Gothic Pro",50)
+  ascolta_tutti_label = display.newImage(group,"media/ascolta_tutti.png")
   ascolta_tutti_label:addEventListener("tap",ascolta_tutti)
   local size = 200
   ascolta_tutti_label.width = size
