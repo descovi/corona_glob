@@ -44,16 +44,13 @@ end
 function colonna:createScene( event )
   self.view:insert(background)
   self.view:insert(anim.group)
-  self.view:insert(back_btn)
   self.view:insert(arrow_up)
   self.view:insert(arrow_dn)
   self.view:insert(vocabolario)
+  self.view:insert(gioca)
+  self.view:insert(back_btn)
   back_btn:addEventListener("tap", go_bk)
-  back_btn.alpha = 0.01
-  back_btn.width = 200
-  back_btn.height = 200
-  back_btn.y = 100
-  back_btn.x = back_btn.x - 45
+  back_btn.alpha = 1
   arrow_dn:addEventListener("tap", go_dn)
   arrow_up:addEventListener("tap", go_up)
   arrow_dn.show()
@@ -63,7 +60,6 @@ function colonna:createScene( event )
   gioca.x = arrow_dn.x + 80
   gioca.y = arrow_dn.y + 100
   gioca.isVisible = false
-  self.view:insert(gioca)
   gioca:addEventListener("tap", load_game)
 end
 

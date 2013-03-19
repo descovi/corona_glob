@@ -1,5 +1,5 @@
-local storyboard = require ( "storyboard" )
-local game = storyboard.newScene()
+local Storyboard = require("storyboard")
+local game = Storyboard.newScene()
 
 local vocali = {"a","e","i","o","u"}
 local x_pos = {0, 100, 200, 300, 400}
@@ -9,6 +9,7 @@ local path = 'media/menu_iniziale/'
 
 local globulo_scelto
 local score = 0
+local back_btn = button_to_go_back()
 
 -- punteggio / score
 local punteggio = display.newText("0", 100,350,"Hiragino Maru Gothic Pro",40)
@@ -126,14 +127,27 @@ function crea_pulsantone()
   pulsantone.x = display.contentWidth - pulsantone.width
   pulsantone.y = display.contentHeight /2
   choose_random_globulo_and_play_audio()
+  return pulsantone
+end
+
+local function go_bk(event) 
+  Storyboard.gotoScene( "src.colonna" )
 end
 
 function game:createScene(event)
   fila_short = crea_fila("short-")
   fila_long = crea_fila("long-")
+  self.view:insert(fila_short)
+  self.view:insert(fila_long)
+  self.view:insert(punteggio)
+  self.view:insert(short)
+  self.view:insert(long)
+  self.view:insert(record_group)
   fila_short.y = y_pos[2]
   fila_long.y = y_pos[1]
-  crea_pulsantone()
+  self.view:insert(crea_pulsantone())
+  
+  back_btn:addEventListener("tap", go_bk)
 end
 game:addEventListener( "createScene", game_created )
 

@@ -4,7 +4,7 @@ button_to_go_back = function ()
   local margin    = 20
   graphics.width  = size_wh
   graphics.height = size_wh
-  graphics.x = display.contentWidth - (size_wh/2) - margin
+  graphics.x = display.contentWidth - (graphics.width/2) - margin
   graphics.y = size_wh
   if (nascondi) then
     graphics.alpha = 0
