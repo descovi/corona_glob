@@ -79,7 +79,7 @@ Anim.newSprite = function()
     else
       anim.toogle = true
       audio.play( anim.audio_2 , {
-        duration=600,
+        duration=800,
         onComplete=anim.audio_ended_2_to_1
       })
       anim.sprite:setSequence("counter")
@@ -93,8 +93,9 @@ Anim.newSprite = function()
     elseif event.phase == "ended" then
       audio.play( anim.audio_2 )
       local thisSprite = event.target
+      anim.toogle = false
       thisSprite:setSequence( "counter" )
-      thisSprite:play()
+      -- thisSprite:play()
       anim.sprite:removeEventListener( "sprite", anim.intro )
     end
   end
