@@ -1,5 +1,7 @@
 local Anim = {}
+
 Anim.newSprite = function()
+  
   local anim = {}
   anim.totalFrames = 11
   anim.sheet_options  = { width=1024, height=256, numFrames=anim.totalFrames }
@@ -39,6 +41,7 @@ Anim.newSprite = function()
     anim.sprite:addEventListener("tap", anim.go_next_anim)
     anim.sprite:play()
   end 
+  
   function anim.prev()
     if (anim.counter > 1 ) then
       anim.counter = anim.counter -1
@@ -46,6 +49,7 @@ Anim.newSprite = function()
       anim.load_image()
     end
   end
+  
   function anim.next()
     if (anim.counter < anim.limit) then  
       anim.counter = anim.counter+1
@@ -53,15 +57,31 @@ Anim.newSprite = function()
       anim.load_image()
     end
   end
+
+  function anim.audio_ended_1_to_2(event)
+    audio.play( anim.audio_2 )
+  end
+  function anim.audio_ended_2_to_1(event)
+    audio.play( anim.audio_1 )
+  end
+
   function anim.go_next_anim(event)
     if anim.toogle == true then
       anim.toogle = false
-      audio.play( anim.audio_1 )
       anim.sprite:setSequence( "forward" )
       anim.sprite:play()
+
+      audio.play( anim.audio_1 , {
+        duration=800,
+        onComplete=anim.audio_ended_1_to_2
+      })
+
     else
       anim.toogle = true
-      audio.play( anim.audio_2 )
+      audio.play( anim.audio_2 , {
+        duration=600,
+        onComplete=anim.audio_ended_2_to_1
+      })
       anim.sprite:setSequence("counter")
       anim.sprite:play()
     end
@@ -78,6 +98,7 @@ Anim.newSprite = function()
       anim.sprite:removeEventListener( "sprite", anim.intro )
     end
   end
+
   anim.load_image()
   return anim
 end
