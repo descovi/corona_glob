@@ -1,3 +1,5 @@
+inspect = require 'src.utils.inspect.inspect'
+
 require ('src.scegli_combinazione')
 require ('src.confronto')
 local storyboard = require "storyboard"
