@@ -3,24 +3,31 @@ local game = Storyboard.newScene()
 
 local vocali = {"a","e","i","o","u"}
 local x_pos = {0, 100, 200, 300, 400}
-local y_pos = {550,100}
 local all_globuli = {}
 local path = 'media/menu_iniziale/'
 
 local globulo_scelto
 local score = 0
 local back_btn = button_to_go_back()
+back_btn.y = 50
+back_btn.width = 60
+back_btn.height = 60
 
--- punteggio / score
-local punteggio = display.newText("0", 100,350,"Hiragino Maru Gothic Pro",40)
-local short = display.newText("short", 830,140,"Hiragino Maru Gothic Pro",40)
-local long = display.newText("long", 830,580,"Hiragino Maru Gothic Pro",40)
+-- short long
+local short = display.newText("short", 830,140,"Hiragino Maru Gothic Pro",30)
+local long = display.newText("long", 830,580,"Hiragino Maru Gothic Pro",30)
 
 -- punteggio massimo / record
-local record_group = display.newGroup()
-local punteggio_massimo = 0
-local record_label = display.newText(record_group,"record", 0, 0, "Hiragino Maru Gothic Pro", 40)
-local record = display.newText(record_group,"0", record_label.x + 90, 0, "Hiragino Maru Gothic Pro", 40)
+local size_table_score        = 20
+local font_table_score        = "Hiragino Maru Gothic Pro"
+local record_punteggio_group  = display.newGroup()
+record_punteggio_group.x      = 30 
+record_punteggio_group.y      = 20
+local punteggio_massimo       = 0
+local punteggio_label         = display.newText(record_punteggio_group, "score",  0,   0,  font_table_score, size_table_score)
+local punteggio               = display.newText(record_punteggio_group, "0",      90,  20, font_table_score, size_table_score)
+local record_label            = display.newText(record_punteggio_group, "record", 150, 0,  font_table_score, size_table_score)
+local record                  = display.newText(record_punteggio_group, "0",      220, 0,  font_table_score, size_table_score)
 
 -- audio - right - wrong
 local audio_right= audio.loadSound("media/audio/right.mp3")
@@ -95,7 +102,7 @@ function crea_fila(long_or_short)
     globo.x = x_pos[i]*1.5 + globo.width
     globo.vocale = long_or_short..vocali[i]
     -- label
-    local label = display.newText(vocali[i], 100,480,"Hiragino Maru Gothic Pro",40)
+    local label = display.newText(vocali[i], 100,480,"Hiragino Maru Gothic Pro",30)
     label.x = globo.x
     -- sound
     local path_audio = 'media/audio/vocali/'
@@ -119,13 +126,13 @@ function crea_fila(long_or_short)
 end
 
 function crea_pulsantone()
-  local size_pulsantone = 200
+  local size_pulsantone = 180
   pulsantone = display.newImage("media/menu_iniziale/long-a/1.png")
   pulsantone:addEventListener("tap", play_audio_globulo_attuale)
   pulsantone.width = size_pulsantone
   pulsantone.height = size_pulsantone
-  pulsantone.x = display.contentWidth - pulsantone.width
-  pulsantone.y = display.contentHeight /2
+  pulsantone.x = display.contentWidth /2 - pulsantone.width/4
+  pulsantone.y = display.contentHeight /2 +40
   choose_random_globulo_and_play_audio()
   return pulsantone
 end
@@ -137,15 +144,20 @@ end
 function game:createScene(event)
   fila_short = crea_fila("short-")
   fila_long = crea_fila("long-")
+  pulsantone = crea_pulsantone()
+  
+  self.view:insert(back_btn)
   self.view:insert(fila_short)
   self.view:insert(fila_long)
   self.view:insert(punteggio)
   self.view:insert(short)
   self.view:insert(long)
-  self.view:insert(record_group)
-  fila_short.y = y_pos[2]
-  fila_long.y = y_pos[1]
-  self.view:insert(crea_pulsantone())
+  self.view:insert(pulsantone)
+  self.view:insert(record_punteggio_group)
+  
+  fila_short.y = 140
+  fila_long.y = 570
+  
   
   back_btn:addEventListener("tap", go_bk)
 end
