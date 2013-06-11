@@ -11,8 +11,16 @@ function play_sound( event )
   audio.play( event.target.audio )
 end
 
+local function callNextFrame(target)
+  print("CIAO")
+   target:nextFrame()
+end
+
+
 function play_anim( event )
-  event.target:play({loop=1})
+  local myclosure = function() return callNextFrame( event.target ) end
+  timer.performWithDelay(100,myclosure,24)
+  -- event.target:play({loop=1})
 end
 
 function goto_menuiniziale(e)
@@ -27,7 +35,7 @@ end
 function go_to_confronto_lunga(event)
   _G.tipo = 'lunga'
   storyboard.removeScene("src.scegli_combinazione")
-  storyboard.gotoScene("src.scegli_combinazione") 
+  storyboard.gotoScene("src.scegli_combinazione")
 end
 
 function go_to_confronto_corto(event)
@@ -37,7 +45,7 @@ function go_to_confronto_corto(event)
 end
 
 local lettera_lunga
-local lettera_corta 
+local lettera_corta
 local size_pulsantoni = 500
 local group
 
@@ -51,7 +59,7 @@ function create_lettera(anim_path,audio_path)
   local long_audio_path = path_audio .. _G.vocale:upper() .. audio_path ..'.mp3'
   lettera.width = size_pulsantoni
   lettera.height = size_pulsantoni
-  lettera.y = display.contentHeight / 2 
+  lettera.y = display.contentHeight / 2
   lettera.audio = audio.loadSound( long_audio_path )
   lettera:addEventListener("tap", play_sound)
   lettera:addEventListener("tap", play_anim)
@@ -68,7 +76,7 @@ end
 function create_lettera_corta()
   -- CORTA
   lettera_corta = create_lettera( "media/menu_iniziale/short-".._G.vocale.."/1.png","_S")
-  lettera_corta.x = display.contentWidth / 2 - 250 
+  lettera_corta.x = display.contentWidth / 2 - 250
   create_button_to_go(lettera_corta,_G.vocale)
   lettera_corta.cerchio_container:addEventListener("tap", go_to_confronto_corto)
 end
