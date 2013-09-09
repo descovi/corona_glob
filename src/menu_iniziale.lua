@@ -47,18 +47,21 @@ function play_sound(event)
     audio.play( url ) 
   end
 end
+
 function anim_completed(event)
   animazione_partita = false
 end
+
 function go_anim(target)
   print("go_anim")
   y_start = target.y
   difference = 20
-  _time = 500
+  _time = 350
   transition.to(target, { time=_time, y=y_start+difference, transition })
   transition.to(target, { time=_time, y=y_start-difference, delay=_time, transition})
   transition.to(target, { time=_time, y=y_start, delay=_time*2, onComplete=anim_completed })
 end
+
 function play_anim(event)
   if animazione_partita == false then
     animazione_partita = true
@@ -85,6 +88,7 @@ local function onSoundComplete(event)
     audio_anim_number = 0
   end
 end
+
 -- quando si clicca
 local function ascolta_tutti(event)
   if audio_anim_number == 0 then
@@ -160,7 +164,7 @@ function menu_iniziale:createScene( event )
   -- ascolta tutti
   ascolta_tutti_label = display.newImage(group,"media/ascolta_tutti.png")
   ascolta_tutti_label:addEventListener("tap",ascolta_tutti)
-  local size = 200
+  local size = 100
   ascolta_tutti_label.width = size
   ascolta_tutti_label.height = size
   ascolta_tutti_label.x = 500
