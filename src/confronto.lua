@@ -8,7 +8,11 @@ local path_audio = 'media/audio/vocali/'
 local torna_indietro
 
 function play_sound( event )
-  audio.play( event.target.audio )
+  function listener()
+    audio.play( event.target.audio)
+  end
+  timer.performWithDelay( 500, listener )
+  
 end
 
 local function callNextFrame(target)
