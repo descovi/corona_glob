@@ -7,7 +7,6 @@ Anim.newSprite = function()
   anim.sheet_options  = { width=1024, height=256, numFrames=anim.totalFrames }
   anim.counter = 1
   anim.limit = 5
-  anim.toogle = true
   anim.current_combination = "/".._G.combinazione.."/"
   anim.group = display.newGroup()
 
@@ -37,9 +36,12 @@ Anim.newSprite = function()
     anim.group:insert(anim.sprite)
     anim.sprite.x = display.contentWidth / 2
     anim.sprite.y = display.contentHeight / 2
-    anim.sprite:addEventListener("sprite", anim.intro)
     anim.sprite:addEventListener("tap", anim.go_next_anim)
-    anim.sprite:play()
+    -- if you want add animation when enter you can uncomment this line
+    --- and change toogle from false to true
+    -- anim.sprite:addEventListener("sprite", anim.intro)
+    -- anim.sprite:play()
+    anim.toogle = true
   end 
   
   function anim.prev()
