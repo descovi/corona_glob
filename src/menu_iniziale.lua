@@ -1,10 +1,8 @@
 require 'src.utils.button_to_go'
 require 'src.menu_iniziale.manipulate_order'
 
-
 local storyboard = require ( "storyboard" )
 local menu_iniziale = storyboard.newScene()
-
 local vocali = {"a","e","i","o","u"}
 local group
 local group_1 = display.newGroup()
@@ -14,12 +12,8 @@ local y_pos = {350,150}
 local x_pos = {0, 100, 200, 300, 400, 0, 100, 200, 300, 400}
 local all_globuli = {}
 local all_globuli_order_inverted = {}
-
 local ascolta_tutti_label = {}
-
 local animazione_partita = false
-
-
 
 function create_globulo( file_name , vocale)
   local globulo_size = 150
@@ -126,7 +120,7 @@ function menu_iniziale:createScene( event )
 
 
   -- LONG
-  y_pos_letter = 360
+  y_pos_letter = 460
   -- a
   a_long = create_globulo('long-a',vocali[1])
   a_long.audio_url = a_l
