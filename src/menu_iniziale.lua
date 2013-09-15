@@ -1,23 +1,21 @@
 require 'src.utils.button_to_go'
+require 'src.menu_iniziale.manipulate_order'
 
 local storyboard = require ( "storyboard" )
 local menu_iniziale = storyboard.newScene()
-
 local vocali = {"a","e","i","o","u"}
 local group
 local group_1 = display.newGroup()
 local group_2 = display.newGroup()
-local contenitore_funzioni
 local counter = 1
 local y_pos = {350,150}
+local x_pos = {0, 100, 200, 300, 400, 0, 100, 200, 300, 400}
 local all_globuli = {}
-
+local all_globuli_order_inverted = {}
 local ascolta_tutti_label = {}
-
 local animazione_partita = false
 
 function create_globulo( file_name , vocale)
-  local x_pos = {0, 100, 200, 300, 400, 0, 100, 200, 300, 400}
   local globulo_size = 150
   -- dati
   local path = 'media/menu_iniziale/'
@@ -47,18 +45,21 @@ function play_sound(event)
     audio.play( url ) 
   end
 end
+
 function anim_completed(event)
   animazione_partita = false
 end
+
 function go_anim(target)
   print("go_anim")
   y_start = target.y
   difference = 20
-  _time = 500
+  _time = 350
   transition.to(target, { time=_time, y=y_start+difference, transition })
   transition.to(target, { time=_time, y=y_start-difference, delay=_time, transition})
   transition.to(target, { time=_time, y=y_start, delay=_time*2, onComplete=anim_completed })
 end
+
 function play_anim(event)
   if animazione_partita == false then
     animazione_partita = true
@@ -79,18 +80,19 @@ local audio_anim_number = 0
 local function onSoundComplete(event)
   audio_anim_number = audio_anim_number+1
   if audio_anim_number < 11 then
-    audio.play(all_globuli[audio_anim_number].audio_url, {onComplete=onSoundComplete})
-    go_anim(all_globuli[audio_anim_number])
+    audio.play(all_globuli_order_inverted[audio_anim_number].audio_url, {onComplete=onSoundComplete})
+    go_anim(all_globuli_order_inverted[audio_anim_number])
   else
     audio_anim_number = 0
   end
 end
+
 -- quando si clicca
 local function ascolta_tutti(event)
   if audio_anim_number == 0 then
     audio_anim_number = 1
-    audio.play(all_globuli[audio_anim_number].audio_url, {onComplete=onSoundComplete})
-    go_anim(all_globuli[audio_anim_number]) 
+    audio.play(all_globuli_order_inverted[audio_anim_number].audio_url, {onComplete=onSoundComplete})
+    go_anim(all_globuli_order_inverted[audio_anim_number]) 
   end
 end
 
@@ -118,7 +120,7 @@ function menu_iniziale:createScene( event )
 
 
   -- LONG
-  y_pos_letter = 360
+  y_pos_letter = 460
   -- a
   a_long = create_globulo('long-a',vocali[1])
   a_long.audio_url = a_l
@@ -160,11 +162,13 @@ function menu_iniziale:createScene( event )
   -- ascolta tutti
   ascolta_tutti_label = display.newImage(group,"media/ascolta_tutti.png")
   ascolta_tutti_label:addEventListener("tap",ascolta_tutti)
-  local size = 200
+  local size = 100
   ascolta_tutti_label.width = size
   ascolta_tutti_label.height = size
   ascolta_tutti_label.x = 500
   ascolta_tutti_label.y = 500
+
+  manipulate_order_invert_group(all_globuli, all_globuli_order_inverted)
 
 end
 

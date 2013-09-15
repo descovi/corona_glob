@@ -7,7 +7,6 @@ Anim.newSprite = function()
   anim.sheet_options  = { width=1024, height=256, numFrames=anim.totalFrames }
   anim.counter = 1
   anim.limit = 5
-  anim.toogle = true
   anim.current_combination = "/".._G.combinazione.."/"
   anim.group = display.newGroup()
 
@@ -29,17 +28,19 @@ Anim.newSprite = function()
     -- load image
     anim.sheet = graphics.newImageSheet(anim.path, anim.sheet_options)
     anim.sequence_data = {
-      { name="forward", start=1, count=anim.totalFrames, time=1000,  loopCount = 1}, 
-      { name="bounce",  start=1, count=anim.totalFrames, time=1000,  loopCount = 1, loopDirection = "bounce" },
-      { name="counter", frames= {11,10,9,8,7,6,5,4,3,2,1}, time=1000,  loopCount = 1}
+      { name="forward", start=1, count=anim.totalFrames, time=2000,  loopCount = 1}, 
+      { name="counter", frames= {11,10,9,8,7,6,5,4,3,2,1}, time=2000,  loopCount = 1}
     }
     anim.sprite = display.newSprite( anim.sheet, anim.sequence_data )
     anim.group:insert(anim.sprite)
     anim.sprite.x = display.contentWidth / 2
     anim.sprite.y = display.contentHeight / 2
-    anim.sprite:addEventListener("sprite", anim.intro)
     anim.sprite:addEventListener("tap", anim.go_next_anim)
-    anim.sprite:play()
+    -- if you want add animation when enter you can uncomment this line
+    --- and change toogle from false to true
+    -- anim.sprite:addEventListener("sprite", anim.intro)
+    -- anim.sprite:play()
+    anim.toogle = true
   end 
   
   function anim.prev()
@@ -72,14 +73,14 @@ Anim.newSprite = function()
       anim.sprite:play()
 
       audio.play( anim.audio_1 , {
-        duration=800,
+        duration=1600,
         onComplete=anim.audio_ended_1_to_2
       })
 
     else
       anim.toogle = true
       audio.play( anim.audio_2 , {
-        duration=800,
+        duration=1600,
         onComplete=anim.audio_ended_2_to_1
       })
       anim.sprite:setSequence("counter")
