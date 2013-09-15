@@ -7,6 +7,8 @@ Anim.newSprite = function()
   anim.sheet_options  = { width=1024, height=256, numFrames=anim.totalFrames }
   anim.counter = 1
   anim.limit = 5
+  anim.running = false
+  anim.timing = 500
   anim.current_combination = "/".._G.combinazione.."/"
   anim.group = display.newGroup()
 
@@ -28,14 +30,14 @@ Anim.newSprite = function()
     -- load image
     anim.sheet = graphics.newImageSheet(anim.path, anim.sheet_options)
     anim.sequence_data = {
-      { name="forward", start=1, count=anim.totalFrames, time=2000,  loopCount = 1}, 
-      { name="counter", frames= {11,10,9,8,7,6,5,4,3,2,1}, time=2000,  loopCount = 1}
+      { name="forward", start=1, count=anim.totalFrames, time=anim.timing,  loopCount = 1}, 
+      { name="counter", frames= {11,10,9,8,7,6,5,4,3,2,1}, time=anim.timing,  loopCount = 1}
     }
     anim.sprite = display.newSprite( anim.sheet, anim.sequence_data )
     anim.group:insert(anim.sprite)
     anim.sprite.x = display.contentWidth / 2
     anim.sprite.y = display.contentHeight / 2
-    anim.sprite:addEventListener("tap", anim.go_next_anim)
+    anim.sprite:addEventListener("tap", anim.sound_animation_sound)
     -- if you want add animation when enter you can uncomment this line
     --- and change toogle from false to true
     -- anim.sprite:addEventListener("sprite", anim.intro)
@@ -66,6 +68,59 @@ Anim.newSprite = function()
     audio.play( anim.audio_1 )
   end
 
+  function anim.go_forward()
+    audio.play( anim.audio_1 , {
+      duration=1000,
+      onComplete = function()
+        anim.toogle = false
+        anim.sprite:setSequence( "forward" )
+        anim.sprite:play()
+        timer.performWithDelay(anim.timing,anim.audio_ended_1_to_2)
+        timer.performWithDelay(anim.timing, 
+          function()
+            anim.running = false
+          end
+        )
+      end
+    })
+  end
+
+  function anim.go_backward()
+    audio.play( anim.audio_2 , {
+      duration=1000,
+      onComplete = function()
+        anim.toogle = true
+        anim.sprite:setSequence( "counter" )
+        anim.sprite:play()
+        timer.performWithDelay(anim.timing,anim.audio_ended_2_to_1)
+        timer.performWithDelay(anim.timing, 
+          function()
+            anim.running = false
+          end
+        )
+      end
+    })
+  end
+
+  -- ATTENZIONE !!!!
+  -- Sono a disposizione 2 anmazioni:
+  -- 1. sound animation sound / fa partire prima il suono, poi l'animazione puoi suoni
+  -- --------------------------------------------------------------------------------
+  function anim.sound_animation_sound()
+    if anim.running == false then
+      anim.running = true
+      if anim.toogle == true then
+        anim.go_forward()
+      else
+        anim.go_backward()
+      end
+    end
+  end
+
+
+
+  -- 2. go_next_anim / fa partire suono e animazione insieme.
+  -- --------------------------------------------------------------------------------
   function anim.go_next_anim(event)
     if anim.toogle == true then
       anim.toogle = false
@@ -87,6 +142,8 @@ Anim.newSprite = function()
       anim.sprite:play()
     end
   end
+
+  -- --------------------------------------------------------------------------------
 
   function anim.intro( event )
     if event.phase == "began" then
