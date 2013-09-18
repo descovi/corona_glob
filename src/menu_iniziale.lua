@@ -54,7 +54,7 @@ function go_anim(target)
   print("go_anim")
   y_start = target.y
   difference = 20
-  _time = 350
+  _time = 180
   transition.to(target, { time=_time, y=y_start+difference, transition })
   transition.to(target, { time=_time, y=y_start-difference, delay=_time, transition})
   transition.to(target, { time=_time, y=y_start, delay=_time*2, onComplete=anim_completed })

@@ -1,5 +1,6 @@
 local Storyboard = require("storyboard")
 local game = Storyboard.newScene()
+local movieclip = require('src.utils.movieclip')
 
 local vocali = {"a","e","i","o","u"}
 local x_pos = {0, 100, 200, 300, 400}
@@ -49,9 +50,25 @@ function choose_random_globulo_and_play_audio()
   globulo_scelto = all_globuli[math.random(#all_globuli)]
   print("NEW RANDOM LETTER !! -->"..globulo_scelto.vocale)
   play_audio_globulo_attuale()
+
 end
+
 function play_audio_globulo_attuale()
   audio.play(globulo_scelto.audio)
+  play_anim(pulsantone)
+end
+
+function play_anim(target)
+  if target ~= nil then
+    local myclosure = function() 
+      target:nextFrame()
+    end
+    timer.performWithDelay(5,myclosure,24)
+  end
+end
+
+function play_anim_globulo_attuale(event)
+  play_anim(event.target)
 end
 
 function fx_true_or_right_handler(event)
@@ -67,6 +84,7 @@ function fx_true_or_right_handler(event)
 end
 
 function answer_clicked(event)
+  
   if blocca_interazione == false then
     blocca_interazione = true
     print("- obbiettivo:")
@@ -74,6 +92,7 @@ function answer_clicked(event)
     print("- scelto:")
     print(event.target.vocale)
     print(" ")
+
     if globulo_scelto == event.target then
       print "giusto!"
       score = score+1
@@ -82,6 +101,7 @@ function answer_clicked(event)
         record.text = punteggio_massimo
       end
       audio.play(audio_right, {onComplete=choose_random_globulo_and_play_audio })
+      
       punteggio.text = score
     else
       print "cacca!"
@@ -92,6 +112,7 @@ function answer_clicked(event)
       punteggio.text = score
     end
   end
+
 end
 
 function crea_fila(long_or_short)
@@ -127,8 +148,15 @@ end
 
 function crea_pulsantone()
   local size_pulsantone = 180
-  pulsantone = display.newImage("media/menu_iniziale/long-a/1.png")
+  local anim_path = "media/menu_iniziale/long-a/1.png"
+  anim_list = {}
+  for i=1,24 do
+    anim_list[i] = string.gsub (anim_path, "1", i)
+  end
+  local pulsantone = movieclip.newAnim(anim_list)
+  -- pulsantone = display.newImage("media/menu_iniziale/long-a/1.png")
   pulsantone:addEventListener("tap", play_audio_globulo_attuale)
+  pulsantone:addEventListener("tap", play_anim_globulo_attuale)
   pulsantone.width = size_pulsantone
   pulsantone.height = size_pulsantone
   pulsantone.x = display.contentWidth /2 - pulsantone.width/4

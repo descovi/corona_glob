@@ -15,12 +15,10 @@ function play_sound( event )
   
 end
 
-local function callNextFrame(target)
-  target:nextFrame()
-end
-
 function play_anim( event )
-  local myclosure = function() return callNextFrame( event.target ) end
+  local myclosure = function() 
+    event.target:nextFrame()
+  end
   timer.performWithDelay(50,myclosure,24)
   -- event.target:play({loop=1})
 end
