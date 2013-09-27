@@ -6,13 +6,48 @@ local storyboard = require( "storyboard" )
 local confronto = storyboard.newScene()
 local path_audio = 'media/audio/vocali/'
 local torna_indietro
+local lettera_toogle = true
+local lettera_clickable = true
+local size_pulsantoni = 500
+local group
+function nextAnim()
+  print("CIAO")
+end
+
+local renable_click = function(e)
+  print("- RENABLE_CLICK -")
+  lettera_clickable = true
+  print(lettera_clickable)
+end
 
 function play_sound( event )
-  function listener()
-    audio.play( event.target.audio)
+
+  function sound_listener()
+    audio.play(event.target.audio,{
+      onComplete=function() 
+        if lettera_toogle == true then
+          lettera_toogle = false
+          transition.to(lettera_corta, {time=1000, alpha=0, onComplete=renable_click})
+          transition.to(lettera_lunga, {time=1000, alpha=1})
+        else
+          lettera_toogle = true
+          transition.to(lettera_lunga, {time=1000, alpha=0, onComplete=renable_click})
+          transition.to(lettera_corta, {time=1000, alpha=1})
+        end
+      end
+    })
   end
-  timer.performWithDelay( 500, listener )
   
+  timer.performWithDelay( 500, sound_listener )
+end
+
+function lettera_tapped(event)
+  print("LETTERA TAPPED")
+  if (lettera_clickable == true) then
+    lettera_clickable = false
+    play_anim(event)
+    play_sound(event)
+  end
 end
 
 function play_anim( event )
@@ -28,10 +63,6 @@ function goto_menuiniziale(e)
   storyboard.gotoScene("src.menu_iniziale")
 end
 
-function go_to(event)
-  print("gotoooooo")
-end
-
 function go_to_confronto_lunga(event)
   _G.tipo = 'lunga'
   storyboard.removeScene("src.scegli_combinazione")
@@ -44,41 +75,42 @@ function go_to_confronto_corto(event)
   storyboard.gotoScene("src.scegli_combinazione")
 end
 
-local lettera_lunga
-local lettera_corta
-local size_pulsantoni = 500
-local group
 
+function go_to(event)
+  print("gotoooooo")
+end
 function create_lettera(anim_path,audio_path)
   anim_list = {}
   for i=1,24 do
     anim_list[i] = string.gsub (anim_path, "1", i)
   end
-  local lettera = movieclip.newAnim(anim_list)
+
+  local lettera  = movieclip.newAnim(anim_list)
   group:insert(lettera)
   local long_audio_path = path_audio .. _G.vocale:upper() .. audio_path ..'.mp3'
-  lettera.width = size_pulsantoni
+  lettera.width  = size_pulsantoni
   lettera.height = size_pulsantoni
-  lettera.y = display.contentHeight / 2
-  lettera.audio = audio.loadSound( long_audio_path )
-  lettera:addEventListener("tap", play_sound)
-  lettera:addEventListener("tap", play_anim)
+  lettera.y      = display.contentHeight / 2
+  lettera.audio  = audio.loadSound( long_audio_path )
+  lettera:addEventListener("tap", lettera_tapped)
   return lettera
 end
 
 function create_lettera_lunga()
   lettera_lunga = create_lettera("media/menu_iniziale/long-".. _G.vocale .."/1.png","_L")
-  lettera_lunga.x = display.contentWidth / 2 + 250
+  lettera_lunga.x = display.contentWidth / 2
   create_button_to_go(lettera_lunga,_G.vocale)
   lettera_lunga.cerchio_container:addEventListener("tap", go_to_confronto_lunga)
+  lettera_lunga.isVisible = true
 end
 
 function create_lettera_corta()
   -- CORTA
   lettera_corta = create_lettera( "media/menu_iniziale/short-".._G.vocale.."/1.png","_S")
-  lettera_corta.x = display.contentWidth / 2 - 250
+  lettera_corta.x = display.contentWidth / 2 
   create_button_to_go(lettera_corta,_G.vocale)
   lettera_corta.cerchio_container:addEventListener("tap", go_to_confronto_corto)
+  lettera_corta.isVisible = false
 end
 
 function confronto:createScene( event )
