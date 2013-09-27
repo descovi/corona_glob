@@ -25,14 +25,16 @@ function play_sound( event )
   function sound_listener()
     audio.play(event.target.audio,{
       onComplete=function() 
+        _time = 500
         if lettera_toogle == true then
           lettera_toogle = false
-          transition.to(lettera_corta, {time=1000, alpha=0, onComplete=renable_click})
-          transition.to(lettera_lunga, {time=1000, alpha=1})
+          transition.to(lettera_lunga, {time=_time, alpha=0.0, onComplete=renable_click})
+          transition.to(lettera_corta, {time=_time, alpha=1.0})
         else
           lettera_toogle = true
-          transition.to(lettera_lunga, {time=1000, alpha=0, onComplete=renable_click})
-          transition.to(lettera_corta, {time=1000, alpha=1})
+
+          transition.to(lettera_lunga, {time=_time, alpha=1.0, onComplete=renable_click})
+          transition.to(lettera_corta, {time=_time, alpha=0.0})
         end
       end
     })
@@ -59,20 +61,20 @@ function play_anim( event )
 end
 
 function goto_menuiniziale(e)
-  storyboard.removeScene("src.menu_iniziale")
+  storyboard.removeAll()
   storyboard.gotoScene("src.menu_iniziale")
 end
 
 function go_to_confronto_lunga(event)
   _G.tipo = 'lunga'
-  storyboard.removeScene("src.scegli_combinazione")
-  storyboard.gotoScene("src.scegli_combinazione")
+  storyboard.removeAll()
+  storyboard.gotoScene("src.colonna")
 end
 
 function go_to_confronto_corto(event)
   _G.tipo = 'corta'
-  storyboard.removeScene("src.scegli_combinazione")
-  storyboard.gotoScene("src.scegli_combinazione")
+  storyboard.removeAll()
+  storyboard.gotoScene("src.colonna")
 end
 
 
@@ -101,7 +103,7 @@ function create_lettera_lunga()
   lettera_lunga.x = display.contentWidth / 2
   create_button_to_go(lettera_lunga,_G.vocale)
   lettera_lunga.cerchio_container:addEventListener("tap", go_to_confronto_lunga)
-  lettera_lunga.isVisible = true
+  lettera_lunga.alpha = 1.0
 end
 
 function create_lettera_corta()
@@ -110,7 +112,7 @@ function create_lettera_corta()
   lettera_corta.x = display.contentWidth / 2 
   create_button_to_go(lettera_corta,_G.vocale)
   lettera_corta.cerchio_container:addEventListener("tap", go_to_confronto_corto)
-  lettera_corta.isVisible = false
+  lettera_corta.alpha = 0.0
 end
 
 function confronto:createScene( event )
