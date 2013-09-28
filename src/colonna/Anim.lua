@@ -35,8 +35,8 @@ Anim.newSprite = function()
     }
     anim.sprite = display.newSprite( anim.sheet, anim.sequence_data )
     anim.group:insert(anim.sprite)
-    anim.sprite.x = display.contentWidth / 2
-    anim.sprite.y = display.contentHeight / 2
+    anim.sprite.x = display.contentWidth  * .5
+    anim.sprite.y = display.contentHeight * .5
     anim.sprite:addEventListener("tap", anim.sound_animation_sound)
     -- if you want add animation when enter you can uncomment this line
     --- and change toogle from false to true

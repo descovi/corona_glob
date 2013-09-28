@@ -15,7 +15,7 @@ local gioca       = display.newText("gioca",100,480,"Hiragino Maru Gothic Pro",4
 
 
 local function go_bk(event) 
-  Storyboard.removeAllScene()
+  -- Storyboard.removeAllScene()
   Storyboard.gotoScene( "src.confronto" ) 
 end
 

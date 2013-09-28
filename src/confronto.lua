@@ -73,6 +73,7 @@ end
 
 function go_to_confronto_corto(event)
   _G.tipo = 'corta'
+  _G.combinazione = _G.vocale.."_".._G.vocale
   storyboard.removeAll()
   storyboard.gotoScene("src.colonna")
 end
