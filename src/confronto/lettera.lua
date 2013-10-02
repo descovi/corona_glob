@@ -1,0 +1,2 @@
+local lettera
+return lettera

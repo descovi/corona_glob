@@ -24,7 +24,7 @@ function play_sound( event )
 
   function sound_listener()
     audio.play(event.target.audio,{
-      onComplete=function() 
+      onComplete=function()
         _time = 500
         if lettera_toogle == true then
           lettera_toogle = false
@@ -39,7 +39,7 @@ function play_sound( event )
       end
     })
   end
-  
+
   timer.performWithDelay( 500, sound_listener )
 end
 
@@ -53,7 +53,7 @@ function lettera_tapped(event)
 end
 
 function play_anim( event )
-  local myclosure = function() 
+  local myclosure = function()
     event.target:nextFrame()
   end
   timer.performWithDelay(50,myclosure,24)
@@ -78,10 +78,10 @@ function go_to_confronto_corto(event)
   storyboard.gotoScene("src.colonna")
 end
 
-
 function go_to(event)
   print("gotoooooo")
 end
+
 function create_lettera(anim_path,audio_path)
   anim_list = {}
   for i=1,24 do
@@ -110,7 +110,7 @@ end
 function create_lettera_corta()
   -- CORTA
   lettera_corta = create_lettera( "media/menu_iniziale/short-".._G.vocale.."/1.png","_S")
-  lettera_corta.x = display.contentWidth / 2 
+  lettera_corta.x = display.contentWidth / 2
   create_button_to_go(lettera_corta,_G.vocale)
   lettera_corta.cerchio_container:addEventListener("tap", go_to_confronto_corto)
   lettera_corta.alpha = 0.0
