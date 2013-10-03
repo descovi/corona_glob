@@ -7,11 +7,9 @@ Glob.newSprite = function()
   glob.size
 
   function glob.set_anim_path()
-    origin_path = "media/menu_iniziale/"
+    local origin_path = "media/menu_iniziale/"
     glob.anim_path = origin_path.."long-".. _G.vocale .."/1.png"
-
     -- "_L"
-
     -- "media/menu_iniziale/short-".. _G.vocale .."/1.png","_L"
   end
 
