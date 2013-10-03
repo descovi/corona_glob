@@ -1,7 +1,7 @@
 local Anim = {}
 
 Anim.newSprite = function()
-  
+
   local anim = {}
   anim.totalFrames = 11
   anim.sheet_options  = { width=1024, height=256, numFrames=anim.totalFrames }
@@ -19,7 +19,7 @@ Anim.newSprite = function()
   -- path animation
   anim.animation_path = 'media/colonna'..anim.current_combination
   anim.path = anim.animation_path..anim.counter.."/full.png"
-  
+
   function anim.load_image()
     -- reload path
     anim.animation_path = 'media/colonna'..anim.current_combination
@@ -30,7 +30,7 @@ Anim.newSprite = function()
     -- load image
     anim.sheet = graphics.newImageSheet(anim.path, anim.sheet_options)
     anim.sequence_data = {
-      { name="forward", start=1, count=anim.totalFrames, time=anim.timing,  loopCount = 1}, 
+      { name="forward", start=1, count=anim.totalFrames, time=anim.timing,  loopCount = 1},
       { name="counter", frames= {11,10,9,8,7,6,5,4,3,2,1}, time=anim.timing,  loopCount = 1}
     }
     anim.sprite = display.newSprite( anim.sheet, anim.sequence_data )
@@ -43,8 +43,8 @@ Anim.newSprite = function()
     -- anim.sprite:addEventListener("sprite", anim.intro)
     -- anim.sprite:play()
     anim.toogle = true
-  end 
-  
+  end
+
   function anim.prev()
     if (anim.counter > 1 ) then
       anim.counter = anim.counter -1
@@ -52,9 +52,9 @@ Anim.newSprite = function()
       anim.load_image()
     end
   end
-  
+
   function anim.next()
-    if (anim.counter < anim.limit) then  
+    if (anim.counter < anim.limit) then
       anim.counter = anim.counter+1
       anim.group:remove(anim.sprite)
       anim.load_image()
@@ -76,7 +76,7 @@ Anim.newSprite = function()
         anim.sprite:setSequence( "forward" )
         anim.sprite:play()
         timer.performWithDelay(anim.timing,anim.audio_ended_1_to_2)
-        timer.performWithDelay(anim.timing, 
+        timer.performWithDelay(anim.timing,
           function()
             anim.running = false
           end
@@ -93,7 +93,7 @@ Anim.newSprite = function()
         anim.sprite:setSequence( "counter" )
         anim.sprite:play()
         timer.performWithDelay(anim.timing,anim.audio_ended_2_to_1)
-        timer.performWithDelay(anim.timing, 
+        timer.performWithDelay(anim.timing,
           function()
             anim.running = false
           end

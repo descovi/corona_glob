@@ -1,16 +1,17 @@
+local movieclip = require('utils.movieclip')
+
 local Glob = {}
-Glob.newSprite = function()
+Glob.newMovieClip = function()
 
   local glob = {}
   glob.anim_list = {}
   glob.anim_path = ''
-  glob.size
 
   function glob.set_anim_path()
-    local origin_path = "media/menu_iniziale/"
-    glob.anim_path = origin_path.."long-".. _G.vocale .."/1.png"
     -- "_L"
     -- "media/menu_iniziale/short-".. _G.vocale .."/1.png","_L"
+    local origin_path = "media/menu_iniziale/"
+    glob.anim_path = origin_path.."long-".. _G.vocale .."/1.png"
   end
 
   function glob.fill_anim_list()
@@ -22,6 +23,10 @@ Glob.newSprite = function()
   function glob.setMovieClip()
     glob.set_anim_path()
     glob.fill_anim_list()
+    print("CIAO")
+    print("/////")
+    print(glob.anim_list)
+    print("/////")
     glob = movieclip.newAnim(glob.anim_list)
   end
 
@@ -44,4 +49,4 @@ Glob.newSprite = function()
   glob.create()
 
 end
-return Lettera
+return Glob
