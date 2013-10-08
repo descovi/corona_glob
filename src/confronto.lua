@@ -3,6 +3,7 @@ require('src.utils.button_to_go_back')
 
 local movieclip = require('src.utils.movieclip')
 local storyboard = require( "storyboard" )
+local glob = require("src.confronto.glob")
 local confronto = storyboard.newScene()
 local path_audio = 'media/audio/vocali/'
 local torna_indietro
@@ -82,39 +83,6 @@ function go_to(event)
   print("gotoooooo")
 end
 
-function create_lettera(anim_path,audio_path)
-  anim_list = {}
-  for i=1,24 do
-    anim_list[i] = string.gsub (anim_path, "1", i)
-  end
-
-  local lettera  = movieclip.newAnim(anim_list)
-  group:insert(lettera)
-  local long_audio_path = path_audio .. _G.vocale:upper() .. audio_path ..'.mp3'
-  lettera.width  = size_pulsantoni
-  lettera.height = size_pulsantoni
-  lettera.y      = display.contentHeight / 2
-  lettera.audio  = audio.loadSound( long_audio_path )
-  lettera:addEventListener("tap", lettera_tapped)
-  return lettera
-end
-
-function create_lettera_lunga()
-  lettera_lunga = create_lettera("media/menu_iniziale/long-".. _G.vocale .."/1.png","_L")
-  lettera_lunga.x = display.contentWidth / 2
-  create_button_to_go(lettera_lunga,_G.vocale)
-  lettera_lunga.cerchio_container:addEventListener("tap", go_to_confronto_lunga)
-  lettera_lunga.alpha = 1.0
-end
-
-function create_lettera_corta()
-  -- CORTA
-  lettera_corta = create_lettera( "media/menu_iniziale/short-".._G.vocale.."/1.png","_S")
-  lettera_corta.x = display.contentWidth / 2
-  create_button_to_go(lettera_corta,_G.vocale)
-  lettera_corta.cerchio_container:addEventListener("tap", go_to_confronto_corto)
-  lettera_corta.alpha = 0.0
-end
 
 function confronto:createScene( event )
   print("confronto:createScene")
@@ -125,8 +93,9 @@ function confronto:createScene( event )
   -- torna indietro
   torna_indietro = button_to_go_back()
   -- mostra le lettere selezioante
-  create_lettera_lunga()
-  create_lettera_corta()
+  -- create_lettera_lunga()
+  -- create_lettera_corta()
+  glob_1 = glob:newMovieClip()
   torna_indietro:addEventListener("tap", goto_menuiniziale)
   group:insert(torna_indietro)
 end

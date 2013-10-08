@@ -1,52 +1,55 @@
-local movieclip = require('utils.movieclip')
-
+local Movieclip = require 'src.utils.movieclip'
 local Glob = {}
-Glob.newMovieClip = function()
+Glob.newMovieClip = function(self)
 
   local glob = {}
-  glob.anim_list = {}
-  glob.anim_path = ''
 
-  function glob.set_anim_path()
+  glob.set_anim_path = function(self)
     -- "_L"
     -- "media/menu_iniziale/short-".. _G.vocale .."/1.png","_L"
     local origin_path = "media/menu_iniziale/"
-    glob.anim_path = origin_path.."long-".. _G.vocale .."/1.png"
+    self.anim_path = origin_path.."long-".. _G.vocale .."/1.png"
   end
 
-  function glob.fill_anim_list()
+  glob.fill_anim_list = function(self)
+    self.anim_list = {}
     for i=1,24 do
-      glob.anim_list[i] = string.gsub (glob.anim_path, "1", i)
+      self.anim_list[i] = string.gsub (self.anim_path, "1", i)
     end
   end
 
-  function glob.setMovieClip()
-    glob.set_anim_path()
-    glob.fill_anim_list()
-    print("CIAO")
-    print("/////")
-    print(glob.anim_list)
-    print("/////")
-    glob = movieclip.newAnim(glob.anim_list)
+  glob.setMovieClip = function(self)
+    self:set_anim_path()
+    self:fill_anim_list()
+    self.movieclip = Movieclip.newAnim(glob.anim_list)
   end
 
-  function glob.setPosition()
-    glob.y = display.contentHeight / 2
-    glob.x = display.contentWidth / 2
+  glob.setPosition = function(self,size)
+    self.movieclip.y = display.contentHeight / 2
+    self.movieclip.x = display.contentWidth / 2
   end
 
-  function glob.setSize(size)
-    glob.width = size
-    glob.height = size
+  glob.setSize = function(self,size)
+    self.movieclip.width = size
+    self.movieclip.height = size
   end
 
-  function glob.create()
-    glob.setMovieClip()
-    glob.setSize(500)
-    glob.setPosition()
+  glob.playAnimation = function(event)
+    local target = event.target
+    local myclosure = function() 
+      target:nextFrame()
+    end
+    timer.performWithDelay(5,myclosure,24)
   end
 
-  glob.create()
+  function glob:create()
+    self:setMovieClip()
+    self:setSize(500)
+    self:setPosition()
+    self.movieclip:addEventListener("tap", self.playAnimation)
+  end
+
+  glob:create()
 
 end
 return Glob
