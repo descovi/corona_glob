@@ -13,19 +13,6 @@ local renable_click = function(e)
   print(lettera_clickable)
 end
 
-function play_sound( event )
-  _time = 500
-  if lettera_toogle == true then
-    lettera_toogle = false
-    transition.to(lettera_lunga, {time=_time, alpha=0.0, onComplete=renable_click})
-    transition.to(lettera_corta, {time=_time, alpha=1.0})
-  else
-    lettera_toogle = true
-    transition.to(lettera_lunga, {time=_time, alpha=1.0, onComplete=renable_click})
-    transition.to(lettera_corta, {time=_time, alpha=0.0})
-  end
-end
-
 
 function goto_menuiniziale(e)
   storyboard.removeAll()
@@ -51,23 +38,15 @@ function createTornaIndietro(group)
   group:insert(torna_indietro)
 end
 
-function tapped( event )
-  event.target.isVisible = false
-  event.target.opposto.isVisible = true
-end
+
 
 function confronto:createScene( event )
   local glob_l = glob:newMovieClip(_G.vocale,'L',self.view)
   local glob_s = glob:newMovieClip(_G.vocale,'S',self.view)
-  
   glob_l.opposto = glob_s
   glob_s.opposto = glob_l
-  
-  glob_l.isVisible = false
-  glob_s.isVisible = true
+  glob_l.alpha = 0
 
-  glob_l:addEventListener("tap", tapped)
-  glob_s:addEventListener("tap", tapped)
 
   createTornaIndietro(self.view)
 end
