@@ -51,9 +51,23 @@ function createTornaIndietro(group)
   group:insert(torna_indietro)
 end
 
+function tapped( event )
+  event.target.isVisible = false
+  event.target.opposto.isVisible = true
+end
+
 function confronto:createScene( event )
-  glob_l = glob:newMovieClip(_G.vocale,'L')
-  glob_s = glob:newMovieClip(_G.vocale,'S')
+  local glob_l = glob:newMovieClip(_G.vocale,'L',self.view)
+  local glob_s = glob:newMovieClip(_G.vocale,'S',self.view)
+  
+  glob_l.opposto = glob_s
+  glob_s.opposto = glob_l
+  
+  glob_l.isVisible = false
+  glob_s.isVisible = true
+
+  glob_l:addEventListener("tap", tapped)
+  glob_s:addEventListener("tap", tapped)
 
   createTornaIndietro(self.view)
 end
