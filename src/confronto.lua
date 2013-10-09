@@ -1,15 +1,11 @@
 require('src.utils.button_to_go')
 require('src.utils.button_to_go_back')
 
-local movieclip = require('src.utils.movieclip')
 local storyboard = require( "storyboard" )
 local glob = require("src.confronto.glob")
 local confronto = storyboard.newScene()
-local path_audio = 'media/audio/vocali/'
 local torna_indietro
-local lettera_toogle = true
-local lettera_clickable = true
-local size_pulsantoni = 500
+
 local group
 function nextAnim()
   print("CIAO")
@@ -83,7 +79,6 @@ function go_to(event)
   print("gotoooooo")
 end
 
-
 function confronto:createScene( event )
   print("confronto:createScene")
   print("VOCALE ATTUALE:")
@@ -95,7 +90,8 @@ function confronto:createScene( event )
   -- mostra le lettere selezioante
   -- create_lettera_lunga()
   -- create_lettera_corta()
-  glob_1 = glob:newMovieClip()
+  glob_l = glob:newMovieClip(_G.vocale,'L')
+  glob_s = glob:newMovieClip(_G.vocale,'S')
   torna_indietro:addEventListener("tap", goto_menuiniziale)
   group:insert(torna_indietro)
 end
