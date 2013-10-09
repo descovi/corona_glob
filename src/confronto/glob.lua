@@ -26,9 +26,9 @@ Glob.newMovieClip = function(self, vocale, long_or_short)
     end
   end
 
-  self.glob.createMovieClip = function(self)
+  self.glob.createMovieClip = function(self, _anim_list)
     
-    self.movieclip = Movieclip.newAnim(self.anim_list)
+    self.movieclip = Movieclip.newAnim(_anim_list)
     self.movieclip.name = "glob-movieclip"
     self.movieclip.is_going = false
 
@@ -81,7 +81,7 @@ Glob.newMovieClip = function(self, vocale, long_or_short)
     local vocale_upper = vocale:upper()
     local sound_path = vocale_upper..'_'..long_or_short..'.mp3'
     self:setupAnimationPath(vocale, long_or_short)
-    self:createMovieClip()
+    self:createMovieClip(self.anim_list)
     self:setupSound(sound_path)
     self.movieclip:addEventListener("tap", self.tapped)
   end
