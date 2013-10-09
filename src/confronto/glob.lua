@@ -43,10 +43,11 @@ Glob.newMovieClip = function(self, vocale, long_or_short, view)
     self.movieclip.audio_played = function ( bog )
       transition.to(self.movieclip, {time=500, alpha=.5, onComplete=function(m)
         
-        transition.to(self.movieclip,{time=500,alpha=0})
-        transition.to(m.opposto, {time=1000,alpha=1,onComplete=function(m)
-          self.movieclip.is_going = false
-          self.movieclip.opposto.is_going = true
+        transition.to(m,{time=2500,alpha=0})
+
+        transition.to(m.opposto, {time=1000,alpha=1,onComplete=function(o)
+          o.is_going = false
+          o.opposto.is_going = true
         end})
 
       end})
