@@ -7,8 +7,10 @@ local Letter = require("src.confronto.letter")
 
 -- elements
 local letter = {}
-local glob_s = {}
-local glob_l = {}
+local letter_links_1 = {}
+local letter_links_2 = {}
+local glob_2 = {}
+local glob_1 = {}
 
 -- storyboard
 local confronto = Storyboard.newScene()
@@ -44,11 +46,11 @@ function createTornaIndietro(group)
 end
 
 function createGlobs(group)
-  glob_l = Glob:newMovieClip(_G.vocale,'L',group)
-  glob_s = Glob:newMovieClip(_G.vocale,'S',group)
-  glob_l.opposto = glob_s
-  glob_s.opposto = glob_l
-  glob_l.alpha = 0
+  glob_1 = Glob:newMovieClip(_G.vocale,'L',group)
+  glob_2 = Glob:newMovieClip(_G.vocale,'S',group)
+  glob_1.opposto = glob_2
+  glob_2.opposto = glob_1
+  glob_1.alpha = 0
 end
 
 function createLetters( group )
@@ -57,14 +59,13 @@ function createLetters( group )
 end
 
 function setupListener()
-  glob_s:addEventListener("fadeOut50%",function()glob_l:fadeInAndPlay()end)
-  glob_l:addEventListener("fadeOut50%",function()glob_s:fadeInAndPlay()end)
-  glob_s:addEventListener("startPlay",function()letter:zoom()end)
-  glob_l:addEventListener("startPlay",function()letter:zoom()end)
+  glob_2:addEventListener("fadeOut50%",function()glob_1:fadeInAndPlay()end)
+  glob_1:addEventListener("fadeOut50%",function()glob_2:fadeInAndPlay()end)
+  glob_2:addEventListener("startPlay",function()letter:zoom()end)
+  glob_1:addEventListener("startPlay",function()letter:zoom()end)
 end
 
 function confronto:createScene( event )
-  
   createGlobs(self.view)
   createLetters(self.view)
   setupListener()

@@ -23,7 +23,7 @@ Glob.newMovieClip = function(self, vocale, long_or_short, view)
     end
   end
 
-  -- -- MOVIECLIP -- --
+  -- -- START MOVIECLIP -- --
 
   self.glob.createMovieClip = function(self, _anim_list)
     
@@ -94,7 +94,7 @@ Glob.newMovieClip = function(self, vocale, long_or_short, view)
     self.movieclip:setSize(500)
   end
 
-  -- -- #MOVIECLIP -- --
+  -- -- # END MOVIECLIP -- --
 
   self.glob.setupSound = function(self,path)
     local path_audio = 'media/audio/vocali/' .. path
