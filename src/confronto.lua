@@ -38,15 +38,18 @@ function createTornaIndietro(group)
   group:insert(torna_indietro)
 end
 
-
-
 function confronto:createScene( event )
   local glob_l = glob:newMovieClip(_G.vocale,'L',self.view)
   local glob_s = glob:newMovieClip(_G.vocale,'S',self.view)
   glob_l.opposto = glob_s
   glob_s.opposto = glob_l
   glob_l.alpha = 0
-
+  glob_s:addEventListener("fadeOut50%",function()
+    glob_l:fadeInAndPlay() 
+  end)
+  glob_l:addEventListener("fadeOut50%",function()
+    glob_s:fadeInAndPlay() 
+  end)
 
   createTornaIndietro(self.view)
 end
