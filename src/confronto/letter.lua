@@ -3,7 +3,7 @@ local Letter = {}
 Letter.new = function(vocale)
 
   local short = display.newText(
-    _G.vocale,
+    vocale,
     display.contentWidth/2-10,
     display.contentHeight-150,
     "Hiragino Maru Gothic Pro",

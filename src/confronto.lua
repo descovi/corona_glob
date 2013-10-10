@@ -3,7 +3,8 @@ require('src.utils.button_to_go_back')
 
 local Storyboard = require( "storyboard" )
 local Glob = require("src.confronto.glob")
-local Letter = require("src.confronto.letter")
+local Letter = require("src.confronto.Letter")
+local LetterLinks = require("src.confronto.LetterLinks")
 
 -- elements
 local letter = {}
@@ -54,8 +55,15 @@ function createGlobs(group)
 end
 
 function createLetters( group )
-  letter = Letter:new(_G.vocale)
+  letter = Letter.new(_G.vocale)
   group:insert(letter)
+end
+
+function createLinkLetters( group )
+  letter_links_1 = LetterLinks.new(_G.vocale,1)
+  letter_links_2 = LetterLinks.new(_G.vocale,2)
+  group:insert(letter_links_1)
+  group:insert(letter_links_2)
 end
 
 function setupListener()
@@ -68,6 +76,7 @@ end
 function confronto:createScene( event )
   createGlobs(self.view)
   createLetters(self.view)
+  createLinkLetters(self.view)
   setupListener()
   createTornaIndietro(self.view)
 end
