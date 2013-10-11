@@ -1,5 +1,4 @@
 require('src.utils.button_to_go')
-require('src.utils.button_to_go_back')
 
 local Storyboard = require( "storyboard" )
 local Glob = require("src.confronto.glob")

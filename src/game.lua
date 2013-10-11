@@ -1,6 +1,8 @@
 local Storyboard = require("storyboard")
 local game = Storyboard.newScene()
 local movieclip = require('src.utils.movieclip')
+local Stat = require('src.utils.Stat')
+
 
 local vocali = {"a","e","i","o","u"}
 local x_pos = {0, 100, 200, 300, 400}
@@ -28,7 +30,8 @@ local punteggio_massimo       = 0
 local punteggio_label         = display.newText(record_punteggio_group, "score",  0,   0,  font_table_score, size_table_score)
 local punteggio               = display.newText(record_punteggio_group, "0",      90,  20, font_table_score, size_table_score)
 local record_label            = display.newText(record_punteggio_group, "record", 150, 0,  font_table_score, size_table_score)
-local record                  = display.newText(record_punteggio_group, "0",      220, 0,  font_table_score, size_table_score)
+local record_from_data        = Stat.read()
+local record                  = display.newText(record_punteggio_group, record_from_data,      220, 0,  font_table_score, size_table_score)
 
 -- audio - right - wrong
 local audio_right= audio.loadSound("media/audio/right.mp3")
@@ -93,12 +96,16 @@ function answer_clicked(event)
     print(event.target.vocale)
     print(" ")
 
-    if globulo_scelto == event.target then
+    if (globulo_scelto == event.target) then
       print "giusto!"
       score = score+1
-      if score > punteggio_massimo then
+      if (score > punteggio_massimo) then
         punteggio_massimo = score
         record.text = punteggio_massimo
+        record_saved = Stat.read()
+        if (Stat.read() < punteggio_massimo) then
+          Stat.write(punteggio_massimo)
+        end
       end
       audio.play(audio_right, {onComplete=choose_random_globulo_and_play_audio })
       

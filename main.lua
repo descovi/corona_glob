@@ -1,3 +1,5 @@
+require('src.utils.button_to_go_back')
+
 inspect = require 'src.utils.inspect.inspect'
 _G.vocale = "a"
 _G.tipo = "lunga"
@@ -9,7 +11,7 @@ display.setStatusBar( display.HiddenStatusBar )
 -- Create a storyboard scene for this module
 local scene = storyboard.newScene()
 storyboard.isDebug = true
-storyboard.gotoScene( "src.confronto" )
+storyboard.gotoScene( "src.game" )
 
 local gurgle = audio.loadSound('media/audio/GURGLE.wav')
 -- audio.play( gurgle )
