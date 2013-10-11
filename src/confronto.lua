@@ -77,12 +77,12 @@ function setupListener()
   glob_2:addEventListener("startPlay",function()letter:zoom()end)
   letter_links_1:addEventListener("tap",function()
     _G.combinazione =  _G.vocale .. "_" .. letter_links_1.text_raw
-    Storyboard.loadScene("src.colonna")
+    Storyboard.removeScene("src.colonna")
     Storyboard.gotoScene("src.colonna")
   end)
   letter_links_2:addEventListener("tap",function()
     _G.combinazione =  _G.vocale .. "_" .. letter_links_2.text_raw
-    Storyboard.loadScene("src.colonna")
+    Storyboard.removeScene("src.colonna")
     Storyboard.gotoScene("src.colonna")
   end)
 end
