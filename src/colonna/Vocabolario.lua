@@ -193,6 +193,7 @@ Vocabolario.newSprite = function()
   group.counter = 1
   local myRectangle = display.newRect(group,0, display.contentHeight-150, 150, 150)
   local image = display.newImage("media/vocabolario.png")
+  group:insert(image)
   image.x = myRectangle.x
   image.y = myRectangle.y
   myRectangle.alpha = 0.01
@@ -224,7 +225,6 @@ Vocabolario.newSprite = function()
       show = false
       group:remove(group.numChildren)
       group:remove(group.numChildren)
-      
     end
 
   end)
