@@ -64,9 +64,12 @@ end
 function createLinkLetters( group )
   letter_links_1 = LetterLinks.new(_G.vocale,1)
   group:insert(letter_links_1)
+  letter_links_1:fadeOut()
+  letter_links_1.alpha = 0
   if (Combination.is_more_than_one()) then
     letter_links_2 = LetterLinks.new(_G.vocale,2)
     group:insert(letter_links_2)
+    letter_links_2.alpha = 0
   end
 end
 
@@ -74,32 +77,36 @@ function globPlayedStart(event)
   letter:zoom()
 end
 
-function LinksClicked(event)
-  end
+function links_clicked(event)
+  _G.combinazione =  _G.vocale .. "_" .. event.target.text_raw
+  Storyboard.removeScene("src.colonna")
+  Storyboard.gotoScene("src.colonna")
+end
 
 function setupListener()
   glob_1:addEventListener("GlobFadeOut50%",function()
+    letter_links_1:fadeOut()
+    if (Combination.is_more_than_one()) then
+      letter_links_2:fadeOut()
+    end
     glob_2:fadeInAndPlay()
   end)
   glob_2:addEventListener("GlobFadeOut50%",function()
+    letter_links_1:fadeIn()
+    if (Combination.is_more_than_one()) then
+      letter_links_2:fadeIn()
+    end
     glob_1:fadeInAndPlay()
   end)
+
   glob_1:addEventListener("GlobStartPlay",globPlayedStart)
   glob_2:addEventListener("GlobStartPlay",globPlayedStart)
 
   -- setup link 1
-  letter_links_1:addEventListener("tap",function()
-    _G.combinazione =  _G.vocale .. "_" .. letter_links_1.text_raw
-    Storyboard.removeScene("src.colonna")
-    Storyboard.gotoScene("src.colonna")
-  end)
+  letter_links_1:addEventListener("tap",links_clicked)
   -- setup link 2
   if (Combination.is_more_than_one()) then
-    letter_links_2:addEventListener("tap",function()
-      _G.combinazione =  _G.vocale .. "_" .. letter_links_2.text_raw
-      Storyboard.removeScene("src.colonna")
-      Storyboard.gotoScene("src.colonna")
-    end)
+    letter_links_2:addEventListener("tap",links_clicked)
   end
   --
 end

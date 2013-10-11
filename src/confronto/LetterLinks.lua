@@ -32,7 +32,26 @@ LetterLinks.new = function(vocale, number)
 
   group.fadeOut = function(self)
     local time = 200
-    transition.to(self, {time=time, alpha=0})
+    print("CIAO BELLO - fadeOut")
+    transition.to(self, {time=time, alpha=.2})
+  end
+
+  group.fadeIn = function(self)
+    local time = 200
+    print("CIAO BELLO - fadeIn")
+    transition.to(self, {time=time, alpha=1})
+  end
+
+  group.fadeToogle = function(self)
+    print("TOOOOGLAAAA")
+    print(self.alpha)
+    if self.alpha == 1 then
+      print("TOOOOGLAAAA1")
+      self:fadeOut()
+    else
+      print("TOOOOGLAAAA2")
+      self:fadeIn()
+    end
   end
 
   group.setup()
