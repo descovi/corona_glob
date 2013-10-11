@@ -13,8 +13,15 @@ Combination.get = function(vocale)
     combination = {"e","a"} 
   end
   if vocale == "u" then
-    combination = {"u"} 
+    combination = {"e"} 
   end
   return combination
+end
+Combination.is_more_than_one = function(vocale)
+  combination = Combination.get(vocale)
+  if (#combination > 1) then
+    return true
+  end
+  return false
 end
 return Combination

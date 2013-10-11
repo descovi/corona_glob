@@ -37,7 +37,7 @@ Glob.newMovieClip = function(self, vocale, long_or_short, view)
       self.is_going = true
       self:playAnimation()
       self:playSound()
-      self:dispatchEvent( { name="startPlay", target=self } )
+      self:dispatchEvent( { name="GlobStartPlay", target=self } )
     end
 
     self.movieclip.playAnimation = function ( self )
@@ -78,7 +78,7 @@ Glob.newMovieClip = function(self, vocale, long_or_short, view)
       local time = 200
       transition.to(self.movieclip, {time=time, alpha=.7, onComplete=function(m)
         transition.to(self.movieclip, {time=time*2, alpha=0})
-        m:dispatchEvent( { name="fadeOut50%", target=m } )
+        m:dispatchEvent( { name="GlobFadeOut50%", target=m } )
       end})
     end
 
