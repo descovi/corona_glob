@@ -61,9 +61,11 @@ end
 
 function createLinkLetters( group )
   letter_links_1 = LetterLinks.new(_G.vocale,1)
-  letter_links_2 = LetterLinks.new(_G.vocale,2)
   group:insert(letter_links_1)
-  group:insert(letter_links_2)
+
+    letter_links_2 = LetterLinks.new(_G.vocale,2)
+    group:insert(letter_links_2)
+  
 end
 
 function setupListener()
@@ -80,6 +82,7 @@ function setupListener()
     Storyboard.removeScene("src.colonna")
     Storyboard.gotoScene("src.colonna")
   end)
+
   letter_links_2:addEventListener("tap",function()
     _G.combinazione =  _G.vocale .. "_" .. letter_links_2.text_raw
     Storyboard.removeScene("src.colonna")
