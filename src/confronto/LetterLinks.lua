@@ -1,5 +1,4 @@
 local LetterLinks = {}
-print "c"
 LetterLinks.new = function(vocale, number)
 
   local group = display.newGroup()
@@ -9,7 +8,7 @@ LetterLinks.new = function(vocale, number)
 
   local combination = {}
   if vocale == "a" then
-    combination = {"a","e"} 
+    combination = {"e","i"} 
   end
   if vocale == "e" then
     combination = {"a","e"} 
@@ -35,11 +34,13 @@ LetterLinks.new = function(vocale, number)
   if number == 1 then
     letter_link.text = combination[number] .. "+"
     letter_link.x = letter_link.x - 170
+    group.text_raw = combination[number]
   end
 
   if number == 2 then
     letter_link.text = "+" .. combination[number] 
     letter_link.x = letter_link.x + 150
+    group.text_raw = combination[number]
   end
 
   circle.x = letter_link.x
@@ -49,7 +50,6 @@ LetterLinks.new = function(vocale, number)
 
   group:insert(circle)
   group:insert(letter_link)
-
   
   return group
 end

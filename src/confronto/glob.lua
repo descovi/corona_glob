@@ -102,10 +102,12 @@ Glob.newMovieClip = function(self, vocale, long_or_short, view)
   end
 
   self.glob.tapped = function(event)
-    local movie_clip = event.target
-    if (movie_clip.is_going == false and movie_clip.alpha == 1) then
-      movie_clip:playGlob()
-      movie_clip:fadeOutWithDelay()
+    if event.y < 544 then
+      local movie_clip = event.target
+      if (movie_clip.is_going == false and movie_clip.alpha == 1) then
+        movie_clip:playGlob()
+        movie_clip:fadeOutWithDelay()
+      end
     end
   end
 
@@ -116,6 +118,7 @@ Glob.newMovieClip = function(self, vocale, long_or_short, view)
     self:createMovieClip(self.anim_list)
     self:setupSound(sound_path)
     self.movieclip:addEventListener("tap", self.tapped)
+    
     view:insert(self.movieclip)
     return self.movieclip
   end

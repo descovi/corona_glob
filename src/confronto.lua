@@ -67,10 +67,24 @@ function createLinkLetters( group )
 end
 
 function setupListener()
-  glob_2:addEventListener("fadeOut50%",function()glob_1:fadeInAndPlay()end)
-  glob_1:addEventListener("fadeOut50%",function()glob_2:fadeInAndPlay()end)
-  glob_2:addEventListener("startPlay",function()letter:zoom()end)
+  glob_1:addEventListener("fadeOut50%",function()
+    glob_2:fadeInAndPlay()
+  end)
+  glob_2:addEventListener("fadeOut50%",function()
+    glob_1:fadeInAndPlay()
+  end)
   glob_1:addEventListener("startPlay",function()letter:zoom()end)
+  glob_2:addEventListener("startPlay",function()letter:zoom()end)
+  letter_links_1:addEventListener("tap",function()
+    _G.combinazione =  _G.vocale .. "_" .. letter_links_1.text_raw
+    Storyboard.loadScene("src.colonna")
+    Storyboard.gotoScene("src.colonna")
+  end)
+  letter_links_2:addEventListener("tap",function()
+    _G.combinazione =  _G.vocale .. "_" .. letter_links_2.text_raw
+    Storyboard.loadScene("src.colonna")
+    Storyboard.gotoScene("src.colonna")
+  end)
 end
 
 function confronto:createScene( event )
