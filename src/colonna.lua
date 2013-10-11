@@ -1,5 +1,6 @@
 local Anim        = require('src.colonna.Anim')
 local Arrow       = require('src.colonna.Arrow')
+
 local Vocabolario = require('src.colonna.Vocabolario')
 local Storyboard  = require("storyboard")
 -- display objects
@@ -16,7 +17,7 @@ local gioca       = display.newText("gioca",100,480,"Hiragino Maru Gothic Pro",4
 
 local function go_bk(event) 
   -- Storyboard.removeAllScene()
-  Storyboard.gotoScene( "src.confronto" ) 
+  Storyboard.gotoScene( "src.confronto" )
 end
 
 local function go_up(event)
@@ -74,6 +75,7 @@ function colonna:createScene( event )
   print("background_path")
   print(background_path)
   print("-------")
+  print("")
 end
 
 colonna:addEventListener( "createScene" , colonna )
