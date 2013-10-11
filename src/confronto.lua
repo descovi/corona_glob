@@ -5,6 +5,7 @@ local Storyboard = require( "storyboard" )
 local Glob = require("src.confronto.glob")
 local Letter = require("src.confronto.Letter")
 local LetterLinks = require("src.confronto.LetterLinks")
+local Combination = require('src.confronto.Combination')
 
 -- elements
 local letter = {}
@@ -12,7 +13,7 @@ local letter_links_1 = {}
 local letter_links_2 = {}
 local glob_2 = {}
 local glob_1 = {}
-
+local combination = Combination.get(_G.vocale)
 -- storyboard
 local confronto = Storyboard.newScene()
 
@@ -62,10 +63,10 @@ end
 function createLinkLetters( group )
   letter_links_1 = LetterLinks.new(_G.vocale,1)
   group:insert(letter_links_1)
-
+  if (#combination > 1) then
     letter_links_2 = LetterLinks.new(_G.vocale,2)
     group:insert(letter_links_2)
-  
+  end
 end
 
 function setupListener()
@@ -82,12 +83,13 @@ function setupListener()
     Storyboard.removeScene("src.colonna")
     Storyboard.gotoScene("src.colonna")
   end)
-
-  letter_links_2:addEventListener("tap",function()
-    _G.combinazione =  _G.vocale .. "_" .. letter_links_2.text_raw
-    Storyboard.removeScene("src.colonna")
-    Storyboard.gotoScene("src.colonna")
-  end)
+  if (#combination > 1) then
+    letter_links_2:addEventListener("tap",function()
+      _G.combinazione =  _G.vocale .. "_" .. letter_links_2.text_raw
+      Storyboard.removeScene("src.colonna")
+      Storyboard.gotoScene("src.colonna")
+    end)
+  end
 end
 
 function confronto:createScene( event )
