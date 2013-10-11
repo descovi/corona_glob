@@ -103,7 +103,7 @@ Anim.newSprite = function()
   end
 
   -- ATTENZIONE !!!!
-  -- Sono a disposizione 2 anmazioni:
+  -- Sono a disposizione 2 animazioni:
   -- 1. sound animation sound / fa partire prima il suono, poi l'animazione puoi suoni
   -- --------------------------------------------------------------------------------
   function anim.sound_animation_sound()
