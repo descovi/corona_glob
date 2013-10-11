@@ -1,3 +1,4 @@
+Combination = require('src.confronto.Combination')
 local LetterLinks = {}
 LetterLinks.new = function(vocale, number)
 
@@ -6,23 +7,7 @@ LetterLinks.new = function(vocale, number)
   local circle = display.newCircle( 0 , 0, 60 )
   circle:setFillColor(255,255,255)
 
-  local combination = {}
-  if vocale == "a" then
-    combination = {"e","i"} 
-  end
-  if vocale == "e" then
-    combination = {"a","e"} 
-  end
-  if vocale == "i" then
-    combination = {"i"} 
-  end
-  if vocale == "o" then
-    combination = {"e","a"} 
-  end
-  if vocale == "u" then
-    combination = {"u"} 
-  end
-
+  local combination = Combination.get(vocale)
   local letter_link = display.newText(
     vocale,
     display.contentWidth/2,
