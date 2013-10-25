@@ -2,8 +2,8 @@ local Storyboard = require("storyboard")
 local game = Storyboard.newScene()
 local movieclip = require('src.utils.movieclip')
 local Stat = require('src.utils.Stat')
-
-
+local Pulsantone = require('src.game.Pulsantone')
+local pulsantone = {}
 local vocali = {"a","e","i","o","u"}
 local x_pos = {0, 100, 200, 300, 400}
 local all_globuli = {}
@@ -56,11 +56,6 @@ function choose_random_globulo_and_play_audio()
 
 end
 
-function play_audio_globulo_attuale()
-  audio.play(globulo_scelto.audio)
-  play_anim(pulsantone)
-end
-
 function play_anim(target)
   if target ~= nil then
     local myclosure = function() 
@@ -71,6 +66,7 @@ function play_anim(target)
 end
 
 function play_anim_globulo_attuale(event)
+  print("PLAY GLOBULO ATTUALE")
   play_anim(event.target)
 end
 
@@ -97,7 +93,7 @@ function answer_clicked(event)
     print(" ")
 
     if (globulo_scelto == event.target) then
-      print "giusto!"
+      print "Giusto!"
       score = score+1
       if (score > punteggio_massimo) then
         punteggio_massimo = score
@@ -111,7 +107,7 @@ function answer_clicked(event)
       
       punteggio.text = score
     else
-      print "cacca!"
+      print "Sbagliato!"
       if score > 0 then
         score = score-1
       end
@@ -154,20 +150,9 @@ function crea_fila(long_or_short)
 end
 
 function crea_pulsantone()
-  local size_pulsantone = 180
-  local anim_path = "media/menu_iniziale/long-a/1.png"
-  anim_list = {}
-  for i=1,24 do
-    anim_list[i] = string.gsub (anim_path, "1", i)
-  end
-  local pulsantone = movieclip.newAnim(anim_list)
-  -- pulsantone = display.newImage("media/menu_iniziale/long-a/1.png")
-  pulsantone:addEventListener("tap", play_audio_globulo_attuale)
-  pulsantone:addEventListener("tap", play_anim_globulo_attuale)
-  pulsantone.width = size_pulsantone
-  pulsantone.height = size_pulsantone
-  pulsantone.x = display.contentWidth /2 - pulsantone.width/4
-  pulsantone.y = display.contentHeight /2 +40
+  local pulsantone = Pulsantone.new()
+  --pulsantone:addEventListener("tap", play_audio_globulo_attuale)
+  --pulsantone:addEventListener("tap", play_anim_globulo_attuale)
   choose_random_globulo_and_play_audio()
   return pulsantone
 end
@@ -176,11 +161,13 @@ local function go_bk(event)
   Storyboard.gotoScene( "src.colonna" )
 end
 
+
+
+
 function game:createScene(event)
   fila_short = crea_fila("short-")
   fila_long = crea_fila("long-")
   pulsantone = crea_pulsantone()
-  
   self.view:insert(back_btn)
   self.view:insert(fila_short)
   self.view:insert(fila_long)
@@ -189,13 +176,16 @@ function game:createScene(event)
   self.view:insert(long)
   self.view:insert(pulsantone)
   self.view:insert(record_punteggio_group)
-  
   fila_short.y = 140
   fila_long.y = 570
-  
-  
   back_btn:addEventListener("tap", go_bk)
 end
+
+function play_audio_globulo_attuale()
+  audio.play(globulo_scelto.audio)
+  pulsantone:play()
+end
+
 game:addEventListener( "createScene", game_created )
 
 return game
