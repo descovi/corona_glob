@@ -1,0 +1,9 @@
+#!/bin/bash
+
+path=`dirname "$0"`
+if [[ -f "/Applications/CoronaSDK/Corona Simulator.app/Contents/MacOS/Corona Simulator" ]]
+then
+  "/Applications/CoronaSDK/Corona Simulator.app/Contents/MacOS/Corona Simulator" $*
+else
+  echo "ERROR: Could not find \"Corona Simulator.app\" in: $path"
+fi
