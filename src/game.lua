@@ -87,10 +87,12 @@ function answer_clicked_is_correct()
   score = score+1
   if (score > punteggio_massimo) then
     punteggio_massimo = score
-    record.text = punteggio_massimo
     record_saved = Stat.read()
-    if (Stat.read() < punteggio_massimo) then
+    print("record saved: ")
+    print(record_saved)
+    if (record_saved < punteggio_massimo) then
       Stat.write(punteggio_massimo)
+      record.text = punteggio_massimo
     end
   end
   audio.play(audio_right, {onComplete=choose_random_globulo_and_play_audio })
@@ -122,7 +124,6 @@ function answer_clicked(event)
       answer_clicked_is_wrong()
     end
   end
-
 end
 
 function crea_fila(long_or_short)
