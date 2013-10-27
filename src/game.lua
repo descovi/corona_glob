@@ -12,9 +12,9 @@ local path = 'media/menu_iniziale/'
 local globulo_scelto
 local score = 0
 local back_btn = button_to_go_back()
-back_btn.y = 50
-back_btn.width = 60
-back_btn.height = 60
+--back_btn.y = 50
+--back_btn.width = 60
+--back_btn.height = 60
 
 -- short long
 local short = display.newText("short", 830,140,"Hiragino Maru Gothic Pro",30)
@@ -82,8 +82,33 @@ function fx_true_or_right_handler(event)
   blocca_interazione = false
 end
 
+function answer_clicked_is_correct()
+  print "Giusto!"
+  score = score+1
+  if (score > punteggio_massimo) then
+    punteggio_massimo = score
+    record.text = punteggio_massimo
+    record_saved = Stat.read()
+    if (Stat.read() < punteggio_massimo) then
+      Stat.write(punteggio_massimo)
+    end
+  end
+  audio.play(audio_right, {onComplete=choose_random_globulo_and_play_audio })
+  punteggio:setTextColor(0,255,0,255)
+  punteggio.text = score
+end
+
+function answer_clicked_is_wrong()
+  print "Sbagliato!"
+  if score > 0 then
+    score = score-1
+  end
+  audio.play(audio_wrong, {onComplete=fx_true_or_right_handler })
+  punteggio:setTextColor(255,0,0,255)
+  punteggio.text = score
+end
+
 function answer_clicked(event)
-  
   if blocca_interazione == false then
     blocca_interazione = true
     print("- obbiettivo:")
@@ -91,28 +116,10 @@ function answer_clicked(event)
     print("- scelto:")
     print(event.target.vocale)
     print(" ")
-
     if (globulo_scelto == event.target) then
-      print "Giusto!"
-      score = score+1
-      if (score > punteggio_massimo) then
-        punteggio_massimo = score
-        record.text = punteggio_massimo
-        record_saved = Stat.read()
-        if (Stat.read() < punteggio_massimo) then
-          Stat.write(punteggio_massimo)
-        end
-      end
-      audio.play(audio_right, {onComplete=choose_random_globulo_and_play_audio })
-      
-      punteggio.text = score
+      answer_clicked_is_correct()
     else
-      print "Sbagliato!"
-      if score > 0 then
-        score = score-1
-      end
-      audio.play(audio_wrong, {onComplete=fx_true_or_right_handler })
-      punteggio.text = score
+      answer_clicked_is_wrong()
     end
   end
 
@@ -151,8 +158,7 @@ end
 
 function crea_pulsantone()
   local pulsantone = Pulsantone.new()
-  --pulsantone:addEventListener("tap", play_audio_globulo_attuale)
-  --pulsantone:addEventListener("tap", play_anim_globulo_attuale)
+  pulsantone:addEventListener("tap", play_audio_globulo_attuale)
   choose_random_globulo_and_play_audio()
   return pulsantone
 end
@@ -161,13 +167,12 @@ local function go_bk(event)
   Storyboard.gotoScene( "src.colonna" )
 end
 
-
-
-
 function game:createScene(event)
+  print("game:createScene")
   fila_short = crea_fila("short-")
   fila_long = crea_fila("long-")
   pulsantone = crea_pulsantone()
+  pulsantone:play()
   self.view:insert(back_btn)
   self.view:insert(fila_short)
   self.view:insert(fila_long)
@@ -182,8 +187,12 @@ function game:createScene(event)
 end
 
 function play_audio_globulo_attuale()
+  print("play_anim_globulo_attuale")
   audio.play(globulo_scelto.audio)
-  pulsantone:play()
+  -- check if pulsantone is defined
+  if pulsantone.x then
+    pulsantone:play()
+  end
 end
 
 game:addEventListener( "createScene", game_created )
