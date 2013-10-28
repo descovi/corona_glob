@@ -1,10 +1,12 @@
 local Anim        = require('src.colonna.Anim')
 local Arrow       = require('src.colonna.Arrow')
+
 local Vocabolario = require('src.colonna.Vocabolario')
 local Storyboard  = require("storyboard")
 -- display objects
 local colonna     = Storyboard.newScene()
-local background  = display.newImage("media/sfondi/".._G.vocale..".png")
+local background_path = "media/sfondi/".._G.vocale..".png"
+local background  = display.newImage(background_path)
 local back_btn    = button_to_go_back()
 local arrow_up    = Arrow.newSprite()
 local arrow_dn    = Arrow.newSprite()
@@ -14,7 +16,8 @@ local gioca       = display.newText("gioca",100,480,"Hiragino Maru Gothic Pro",4
 
 
 local function go_bk(event) 
-  Storyboard.gotoScene( "src.scegli_combinazione" ) 
+  -- Storyboard.removeAllScene()
+  Storyboard.gotoScene( "src.confronto" )
 end
 
 local function go_up(event)
@@ -61,6 +64,18 @@ function colonna:createScene( event )
   gioca.y = arrow_dn.y + 100
   gioca.isVisible = false
   gioca:addEventListener("tap", load_game)
+  print("-------")
+  print("_G.vocale")
+  print(_G.vocale)
+  print("_G.tipo")
+  print(_G.tipo)
+  print("_G.combinazione")
+  print(_G.combinazione)
+  print("-------")
+  print("background_path")
+  print(background_path)
+  print("-------")
+  print("")
 end
 
 colonna:addEventListener( "createScene" , colonna )
