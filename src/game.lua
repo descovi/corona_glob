@@ -3,10 +3,15 @@ local game = Storyboard.newScene()
 local movieclip = require('src.utils.movieclip')
 local Stat = require('src.utils.Stat')
 local Pulsantone = require('src.game.Pulsantone')
+local Explainer = require('src.game.Explainer')
+
+require('src.game.CreaFila')
+
 local pulsantone = {}
 local vocali = {"a","e","i","o","u"}
 local x_pos = {0, 100, 200, 300, 400}
 local all_globuli = {}
+local explainer = {}
 local path = 'media/menu_iniziale/'
 
 local globulo_scelto
@@ -53,7 +58,6 @@ function choose_random_globulo_and_play_audio()
   globulo_scelto = all_globuli[math.random(#all_globuli)]
   print("NEW RANDOM LETTER !! -->"..globulo_scelto.vocale)
   play_audio_globulo_attuale()
-
 end
 
 function play_anim(target)
@@ -88,8 +92,6 @@ function answer_clicked_is_correct()
   if (score > punteggio_massimo) then
     punteggio_massimo = score
     record_saved = Stat.read()
-    print("record saved: ")
-    print(record_saved)
     if (record_saved < punteggio_massimo) then
       Stat.write(punteggio_massimo)
       record.text = punteggio_massimo
@@ -105,6 +107,10 @@ function answer_clicked_is_wrong()
   if score > 0 then
     score = score-1
   end
+  print("answer_clicked_is_wrong")
+  print(globulo_scelto.vocale)
+  print("----")
+  explainer:fade_in_out(globulo_scelto.vocale)
   audio.play(audio_wrong, {onComplete=fx_true_or_right_handler })
   punteggio:setTextColor(255,0,0,255)
   punteggio.text = score
@@ -113,10 +119,9 @@ end
 function answer_clicked(event)
   if blocca_interazione == false then
     blocca_interazione = true
-    print("- obbiettivo:")
-    print(globulo_scelto.vocale)
-    print("- scelto:")
-    print(event.target.vocale)
+    print(" ")
+    print("- obbiettivo: " .. globulo_scelto.vocale)
+    print("- scelto: " .. event.target.vocale)
     print(" ")
     if (globulo_scelto == event.target) then
       answer_clicked_is_correct()
@@ -124,37 +129,6 @@ function answer_clicked(event)
       answer_clicked_is_wrong()
     end
   end
-end
-
-function crea_fila(long_or_short)
-  local group = display.newGroup()
-  for i=1,5 do
-    single_path = path .. long_or_short ..vocali[i] .. "-150/1.png"
-    local globo = display.newImage(single_path)
-    globo.x = x_pos[i]*1.5 + globo.width
-    globo.vocale = long_or_short..vocali[i]
-    -- label
-    local label = display.newText(vocali[i], 100,480,"Hiragino Maru Gothic Pro",30)
-    label.x = globo.x
-    -- sound
-    local path_audio = 'media/audio/vocali/'
-    if (long_or_short=="long-") then
-      local audio = audio.loadSound( path_audio .. string.upper(vocali[i]) .. '_L.mp3')
-      globo.audio = audio
-      label.y = globo.y+100
-    else
-      local audio = audio.loadSound( path_audio .. string.upper(vocali[i]) .. '_S.mp3')
-      globo.audio = audio
-      label.y = globo.y-100
-    end
-    -- tap
-    globo:addEventListener("tap", answer_clicked)
-    -- insert
-    table.insert(all_globuli,globo)
-    group:insert(globo)
-    group:insert(label)
-  end
-  return group
 end
 
 function crea_pulsantone()
@@ -170,10 +144,12 @@ end
 
 function game:createScene(event)
   print("game:createScene")
-  fila_short = crea_fila("short-")
-  fila_long = crea_fila("long-")
+  fila_short = CreaFila("short-", vocali, path, x_pos, all_globuli)
+  fila_long = CreaFila("long-", vocali, path, x_pos, all_globuli)
   pulsantone = crea_pulsantone()
   pulsantone:play()
+
+  explainer = Explainer.new()
   self.view:insert(back_btn)
   self.view:insert(fila_short)
   self.view:insert(fila_long)
