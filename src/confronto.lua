@@ -1,5 +1,3 @@
-require('src.utils.button_to_go')
-
 local Storyboard = require( "storyboard" )
 local Glob = require("src.confronto.glob")
 local Letter = require("src.confronto.Letter")
