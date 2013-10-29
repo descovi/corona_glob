@@ -132,7 +132,7 @@ function menu_iniziale:createScene( event )
   ascolta_tutti_label.width = size
   ascolta_tutti_label.height = size
   ascolta_tutti_label.x = 500
-  ascolta_tutti_label.y = 650
+  ascolta_tutti_label.y = 680
   manipulate_order_invert_group(all_globuli, all_globuli_order_inverted)
 end
 
