@@ -15,7 +15,7 @@ local all_globuli_order_inverted = {}
 local ascolta_tutti_label = {}
 local animazione_partita = false
 
-function create_globulo( file_name , vocale)
+function create_globulo( file_name , vocale, _audio_url)
   local globulo_size = 150
   -- dati
   local path = 'media/menu_iniziale/'
@@ -35,6 +35,9 @@ function create_globulo( file_name , vocale)
   
   globulo:addEventListener('tap',play_sound)
   globulo:addEventListener('tap',play_anim)
+  local path_audio = 'media/audio/vocali/'
+  local audio_o = audio.loadSound( path_audio .. _audio_url .. '.mp3' )
+  globulo.audio_url = audio_o
   counter = counter+1
   return globulo
 end
@@ -98,67 +101,30 @@ end
 
 --Create the scene
 function menu_iniziale:createScene( event )
-
   group = self.view
   group:insert(group_1)
   group:insert(group_2)
   group_1.y = 50
   group_2.y = 250
-
-  -- Loading sound
-  local path_audio = 'media/audio/vocali/'
-  local a_l = audio.loadSound( path_audio .. 'A_L.mp3' )
-  local a_s = audio.loadSound( path_audio .. 'A_S.mp3' )
-  local e_l = audio.loadSound( path_audio .. 'E_L.mp3' )
-  local e_s = audio.loadSound( path_audio .. 'E_S.mp3' )
-  local i_l = audio.loadSound( path_audio .. 'I_L.mp3' )
-  local i_s = audio.loadSound( path_audio .. 'I_S.mp3' )
-  local o_l = audio.loadSound( path_audio .. 'O_L.mp3' )
-  local o_s = audio.loadSound( path_audio .. 'O_S.mp3' )
-  local u_l = audio.loadSound( path_audio .. 'U_L.mp3' )
-  local u_s = audio.loadSound( path_audio .. 'U_S.mp3' )
-
-
+  y_pos_letter = 260
   -- LONG
-  y_pos_letter = 460
-  -- a
-  a_long = create_globulo('long-a',vocali[1])
-  a_long.audio_url = a_l
-  create_button_to_go(a_long, vocali[1], y_pos_letter)
-  -- e
-  e_long = create_globulo('long-e',vocali[2])
-  e_long.audio_url = e_l
-  create_button_to_go(e_long, vocali[2], y_pos_letter)
-  -- i
-  i_long = create_globulo('long-i',vocali[3]) 
-  i_long.audio_url = i_l
-  create_button_to_go(i_long, vocali[3], y_pos_letter)
-  -- o
-  o_long = create_globulo('long-o',vocali[4])
-  o_long.audio_url = o_l
-  create_button_to_go(o_long, vocali[4], y_pos_letter)
-  -- u
-  u_long = create_globulo('long-u',vocali[5])
-  u_long.audio_url = u_l
-  create_button_to_go(u_long, vocali[5], y_pos_letter)
-
+  a_long = create_globulo('long-a',vocali[1], 'A_L')
+  e_long = create_globulo('long-e',vocali[2], 'E_L')
+  i_long = create_globulo('long-i',vocali[3], 'I_L') 
+  o_long = create_globulo('long-o',vocali[4], 'O_L')
+  u_long = create_globulo('long-u',vocali[5], 'U_L')
   -- SHORT
-  -- a
-  a_short = create_globulo('short-a',vocali[1])
-  a_short.audio_url = a_s
-  -- e
-  e_short = create_globulo('short-e',vocali[2])
-  e_short.audio_url = e_s
-  -- i
-  i_short = create_globulo('short-i',vocali[3])
-  i_short.audio_url = i_s
-  -- o
-  o_short = create_globulo('short-o',vocali[4])
-  o_short.audio_url = o_s
-  -- u
-  u_short = create_globulo('short-u',vocali[5])
-  u_short.audio_url = u_s
-
+  a_short = create_globulo('short-a',vocali[1], 'A_S')
+  e_short = create_globulo('short-e',vocali[2], 'E_S')
+  i_short = create_globulo('short-i',vocali[3], 'I_S')
+  o_short = create_globulo('short-o',vocali[4], 'O_S')
+  u_short = create_globulo('short-u',vocali[5], 'U_S')
+  -- Button to go
+  create_button_to_go(a_long, vocali[1], y_pos_letter)
+  create_button_to_go(e_long, vocali[2], y_pos_letter)
+  create_button_to_go(i_long, vocali[3], y_pos_letter)
+  create_button_to_go(o_long, vocali[4], y_pos_letter)
+  create_button_to_go(u_long, vocali[5], y_pos_letter)
   -- ascolta tutti
   ascolta_tutti_label = display.newImage(group,"media/ascolta_tutti.png")
   ascolta_tutti_label:addEventListener("tap",ascolta_tutti)
@@ -166,10 +132,8 @@ function menu_iniziale:createScene( event )
   ascolta_tutti_label.width = size
   ascolta_tutti_label.height = size
   ascolta_tutti_label.x = 500
-  ascolta_tutti_label.y = 500
-
+  ascolta_tutti_label.y = 650
   manipulate_order_invert_group(all_globuli, all_globuli_order_inverted)
-
 end
 
 --Add the createScene listener
