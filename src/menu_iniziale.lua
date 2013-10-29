@@ -70,7 +70,7 @@ function setup_ascolta_tutti()
   ascolta_tutti_label.width = size
   ascolta_tutti_label.height = size
   ascolta_tutti_label.x = 500
-  ascolta_tutti_label.y = 680
+  ascolta_tutti_label.y = 700
   manipulate_order_invert_group(all_globuli, all_globuli_order_inverted)
 end
 
