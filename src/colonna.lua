@@ -17,7 +17,9 @@ local gioca       = display.newText("gioca",100,480,"Hiragino Maru Gothic Pro",4
 
 local function go_bk(event) 
   -- Storyboard.removeAllScene()
-  Storyboard.gotoScene( "src.confronto" )
+  Storyboard.gotoScene( "src.confronto",{
+    effect = "slideDown",
+    time = 800} )
 end
 
 local function go_up(event)

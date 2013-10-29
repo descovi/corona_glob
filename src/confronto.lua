@@ -22,20 +22,9 @@ end
 
 function goto_menuiniziale(e)
   Storyboard.removeAll()
-  Storyboard.gotoScene("src.menu_iniziale")
-end
-
-function go_to_confronto_lunga(event)
-  _G.tipo = 'lunga'
-  Storyboard.removeAll()
-  Storyboard.gotoScene("src.colonna")
-end
-
-function go_to_confronto_corto(event)
-  _G.tipo = 'corta'
-  _G.combinazione = _G.vocale.."_".._G.vocale
-  Storyboard.removeAll()
-  Storyboard.gotoScene("src.colonna")
+  Storyboard.gotoScene("src.menu_iniziale",{
+    effect = "slideDown",
+    time = 800})
 end
 
 function createTornaIndietro(group)
@@ -77,7 +66,7 @@ end
 function links_clicked(event)
   _G.combinazione =  _G.vocale .. "_" .. event.target.text_raw
   Storyboard.removeScene("src.colonna")
-  Storyboard.gotoScene("src.colonna")
+  Storyboard.gotoScene("src.colonna",{effect="slideUp",time = 800})
 end
 
 function setupListener()

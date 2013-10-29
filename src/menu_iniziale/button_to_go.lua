@@ -5,24 +5,32 @@ ButtonToGo.new = function(view,vocale,x_pos,index)
   button_to_go.vocale = vocale[index]
   button_to_go.change_color_text = function (self)
     if self.vocale == "a" then
-      self.testo:setTextColor(252, 39, 69)
+      local g = graphics.newGradient(
+  { 252, 39, 69 },
+  {252, 39, 69 },
+  "top" )
+      local h = graphics.newGradient(
+  { 252, 39, 69 },
+  { 159,  250, 11 },
+  "left" )
+      self.testo:setTextColor(g)
       self.racconto:setTextColor( 159,  250, 11 )
     elseif self.vocale == "e" then
       self.testo:setTextColor(16,  79,  253)
       self.racconto:setTextColor(253, 78, 18)
-      self.racconto.text = "bed/bead"
+      self.racconto.text = "bed bead"
     elseif self.vocale == "i" then
       self.testo:setTextColor(38,  213, 14)
       self.racconto:setTextColor( 255 , 45 , 132  )
-      self.racconto.text = "bit/bite"
+      self.racconto.text = "bit bite"
     elseif self.vocale == "o" then
       self.testo:setTextColor(250, 49,  168)
       self.racconto:setTextColor( 40, 160, 253 )
-      self.racconto.text = "hop/hope"
+      self.racconto.text = "hop hope"
     elseif self.vocale == "u" then
       self.testo:setTextColor(233, 224, 6)
       self.racconto:setTextColor(114, 62,  255)
-      self.racconto.text = "cub/cube"
+      self.racconto.text = "cub cube"
     end
   end
   button_to_go.setup_text = function (self )
@@ -33,7 +41,7 @@ ButtonToGo.new = function(view,vocale,x_pos,index)
       "Hiragino Maru Gothic Pro", 
       80
     )
-    self.racconto = display.newText("fad/fade",
+    self.racconto = display.newText("fad fade",
       self.cerchio.x-60,
       self.cerchio.y+80,
       "Hiragino Maru Gothic Pro",

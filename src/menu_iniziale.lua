@@ -39,7 +39,10 @@ end
 function go_to(event)
   _G.vocale = event.target.vocale
   storyboard.removeScene("src.confronto")
-  storyboard.gotoScene("src.confronto")
+  storyboard.gotoScene("src.confronto",{
+    effect = "slideUp",
+    time = 800}
+  )
 end
 
 -- timeline audio
