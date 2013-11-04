@@ -8,5 +8,16 @@ settings =
  			"landscapeLeft", "landscapeRight"
 		}
 	},
-
+ iphone =
+    {
+        plist =
+        {
+            UIApplicationExitsOnSuspend = false,
+            UIPrerenderedIcon = false,
+            UIStatusBarHidden = true,
+            UIAppFonts = {"hiragino.otf"},
+            CFBundleIconFiles = { },
+            MinimumOSVersion = "5.1.0",
+        }
+    }
 }
