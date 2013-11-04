@@ -4,58 +4,59 @@ ButtonToGo.new = function(view,vocale,x_pos,index)
   button_to_go.cerchio_container = display.newGroup()
   button_to_go.vocale = vocale[index]
   button_to_go.change_color_text = function (self)
+    local h = {}
     if self.vocale == "a" then
-      local g = graphics.newGradient(
-  { 252, 39, 69 },
-  {252, 39, 69 },
-  "top" )
-      local h = graphics.newGradient(
-  { 252, 39, 69 },
-  { 159,  250, 11 },
-  "left" )
+      local g = graphics.newGradient({ 252, 39, 69 },{252, 39, 69 }, "top")
+      h = graphics.newGradient({ 252, 39, 69 },{ 159,  250, 11 }, "left")
       self.testo:setTextColor(g)
-      self.racconto:setTextColor( 159,  250, 11 )
+      self.racconto:setTextColor(h)
     elseif self.vocale == "e" then
+      h = graphics.newGradient({16,  79,  253},{253, 78, 18}, "left")
       self.testo:setTextColor(16,  79,  253)
-      self.racconto:setTextColor(253, 78, 18)
-      self.racconto.text = "bed bead"
+      self.racconto:setTextColor(h)
+      self.racconto.text = "bed bead\ncheck cheek"
     elseif self.vocale == "i" then
+      h = graphics.newGradient({38,  213, 14},{255 , 45 , 132 }, "left")
       self.testo:setTextColor(38,  213, 14)
-      self.racconto:setTextColor( 255 , 45 , 132  )
+      self.racconto:setTextColor(h)
       self.racconto.text = "bit bite"
     elseif self.vocale == "o" then
+      h = graphics.newGradient({250, 49,  168},{40, 160, 253 }, "left")
       self.testo:setTextColor(250, 49,  168)
-      self.racconto:setTextColor( 40, 160, 253 )
-      self.racconto.text = "hop hope"
+      self.racconto:setTextColor(h)
+      self.racconto.text = "block bloke\nboss boast"
     elseif self.vocale == "u" then
+      h = graphics.newGradient({233, 224, 6},{114, 62,  255}, "left")
       self.testo:setTextColor(233, 224, 6)
-      self.racconto:setTextColor(114, 62,  255)
+      self.racconto:setTextColor(h)
       self.racconto.text = "cub cube"
     end
+    self.racconto.align = "center"
   end
   button_to_go.setup_text = function (self )
     self.testo = display.newText(
       self.vocale, 
       self.cerchio.x-30, 
       self.cerchio.y-60, 
-      "Hiragino Maru Gothic Pro", 
+      _G.font, 
       80
     )
-    self.racconto = display.newText("fad fade",
+    self.racconto = display.newText("fad fade\nbat bait",
       self.cerchio.x-60,
       self.cerchio.y+80,
-      "Hiragino Maru Gothic Pro",
-      30
+      300,
+      100,
+      _G.font_bold,
+      28
     )
     self.racconto:setReferencePoint(display.CenterLeftReferencePoint)
-
     self.testo:setTextColor(0, 0, 0)
     self.testo:setReferencePoint( display.CenterReferencePoint )
     self.testo.x = self.cerchio.x
     self.testo.y = self.cerchio.y + 16
   end
   button_to_go.setup = function (self,x_pos,index)
-    self.cerchio = display.newCircle(x_pos[index]+75, 500, 60)
+    self.cerchio = display.newCircle(x_pos[index]+75, 450, 60)
     self.cerchio:setFillColor(255, 255, 255, 255)
     self.cerchio.strokeWidth = 0
   end

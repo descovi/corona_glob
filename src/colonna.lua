@@ -12,7 +12,7 @@ local arrow_up    = Arrow.newSprite()
 local arrow_dn    = Arrow.newSprite()
 local vocabolario = Vocabolario.newSprite()
 local anim        = Anim.newSprite()
-local gioca       = display.newText("gioca",100,480,"Hiragino Maru Gothic Pro",40)
+local gioca       = display.newText("gioca",100,480,_G.font,40)
 
 
 local function go_bk(event) 

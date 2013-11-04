@@ -4,6 +4,8 @@ inspect = require 'src.utils.inspect.inspect'
 _G.vocale = "a"
 _G.tipo = "lunga"
 _G.combinazione = "a_e"
+_G.font = "HiraKakuProN-W3"
+_G.font_bold = "HiraKakuProN-W6"
 
 local storyboard = require "storyboard"
 display.setStatusBar( display.HiddenStatusBar )
@@ -14,4 +16,4 @@ storyboard.isDebug = true
 storyboard.gotoScene( "src.menu_iniziale" )
 
 local gurgle = audio.loadSound('media/audio/GURGLE.wav')
--- audio.play( gurgle )
+audio.play( gurgle )

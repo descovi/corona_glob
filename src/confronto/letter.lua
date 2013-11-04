@@ -6,7 +6,7 @@ Letter.new = function(vocale)
     vocale,
     display.contentWidth/2-10,
     display.contentHeight-150,
-    "Hiragino Maru Gothic Pro",
+    _G.font,
     60
   )
 

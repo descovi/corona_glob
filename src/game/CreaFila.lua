@@ -6,7 +6,7 @@ function CreaFila(long_or_short, vocali, path, x_pos, all_globuli)
     globo.x = x_pos[i]*1.5 + globo.width
     globo.vocale = long_or_short..vocali[i]
     -- label
-    local label = display.newText(vocali[i], 100,480,"Hiragino Maru Gothic Pro",30)
+    local label = display.newText(vocali[i], 100,480,_G.font,30)
     label.x = globo.x
     -- sound
     local path_audio = 'media/audio/vocali/'

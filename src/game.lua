@@ -22,12 +22,12 @@ local back_btn = button_to_go_back()
 --back_btn.height = 60
 
 -- short long
-local short = display.newText("short", 830,140,"Hiragino Maru Gothic Pro",30)
-local long = display.newText("long", 830,580,"Hiragino Maru Gothic Pro",30)
+local short = display.newText("short", 830,140,_G.font,30)
+local long = display.newText("long", 830,580,_G.font,30)
 
 -- punteggio massimo / record
 local size_table_score        = 20
-local font_table_score        = "Hiragino Maru Gothic Pro"
+local font_table_score        = _G.font
 local record_punteggio_group  = display.newGroup()
 record_punteggio_group.x      = 30 
 record_punteggio_group.y      = 20
@@ -43,7 +43,7 @@ local audio_right= audio.loadSound("media/audio/right.mp3")
 local audio_wrong = audio.loadSound("media/audio/wrong.mp3")
 
 -- tentativi
-local tentativo_debug = display.newText("3", 200, 350, "Hiragino Maru Gothic Pro", 40)
+local tentativo_debug = display.newText("3", 200, 350, _G.font, 40)
 tentativo_debug.alpha = 0
 local tentativi_rimasti = 3
 

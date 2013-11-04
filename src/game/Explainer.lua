@@ -42,7 +42,7 @@ Explainer.new = function()
   end
 
   explainer.setup = function(self)
-    self.group.text_tf = display.newText(self.group, "my text", 100,400,"Hiragino Maru Gothic Pro",30)
+    self.group.text_tf = display.newText(self.group, "my text", 100,400,_G.font,30)
     self.group.alpha = 0
   end
 

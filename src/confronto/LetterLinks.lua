@@ -10,7 +10,7 @@ LetterLinks.new = function(vocale, number)
       vocale,
       display.contentWidth/2,
       display.contentHeight-150,
-      "Hiragino Maru Gothic Pro",
+      _G.font,
       60
     )
     if number == 1 then

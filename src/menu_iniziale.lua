@@ -2,13 +2,13 @@ local ButtonToGo = require 'src.menu_iniziale.button_to_go'
 require 'src.menu_iniziale.manipulate_order'
 
 local storyboard = require ( "storyboard" )
-local Globulo = require("src.menu_iniziale.globulo")
+local Globulo = require("src.menu_iniziale.Globulo")
 local menu_iniziale = storyboard.newScene()
 local vocali = {"a","e","i","o","u"}
 local group
 local group_1 = display.newGroup()
 local group_2 = display.newGroup()
-local y_pos = {350,150}
+--local y_pos = {350,150}
 local x_pos = {0, 100, 200, 300, 400, 0, 100, 200, 300, 400}
 local globulo_x_pos = {}
 local all_globuli = {}
@@ -83,7 +83,7 @@ function menu_iniziale:createScene( event )
   group:insert(group_1)
   group:insert(group_2)
   group_1.y = 50
-  group_2.y = 250
+  group_2.y = 200
   for i=1,#vocali do
     create_globulo('long',vocali[i])
   end
