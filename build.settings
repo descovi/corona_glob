@@ -1,23 +1,25 @@
 settings = 
 {
-	orientation =
- 	{
-		default = "landscapeRight",
- 		supported =
- 		{
- 			"landscapeLeft", "landscapeRight"
-		}
-	},
- iphone =
+  orientation =
+  {
+    default = "landscapeRight",
+    supported =
     {
-        plist =
-        {
-            UIApplicationExitsOnSuspend = false,
-            UIPrerenderedIcon = false,
-            UIStatusBarHidden = true,
-            UIAppFonts = {"hiragino.otf"},
-            CFBundleIconFiles = { },
-            MinimumOSVersion = "5.1.0",
-        }
+      "landscapeLeft", "landscapeRight"
     }
+  },
+  iphone =
+  {
+    plist =
+    {
+      UIApplicationExitsOnSuspend = false,
+      UIPrerenderedIcon = false,
+      UIStatusBarHidden = false,
+      UIAppFonts = {"ヒラギノ明朝 Pro W3.otf","ヒラギノ明朝 Pro W6.otf"},
+      --CFBundleIconFiles = { },
+      MinimumOSVersion = "5.1.0"
+    }
+  }
 }
+
+  
