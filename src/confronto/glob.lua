@@ -27,7 +27,7 @@ Glob.newMovieClip = function(self, vocale, long_or_short, view)
 
   self.glob.createMovieClip = function(self, _anim_list)
     
-    self.movieclip = Movieclip.newAnim(_anim_list)
+    self.movieclip = display.newImage(self.anim_path)--Movieclip.newAnim(_anim_list)
     self.movieclip.name = "glob-movieclip"
     self.movieclip.is_going = false
 
@@ -35,7 +35,7 @@ Glob.newMovieClip = function(self, vocale, long_or_short, view)
 
     self.movieclip.playGlob = function (self)
       self.is_going = true
-      self:playAnimation()
+      --self:playAnimation()
       self:playSound()
       self:dispatchEvent( { name="GlobStartPlay", target=self } )
     end
