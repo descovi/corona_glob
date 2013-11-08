@@ -35,6 +35,7 @@ Anim.newSprite = function()
     }
     anim.sprite = display.newSprite( anim.sheet, anim.sequence_data )
     anim.group:insert(anim.sprite)
+    --- pos
     anim.sprite.x = display.contentWidth  * .5
     anim.sprite.y = display.contentHeight * .5
     anim.sprite:addEventListener("tap", anim.sound_animation_sound)
