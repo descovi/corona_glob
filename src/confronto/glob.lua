@@ -5,46 +5,55 @@ Glob.newMovieClip = function(self, vocale, long_or_short, view)
 
   self.glob = {}
 
-  self.glob.setupAnimationPath = function(self,vocale,long_or_short)
-    local origin_path = "media/menu_iniziale/"
+  self.glob.transform_l_to_long_and_r_to_short = function(long_or_short)
     if long_or_short == 'L' then
-      vocal_type = "long"
-    else
-      vocal_type = "short"
+      return "long"
     end
-    self.anim_path = origin_path..vocal_type.."-".. vocale .."/1.png"
-    self:fill_anim_list()
+    return "short"
   end
 
-  self.glob.fill_anim_list = function(self)
-    self.anim_list = {}
-    for i=1,24 do
-      self.anim_list[i] = string.gsub (self.anim_path, "1", i)
-    end
+  self.glob.path_to_animation = function (self, long_or_short, vocale)
+    local origin_path = "media/menu_iniziale/"
+    local vocal_type = self.transform_l_to_long_and_r_to_short(long_or_short)
+    local path = origin_path..vocal_type.."-".. vocale .."/full.png"
+    return path
   end
 
-  -- -- START MOVIECLIP -- --
+  self.glob.path_to_coords = function (self, long_or_short, vocale)
+    local origin_path = "media.menu_iniziale."
+    local vocal_type = self:transform_l_to_long_and_r_to_short(long_or_short)
+    local path = origin_path..vocal_type.."-".. vocale ..".coords"
+    return path
+  end
+
+  self.glob.setupAnimationPath = function(self, vocale, long_or_short)
+    local sheet_png = self:path_to_animation(long_or_short, vocale)
+    local coords_path = self:path_to_coords(long_or_short, vocale)
+    local SheetInfo = require(coords_path)
+    local coords = SheetInfo.frames
+    local options = {frames=coords, sheetContentWidth = 2048,
+    sheetContentHeight = 2048}
+    local sheet = graphics.newImageSheet(sheet_png, options)
+    local sheet_data = {name="standard", start=1,count=13,loopCount=1}
+    local sprite_sheet = display.newSprite(sheet, sheet_data)
+    self.movieclip = sprite_sheet
+  end
+
 
   self.glob.createMovieClip = function(self, _anim_list)
-    
-    self.movieclip = display.newImage(self.anim_path)--Movieclip.newAnim(_anim_list)
     self.movieclip.name = "glob-movieclip"
     self.movieclip.is_going = false
 
     -- playGlob (sound and animation)
-
     self.movieclip.playGlob = function (self)
       self.is_going = true
-      --self:playAnimation()
+      self:playAnimation()
       self:playSound()
-      self:dispatchEvent( { name="GlobStartPlay", target=self } )
+      self:dispatchEvent({name="GlobStartPlay",target=self})
     end
 
     self.movieclip.playAnimation = function ( self )
-      local myclosure = function() 
-        self:nextFrame()
-      end
-      timer.performWithDelay(5,myclosure,24)
+      self:play()
     end
 
     self.movieclip.playSound = function (self)
@@ -91,14 +100,12 @@ Glob.newMovieClip = function(self, vocale, long_or_short, view)
     end
 
     self.movieclip:setPosition()
-    self.movieclip:setSize(500)
+    --self.movieclip:setSize(500)
   end
-
-  -- -- # END MOVIECLIP -- --
 
   self.glob.setupSound = function(self,path)
     local path_audio = 'media/audio/vocali/' .. path
-    self.movieclip.audio = audio.loadSound(path_audio)
+    self.movieclip.audio = audio.loadSound(path_audio)  
   end
 
   self.glob.tapped = function(event)
@@ -111,15 +118,17 @@ Glob.newMovieClip = function(self, vocale, long_or_short, view)
     end
   end
 
-  self.glob.create = function(self, vocale, long_or_short, view)
-    local vocale_upper = vocale:upper()
-    local sound_path = vocale_upper..'_'..long_or_short..'.mp3'
-    self:setupAnimationPath(vocale, long_or_short)
+  self.glob.create = function(self, _vocale, _long_or_short, _view)
+    local vocale_upper = _vocale:upper()
+    local sound_path = vocale_upper..'_'.._long_or_short..'.mp3'   
+    self:setupAnimationPath(_vocale, _long_or_short)
+
     self:createMovieClip(self.anim_list)
+    --self:setupAnimation()
     self:setupSound(sound_path)
     self.movieclip:addEventListener("tap", self.tapped)
     
-    view:insert(self.movieclip)
+    _view:insert(self.movieclip)
     return self.movieclip
   end
 
