@@ -23,7 +23,8 @@ Anim.newSprite = function()
   function anim.load_image()
     -- reload path
     anim.animation_path = 'media/colonna'..anim.current_combination
-    anim.path = anim.animation_path..anim.counter.."/full.png"
+    anim.animation_path_counter = anim.animation_path..anim.counter
+    anim.path = anim.animation_path_counter.."/full.png"
     anim.audio_path = 'media/audio'..anim.current_combination
     anim.audio_1 = audio.loadSound(anim.audio_path..anim.counter..'/1.mp3')
     anim.audio_2 = audio.loadSound(anim.audio_path..anim.counter..'/2.mp3')
