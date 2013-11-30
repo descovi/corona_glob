@@ -106,7 +106,7 @@ Glob.newMovieClip = function(self, vocale, long_or_short, view)
       end})
     end
 
-    --self.movieclip:setPosition()
+    self.movieclip:setPosition()
     --self.movieclip:setSize(500)
   end
 
