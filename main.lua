@@ -16,4 +16,4 @@ storyboard.isDebug = true
 storyboard.gotoScene( "src.confronto" )
 
 local gurgle = audio.loadSound('media/audio/GURGLE.wav')
-audio.play( gurgle )
+--audio.play( gurgle )

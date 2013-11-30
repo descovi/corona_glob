@@ -1,6 +1,5 @@
 local Storyboard = require("storyboard")
 local game = Storyboard.newScene()
-local movieclip = require('src.utils.movieclip')
 local Stat = require('src.utils.Stat')
 local Pulsantone = require('src.game.Pulsantone')
 local Explainer = require('src.game.Explainer')
