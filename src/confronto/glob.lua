@@ -69,16 +69,11 @@ Glob.newMovieClip = function(self, vocale, long_or_short, view)
       end})
     end
 
-    -- posizion and size
+    -- posizion
 
     self.movieclip.setPosition = function(self,size)
       self.y = display.contentHeight / 2
       self.x = display.contentWidth / 2
-    end
-
-    self.movieclip.setSize = function(self,size)
-      self.width = size
-      self.height = size
     end
 
     -- fadeOuting
@@ -107,7 +102,6 @@ Glob.newMovieClip = function(self, vocale, long_or_short, view)
     end
 
     self.movieclip:setPosition()
-    --self.movieclip:setSize(500)
   end
 
   self.glob.setupSound = function(self,path)
