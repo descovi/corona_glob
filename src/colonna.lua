@@ -24,7 +24,8 @@ end
 
 local function go_up(event)
   anim.prev()
-  vocabolario.set(anim.counter)
+  --vocabolario.set(anim.counter) # x quando il vocabolario non era ad immagini
+  vocabolario.update_current_path(anim.animation_path_counter)
   if (anim.counter <= 1) then
     arrow_up.hide()
   end
@@ -34,7 +35,8 @@ end
 
 local function go_dn(event) 
   anim.next()
-  vocabolario.set(anim.counter)
+  --vocabolario.set(anim.counter) # x quando il vocabolario non era ad immagini
+  vocabolario.update_current_path(anim.animation_path_counter)
   if (anim.counter >= anim.limit) then
     arrow_dn.hide()
     gioca.isVisible = true
@@ -78,6 +80,7 @@ function colonna:createScene( event )
   print(background_path)
   print("-------")
   print("")
+  vocabolario.update_current_path(anim.animation_path_counter)
 end
 
 colonna:addEventListener( "createScene" , colonna )
