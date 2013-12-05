@@ -19,6 +19,7 @@ Vocabolario.newSprite = function()
 
   group.create_white_screen = function(container)
     local white_screen = display.newRect( container, 0, 0, w, h)
+    white_screen:setFillColor(0, 0, 0)
     white_screen.alpha = 0
     container.white_screen = white_screen
     container:insert(white_screen)
