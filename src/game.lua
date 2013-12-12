@@ -2,7 +2,6 @@ local Storyboard = require("storyboard")
 local game = Storyboard.newScene()
 local Stat = require('src.utils.Stat')
 local Pulsantone = require('src.game.Pulsantone')
-local Explainer = require('src.game.Explainer')
 
 require('src.game.CreaFila')
 
@@ -10,7 +9,7 @@ local pulsantone = {}
 local vocali = {"a","e","i","o","u"}
 local x_pos = {0, 100, 200, 300, 400}
 local all_globuli = {}
-local explainer = {}
+
 local path = 'media/menu_iniziale/'
 
 local globulo_scelto
@@ -20,9 +19,7 @@ local back_btn = button_to_go_back()
 --back_btn.width = 60
 --back_btn.height = 60
 
--- short long
-local short = display.newText("short", 830,140,_G.font,30)
-local long = display.newText("long", 830,580,_G.font,30)
+
 
 -- punteggio massimo / record
 local size_table_score        = 20
@@ -109,7 +106,7 @@ function answer_clicked_is_wrong()
   print("answer_clicked_is_wrong")
   print(globulo_scelto.vocale)
   print("----")
-  explainer:fade_in_out(globulo_scelto.vocale)
+  pulsantone.explainer:fade_in_out(globulo_scelto.vocale)
   audio.play(audio_wrong, {onComplete=fx_true_or_right_handler })
   punteggio:setTextColor(255,0,0,255)
   punteggio.text = score
@@ -145,20 +142,22 @@ function game:createScene(event)
   print("game:createScene")
   fila_short = CreaFila("short-", vocali, path, x_pos, all_globuli)
   fila_long = CreaFila("long-", vocali, path, x_pos, all_globuli)
+  fila_group = display.newGroup()
+  fila_group:insert(fila_short)
+  fila_group:insert(fila_long)
+  fila_group.y = 300
+
   pulsantone = crea_pulsantone()
   --pulsantone:play()
 
-  explainer = Explainer.new()
   self.view:insert(back_btn)
-  self.view:insert(fila_short)
-  self.view:insert(fila_long)
+  self.view:insert(fila_group)
   self.view:insert(punteggio)
-  self.view:insert(short)
-  self.view:insert(long)
+
   self.view:insert(pulsantone)
   self.view:insert(record_punteggio_group)
   fila_short.y = 140
-  fila_long.y = 570
+  fila_long.y = 300
   back_btn:addEventListener("tap", go_bk)
 end
 
