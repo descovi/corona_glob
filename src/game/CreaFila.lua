@@ -6,25 +6,40 @@ function CreaFila(long_or_short, vocali, path, x_pos, all_globuli)
     globo.x = x_pos[i]*1.5 + globo.width
     globo.vocale = long_or_short..vocali[i]
     -- label
-    local label = display.newText(vocali[i], 100,480,_G.font,30)
-    label.x = globo.x
+    
+
+    
     -- sound
     local path_audio = 'media/audio/vocali/'
     if (long_or_short=="long-") then
       local audio = audio.loadSound( path_audio .. string.upper(vocali[i]) .. '_L.mp3')
       globo.audio = audio
-      label.y = globo.y+100
+    
     else
       local audio = audio.loadSound( path_audio .. string.upper(vocali[i]) .. '_S.mp3')
       globo.audio = audio
-      label.y = globo.y-100
+      
     end
+
+
     -- tap
     globo:addEventListener("tap", answer_clicked)
     -- insert
     table.insert(all_globuli,globo)
     group:insert(globo)
-    group:insert(label)
+
+    if long_or_short == "short-" then
+    local label = display.newText(vocali[i], 100,480,_G.font,30)
+      label.x = globo.x
+      label.y = globo.y+100
+      label.y = globo.y-100
+      group:insert(label)
+    end
+
+    
   end
+  -- short long
+  local label = display.newText(group, long_or_short:gsub("-",""), group.x+group.width+80,group.y,_G.font,30)
+
   return group
 end
