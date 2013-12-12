@@ -4,8 +4,8 @@ inspect = require 'src.utils.inspect.inspect'
 _G.vocale = "a"
 _G.tipo = "lunga"
 _G.combinazione = "a_e"
-_G.font = "HiraKakuProN-W3"
-_G.font_bold = "HiraKakuProN-W6"
+_G.font = "HiraginoSansGB-W3"
+_G.font_bold = "HiraginoSansGB-W6"
 
 local storyboard = require "storyboard"
 display.setStatusBar( display.HiddenStatusBar )
@@ -17,3 +17,19 @@ storyboard.gotoScene( "src.game" )
 
 local gurgle = audio.loadSound('media/audio/GURGLE.wav')
 --audio.play( gurgle )
+
+
+
+
+
+
+
+
+
+-- Code to have Corona display the font names found
+local fonts = native.getFontNames()
+
+for k, v in ipairs(fonts) do
+     print(k, v)
+end
+---------------------------------------------------------
