@@ -133,7 +133,7 @@ end
 function crea_pulsantone()
   local pulsantone = Pulsantone.new()
   pulsantone:addEventListener("tap", play_audio_globulo_attuale)
-  choose_random_globulo_and_play_audio()
+  timer.performWithDelay( 1000, choose_random_globulo_and_play_audio)
   return pulsantone
 end
 
@@ -146,7 +146,7 @@ function game:createScene(event)
   fila_short = CreaFila("short-", vocali, path, x_pos, all_globuli)
   fila_long = CreaFila("long-", vocali, path, x_pos, all_globuli)
   pulsantone = crea_pulsantone()
-  pulsantone:play()
+  --pulsantone:play()
 
   explainer = Explainer.new()
   self.view:insert(back_btn)
