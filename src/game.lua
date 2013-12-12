@@ -25,14 +25,15 @@ local back_btn = button_to_go_back()
 local size_table_score        = 20
 local font_table_score        = _G.font
 local record_punteggio_group  = display.newGroup()
-record_punteggio_group.x      = 30 
-record_punteggio_group.y      = 20
+
 local punteggio_massimo       = 0
 local punteggio_label         = display.newText(record_punteggio_group, "score",  0,   0,  font_table_score, size_table_score)
-local punteggio               = display.newText(record_punteggio_group, "0",      90,  20, font_table_score, size_table_score)
-local record_label            = display.newText(record_punteggio_group, "record", 150, 0,  font_table_score, size_table_score)
+local punteggio               = display.newText(record_punteggio_group, "0",      punteggio_label.width+10,  0, font_table_score, size_table_score)
+local record_label            = display.newText(record_punteggio_group, "record", punteggio.x+punteggio.width+20, 0,  font_table_score, size_table_score)
 local record_from_data        = Stat.read()
-local record                  = display.newText(record_punteggio_group, record_from_data,      220, 0,  font_table_score, size_table_score)
+local record                  = display.newText(record_punteggio_group, record_from_data, record_label.x+40, 0,  font_table_score, size_table_score)
+record_punteggio_group.x      = 100 
+record_punteggio_group.y      = 30
 
 -- audio - right - wrong
 local audio_right= audio.loadSound("media/audio/right.mp3")
@@ -82,6 +83,16 @@ function fx_true_or_right_handler(event)
   blocca_interazione = false
 end
 
+function animate_score()
+  local time = 200
+  local function restore()
+     transition.to(punteggio,{time=time,xScale=1,yScale=1})
+  end
+
+  transition.to(punteggio,{time=time,xScale=1.5,yScale=1.5,onComplete=restore})
+
+end
+
 function answer_clicked_is_correct()
   print "Giusto!"
   score = score+1
@@ -93,9 +104,18 @@ function answer_clicked_is_correct()
       record.text = punteggio_massimo
     end
   end
+
+
+      -- score
+      if score > 9 then
+        punteggio.x = punteggio.x + 5
+      end
+      animate_score()
+      -- # score
   audio.play(audio_right, {onComplete=choose_random_globulo_and_play_audio })
   punteggio:setTextColor(0,255,0,255)
   punteggio.text = score
+  
 end
 
 function answer_clicked_is_wrong()
@@ -152,7 +172,7 @@ function game:createScene(event)
 
   self.view:insert(back_btn)
   self.view:insert(fila_group)
-  self.view:insert(punteggio)
+  
 
   self.view:insert(pulsantone)
   self.view:insert(record_punteggio_group)
