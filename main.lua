@@ -4,8 +4,8 @@ inspect = require 'src.utils.inspect.inspect'
 _G.vocale = "a"
 _G.tipo = "lunga"
 _G.combinazione = "a_e"
-_G.font = "HiraginoSansGB-W3"
-_G.font_bold = "HiraginoSansGB-W6"
+_G.font = "HiraMaruPro-W4"
+_G.font_bold = "HiraKakuStdN-W8"
 
 local storyboard = require "storyboard"
 display.setStatusBar( display.HiddenStatusBar )
@@ -13,7 +13,7 @@ display.setStatusBar( display.HiddenStatusBar )
 -- Create a storyboard scene for this module
 local scene = storyboard.newScene()
 storyboard.isDebug = true
-storyboard.gotoScene( "src.game" )
+storyboard.gotoScene( "src.menu_iniziale" )
 
 local gurgle = audio.loadSound('media/audio/GURGLE.wav')
 --audio.play( gurgle )
