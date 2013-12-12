@@ -1,5 +1,6 @@
 Globulo = {}
 Globulo.anim_is_going = false
+
 Globulo.new = function(file_name, _audio_url)
 
   globulo_container = display.newGroup()

@@ -8,57 +8,84 @@ ButtonToGo.new = function(view,vocale,x_pos,index)
     if self.vocale == "a" then
       local g = graphics.newGradient({ 252, 39, 69 },{252, 39, 69 }, "top")
       h = graphics.newGradient({ 252, 39, 69 },{ 159,  250, 11 }, "left")
-      self.testo:setTextColor(g)
+      --self.testo:setTextColor(g)
       self.racconto:setTextColor(h)
     elseif self.vocale == "e" then
       h = graphics.newGradient({16,  79,  253},{253, 78, 18}, "left")
-      self.testo:setTextColor(16,  79,  253)
+      --self.testo:setTextColor(16,  79,  253)
       self.racconto:setTextColor(h)
       self.racconto.text = "bed bead\ncheck cheek"
     elseif self.vocale == "i" then
       h = graphics.newGradient({38,  213, 14},{255 , 45 , 132 }, "left")
-      self.testo:setTextColor(38,  213, 14)
+      --self.testo:setTextColor(38,  213, 14)
       self.racconto:setTextColor(h)
       self.racconto.text = "bit bite"
     elseif self.vocale == "o" then
       h = graphics.newGradient({250, 49,  168},{40, 160, 253 }, "left")
-      self.testo:setTextColor(250, 49,  168)
+      --self.testo:setTextColor(250, 49,  168)
       self.racconto:setTextColor(h)
       self.racconto.text = "block bloke\nboss boast"
     elseif self.vocale == "u" then
       h = graphics.newGradient({233, 224, 6},{114, 62,  255}, "left")
-      self.testo:setTextColor(233, 224, 6)
+     -- self.testo:setTextColor(233, 224, 6)
       self.racconto:setTextColor(h)
       self.racconto.text = "cub cube"
     end
     self.racconto.align = "center"
   end
   button_to_go.setup_text = function (self )
-    self.testo = display.newText(
-      self.vocale, 
-      self.cerchio.x-30, 
-      self.cerchio.y-60, 
-      _G.font, 
-      80
-    )
-    self.racconto = display.newText("fad fade\nbat bait",
-      self.cerchio.x-60,
-      self.cerchio.y+80,
-      300,
-      100,
-      _G.font_bold,
-      28
-    )
-    self.racconto:setReferencePoint(display.CenterLeftReferencePoint)
-    self.testo:setTextColor(0, 0, 0)
+    
+    local options_testo = 
+    {
+      text = self.vocale,
+      x = 0,
+      y = 0,
+      font = _G.font_bold,
+      fontSize = 30
+
+    }
+    
+    local options_racconto = 
+    {
+      text = "fad fade\nbat bait",     
+      x = self.cerchio.x,
+      y = self.cerchio.y+80,
+      width = 300,
+      height = 100,
+      font = _G.font_bold,
+      fontSize = 14,
+      align = "center"
+    }
+    
+    self.testo = display.newText(options_testo)
     self.testo:setReferencePoint( display.CenterReferencePoint )
-    self.testo.x = self.cerchio.x
-    self.testo.y = self.cerchio.y + 16
+    self.testo.x = self.cerchio.x + 2
+    self.testo.y = self.cerchio.y + 6
+
+    self.racconto = display.newText(options_racconto)
+    self.racconto:setReferencePoint( display.CenterReferencePoint )
+    self.racconto.x = self.cerchio.x
+    self.racconto.y = self.cerchio.y + 120
+
+    self.testo:setTextColor(0, 0, 0)
+    
   end
   button_to_go.setup = function (self,x_pos,index)
-    self.cerchio = display.newCircle(x_pos[index]+75, 450, 60)
-    self.cerchio:setFillColor(255, 255, 255, 255)
-    self.cerchio.strokeWidth = 0
+    --self.cerchio = display.newCircle(x_pos[index]+75, 450, 60)
+    --self.cerchio:setFillColor(255, 255, 255, 255)
+    --self.cerchio.strokeWidth = 0
+    local widget = require( "widget" )
+
+
+     self.cerchio = widget.newButton
+    {
+        defaultFile = "media/menu_iniziale/background-button-white/default.png",
+        overFile = "media/menu_iniziale/background-button-white/over.png",
+    }
+
+    self.cerchio.x = x_pos[index]+75
+    self.cerchio.y = 450
+
   end
   button_to_go.setup_display_list = function(self,view)
     view:insert(self.cerchio_container)
