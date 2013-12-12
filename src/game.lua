@@ -108,7 +108,7 @@ function answer_clicked_is_correct()
 
       -- score
       if score > 9 then
-        punteggio.x = punteggio.x + 5
+        punteggio.x = punteggio.x + 2
       end
       animate_score()
       -- # score
