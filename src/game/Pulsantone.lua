@@ -6,6 +6,8 @@ Pulsantone.new = function()
   pulsantone.group = display.newGroup()
   pulsantone.sprite = {}
   pulsantone.glow = {}
+
+
   pulsantone.setupAnimation = function(self)
     local path = "media/game/globo_asker/coords.png"
     self.sheet = graphics.newImageSheet(path, coords:getSheet())
@@ -35,11 +37,11 @@ Pulsantone.new = function()
     self.sprite.x = display.contentWidth/2 - self.sprite.width/4
     self.sprite.y = display.contentHeight/2+40
   end
+  
   pulsantone.tapped = function ( event )
-    print("bella di badella")
-    pulsantone.group.play()
-    
+    pulsantone.group.play()    
   end
+
   pulsantone.group.play = function(self)
     pulsantone.sprite:play()
     pulsantone:fadeInOutGlow()
