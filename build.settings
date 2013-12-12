@@ -15,7 +15,7 @@ settings =
       UIApplicationExitsOnSuspend = false,
       UIPrerenderedIcon = false,
       UIStatusBarHidden = false,
-      UIAppFonts = {"ヒラギノ明朝 Pro W3.otf","ヒラギノ明朝 Pro W6.otf"},
+      UIAppFonts = {"hiragino_W3.otf","hiragino_W6.otf"},
       --CFBundleIconFiles = { },
       MinimumOSVersion = "5.1.0"
     }
