@@ -33,6 +33,7 @@ ButtonToGo.new = function(view,vocale,x_pos,index)
     end
     self.racconto.align = "center"
   end
+  
   button_to_go.setup_text = function (self )
     
     local options_testo = 
@@ -53,14 +54,14 @@ ButtonToGo.new = function(view,vocale,x_pos,index)
       width = 300,
       height = 100,
       font = _G.font_bold,
-      fontSize = 14,
+      fontSize = 20,
       align = "center"
     }
     
     self.testo = display.newText(options_testo)
     self.testo:setReferencePoint( display.CenterReferencePoint )
     self.testo.x = self.cerchio.x + 2
-    self.testo.y = self.cerchio.y + 6
+    self.testo.y = self.cerchio.y
 
     self.racconto = display.newText(options_racconto)
     self.racconto:setReferencePoint( display.CenterReferencePoint )

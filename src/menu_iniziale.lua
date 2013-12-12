@@ -67,11 +67,16 @@ local function ascolta_tutti(event)
 end
 
 function setup_ascolta_tutti()
-  ascolta_tutti_label = display.newImage(group,"media/ascolta_tutti.png")
+  local widget = require( "widget" )
+  ascolta_tutti_label = widget.newButton
+  {
+      defaultFile = "media/menu_iniziale/play-button/default.png",
+      overFile = "media/menu_iniziale/play-button/over.png",
+  }
   ascolta_tutti_label:addEventListener("tap",ascolta_tutti)
   local size = 100
-  ascolta_tutti_label.width = size
-  ascolta_tutti_label.height = size
+  --ascolta_tutti_label.width = size
+  --ascolta_tutti_label.height = size
   ascolta_tutti_label.x = 500
   ascolta_tutti_label.y = 700
   manipulate_order_invert_group(all_globuli, all_globuli_order_inverted)
