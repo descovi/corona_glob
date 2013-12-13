@@ -41,7 +41,7 @@ function go_to(event)
   storyboard.removeScene("src.confronto")
   storyboard.gotoScene("src.confronto",{
     effect = "slideUp",
-    time = 800}
+    time = 1100}
   )
 end
 
@@ -74,6 +74,7 @@ function setup_ascolta_tutti()
       overFile = "media/menu_iniziale/play-button/over.png",
   }
   ascolta_tutti_label:addEventListener("tap",ascolta_tutti)
+  group:insert(ascolta_tutti_label)
   local size = 100
   --ascolta_tutti_label.width = size
   --ascolta_tutti_label.height = size
@@ -99,6 +100,7 @@ function menu_iniziale:createScene( event )
     ButtonToGo.new(self.view, vocali, globulo_x_pos, i)
   end
   setup_ascolta_tutti()
+  
 end
 
 --Add the createScene listener

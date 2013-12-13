@@ -12,7 +12,7 @@ local arrow_up    = Arrow.newSprite()
 local arrow_dn    = Arrow.newSprite()
 local vocabolario = Vocabolario.newSprite()
 local anim        = Anim.newSprite()
-local gioca       = display.newText("gioca",100,480,_G.font,40)
+local gioca       = display.newText("game",100,480,_G.font,40)
 
 
 local function go_bk(event) 
@@ -57,6 +57,7 @@ function colonna:createScene( event )
   self.view:insert(gioca)
   self.view:insert(back_btn)
   back_btn:addEventListener("tap", go_bk)
+
   back_btn.alpha = 1
   arrow_dn:addEventListener("tap", go_dn)
   arrow_up:addEventListener("tap", go_up)
@@ -81,8 +82,14 @@ function colonna:createScene( event )
   print("-------")
   print("")
   vocabolario.update_current_path(anim.animation_path_counter)
+
+  anim.group.alpha = 0
+  transition.to(anim.group, { time=800, alpha=1, delay=800 })
 end
 
 colonna:addEventListener( "createScene" , colonna )
+colonna:addEventListener( "exitScene" , function (event)
+  print("Exit Scene <----")
+end )
 colonna.name ="colonna"
 return colonna

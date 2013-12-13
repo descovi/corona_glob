@@ -8,8 +8,7 @@ local Combination = require('src.confronto.Combination')
 local letter = {}
 local letter_links_1 = {}
 local letter_links_2 = {}
-local glob_2 = {}
-local glob_1 = {}
+
 local combination = Combination.get(_G.vocale)
 -- storyboard
 local confronto = Storyboard.newScene()
@@ -34,11 +33,8 @@ function createTornaIndietro(group)
 end
 
 function createGlobs(group)
-  glob_1 = Glob:newMovieClip(_G.vocale,'L',group)
-  glob_2 = Glob:newMovieClip(_G.vocale,'S',group)
-  glob_1.opposto = glob_2
-  glob_2.opposto = glob_1
-  glob_1.alpha = 0
+  glob = Glob:new(_G.vocale)
+  group:insert(glob)
 end
 
 function createLetters( group )
@@ -59,9 +55,6 @@ function createLinkLetters( group )
   end
 end
 
-function globPlayedStart(event)
-  letter:zoom()
-end
 
 function links_clicked(event)
   _G.combinazione =  _G.vocale .. "_" .. event.target.text_raw
@@ -70,31 +63,12 @@ function links_clicked(event)
 end
 
 function setupListener()
-  glob_1:addEventListener("GlobFadeOut50%",function()
-    letter_links_1:fadeOut()
-    if (Combination.is_more_than_one()) then
-      letter_links_2:fadeOut()
-    end
-    glob_2:fadeInAndPlay()
-  end)
-  glob_2:addEventListener("GlobFadeOut50%",function()
-    letter_links_1:fadeIn()
-    if (Combination.is_more_than_one()) then
-      letter_links_2:fadeIn()
-    end
-    glob_1:fadeInAndPlay()
-  end)
-
-  glob_1:addEventListener("GlobStartPlay",globPlayedStart)
-  glob_2:addEventListener("GlobStartPlay",globPlayedStart)
-
-  -- setup link 1
+    -- setup link 1
   letter_links_1:addEventListener("tap",links_clicked)
   -- setup link 2
   if (Combination.is_more_than_one()) then
     letter_links_2:addEventListener("tap",links_clicked)
   end
-  --
 end
 
 function confronto:createScene( event )
@@ -103,10 +77,15 @@ function confronto:createScene( event )
   createLinkLetters(self.view)
   setupListener()
   createTornaIndietro(self.view)
+
+  transition.to(glob_2, { time=800, alpha=1, xScale=1,yScale=1,delay=900, transition=easing.inOutElastic })
 end
 
-confronto:addEventListener( "destroyScene", confronto )
-confronto:addEventListener( "enterScene",  confronto )
+--confronto:addEventListener( "destroyScene", confronto )
+--confronto:addEventListener( "enterScene",  confronto )
+confronto:addEventListener("exitScene",function (  )
+  print("Exit Scene <----")
+end)
 confronto:addEventListener( "createScene", confronto )
 
 return confronto

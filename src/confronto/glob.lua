@@ -1,46 +1,39 @@
 local Glob = {}
 
-Glob.newMovieClip = function(self, vocale, long_or_short, view)
+Glob.new = function(self, vocale)
 
   self.glob = {}
 
-  self.glob.transform_l_to_long_and_r_to_short = function(long_or_short)
-    local result
-    if long_or_short == "L" then
-      result = "long"
-    else
-      result = "short"
-    end
-    return result
-  end
-
-  self.glob.path_to_animation = function (self, long_or_short, vocale)
-    local origin_path = "media/menu_iniziale/"
-    local vocal_type = self.transform_l_to_long_and_r_to_short(long_or_short)
-    local path = origin_path..vocal_type.."-".. vocale .."/full.png"
+  self.glob.path_to_animation = function (self, vocale)
+    local origin_path = "media/vocali/"
+    local path = origin_path..vocale ..".png"
     return path
   end
 
-  self.glob.path_to_coords = function (self, long_or_short, vocale)
-    local origin_path = "media.menu_iniziale."
-
-    local vocal_type = self.transform_l_to_long_and_r_to_short(long_or_short)
-
-    
-    local path = origin_path..vocal_type.."-".. vocale ..".coords"
-    
+  self.glob.path_to_coords = function (self, vocale)
+    local origin_path = "media.vocali."
+    local path = origin_path..vocale
     return path
   end
 
-  self.glob.setupAnimationPath = function(self, vocale, long_or_short)
-    local sheet_png = self:path_to_animation(long_or_short, vocale)
-    local coords_path = self:path_to_coords(long_or_short, vocale)
+  self.glob.setupAnimationPath = function(self, vocale)
+    local sheet_png = self:path_to_animation(vocale)
+    local coords_path = self:path_to_coords(vocale)
     
     local SheetInfo = require(coords_path)
    
     local image_sheet = graphics.newImageSheet(sheet_png, SheetInfo:getSheet())
-    local sequence_data = {name="standard", start=1,count=24,loopCount=1,time=1000}
+    local time = 1000
+    local frames_ = {}
+    for i=1,37 do
+      table.insert(frames_,i)
+    end
+    local sequence_data = {
+      {name="standard", start=1,count=37,loopCount=1,time=time},
+      {name="reverse",frames= frames_,time=time, loopCount=1}
+    }
     local sprite_sheet = display.newSprite(image_sheet, sequence_data)
+    sprite_sheet:setSequence("reverse")
     sprite_sheet.x = 100
     sprite_sheet.y = 100
     self.movieclip = sprite_sheet
@@ -64,9 +57,12 @@ Glob.newMovieClip = function(self, vocale, long_or_short, view)
     end
 
     self.movieclip.playSound = function (self)
-      audio.play(self.audio, {onComplete=function(m)
-        self.is_going = false
-      end})
+      timer.performWithDelay(100,function()
+        audio.play(self.audio, {onComplete=function(m)
+          self.is_going = false
+        end})
+      end)
+      
     end
 
     -- posizion
@@ -115,27 +111,26 @@ Glob.newMovieClip = function(self, vocale, long_or_short, view)
       local movie_clip = event.target
       if (movie_clip.is_going == false and movie_clip.alpha == 1) then
         movie_clip:playGlob()
-        movie_clip:fadeOutWithDelay()
+        --movie_clip:fadeOutWithDelay()
       end
     end
   end
 
-  self.glob.create = function(self, _vocale, _long_or_short, _view)
-    local vocale_upper = _vocale:upper()
-    local sound_path = vocale_upper..'_'.._long_or_short..'.mp3'   
+  self.glob.create = function(self, _vocale)
+    --local sound_path = vocale_upper..'_'....'.mp3'   
     self:setupAnimationPath(_vocale, _long_or_short)
 
     self:createMovieClip()
     
-    self:setupSound(sound_path)
+    --self:setupSound(sound_path)
     self.movieclip:addEventListener("tap", self.tapped)
    
     local stage = display.getCurrentStage()
-    _view:insert(self.movieclip)
+    --_view:insert(self.movieclip)
     return self.movieclip
   end
 
-  return self.glob:create(vocale, long_or_short, view)
+  return self.glob:create(vocale)
 
 end
 

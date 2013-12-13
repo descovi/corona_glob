@@ -29,7 +29,7 @@ Pulsantone.new = function()
 
   pulsantone.setupHintMessage = function ( self )
     local size = 40
-    self.hint_message = display.newText(self.group, "Vocal?", self.glow.x+150, self.glow.y-size, _G.font, size)
+    self.hint_message = display.newText(self.group, "Vowel?", self.glow.x+150, self.glow.y-size, _G.font, size)
     self.hint_message.alpha = 0
   end
 
@@ -38,6 +38,7 @@ Pulsantone.new = function()
     transition.to(self.hint_message, { time=time, alpha=0 })
     transition.to(self.hint_message, { time=time, alpha=1, delay=time })
   end
+  
   pulsantone.fadeInOutGlow = function ( self )
     local time = 300
     transition.to(self.glow, { time=time, alpha=1 })

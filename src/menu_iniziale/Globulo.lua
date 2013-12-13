@@ -19,7 +19,7 @@ Globulo.new = function(file_name, _audio_url)
     _time = 180
     transition.to(target, { time=_time, y=y_start+difference })
     transition.to(target, { time=_time, y=y_start-difference, delay=_time})
-    transition.to(target, { time=_time, y=y_start, delay=_time*2, onComplete= globulo_container.anim_completed })
+    transition.to(target, { time=_time, y=y_start, delay=_time*2, onComplete= globulo_container.anim_completed})
   end
 
   globulo_container.tapped = function(event)
