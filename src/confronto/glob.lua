@@ -23,17 +23,22 @@ Glob.new = function(self, vocale)
     local SheetInfo = require(coords_path)
    
     local image_sheet = graphics.newImageSheet(sheet_png, SheetInfo:getSheet())
-    local time = 1000
     local frames_ = {}
-    for i=1,37 do
-      table.insert(frames_,i)
+    local total_frames = 37
+    
+    for i=0,total_frames do
+      table.insert(frames_,total_frames-i)
     end
+
+    local duration_anim_totale = 2000
     local sequence_data = {
-      {name="standard", start=1,count=37,loopCount=1,time=time},
-      {name="reverse",frames= frames_,time=time, loopCount=1}
+      {name="standard", start=1,count=total_frames,loopCount=1,time=duration_anim_totale},
+      {name="reverse",frames= frames_, loopCount=1,time=duration_anim_totale}
     }
     local sprite_sheet = display.newSprite(image_sheet, sequence_data)
-    sprite_sheet:setSequence("reverse")
+    sprite_sheet.duration_anim_totale = duration_anim_totale
+    sprite_sheet:setSequence("standard")
+    sprite_sheet.not_yet_started = true
     sprite_sheet.x = 100
     sprite_sheet.y = 100
     self.movieclip = sprite_sheet
@@ -57,11 +62,27 @@ Glob.new = function(self, vocale)
     end
 
     self.movieclip.playSound = function (self)
-      timer.performWithDelay(100,function()
-        audio.play(self.audio, {onComplete=function(m)
-          self.is_going = false
-        end})
-      end)
+      if self.sequence == "reverse" then
+
+        timer.performWithDelay(100,function()
+          audio.play(self.audio_l)
+        end)
+        
+        timer.performWithDelay(self.duration_anim_totale/2,function()
+          audio.play(self.audio_s)
+        end)
+
+      else
+
+        timer.performWithDelay(100,function()
+          audio.play(self.audio_s)
+        end)
+        
+        timer.performWithDelay(self.duration_anim_totale/2,function()
+          audio.play(self.audio_l)
+        end)
+
+      end
       
     end
 
@@ -72,57 +93,44 @@ Glob.new = function(self, vocale)
       self.x = display.contentWidth / 2
     end
 
-    -- fadeOuting
-
-    self.movieclip.fadeOutWithDelay = function(self)
-      local time = 500
-      timer.performWithDelay(500, function()
-        self:fadeOut()
-      end)
-    end
-
-    self.movieclip.fadeOut = function ()
-      local time = 200
-      transition.to(self.movieclip, {time=time, alpha=.7, onComplete=function(m)
-        transition.to(self.movieclip, {time=time*2, alpha=0})
-        m:dispatchEvent( { name="GlobFadeOut50%", target=m } )
-      end})
-    end
-
-    -- fadeIn
-
-    self.movieclip.fadeInAndPlay = function(self)
-      transition.to(self, {time=100, alpha=1, onComplete=function(m)
-        self:playGlob()
-      end})
+    self.movieclip.chooseSequence = function(self)
+      if self.sequence == "reverse" then
+        self:setSequence("standard")
+      elseif self.sequence == "standard" and self.not_yet_started == false then
+        self:setSequence("reverse")
+      end
+      self.not_yet_started = false
     end
 
     self.movieclip:setPosition()
   end
 
-  self.glob.setupSound = function(self,path)
-    local path_audio = 'media/audio/vocali/' .. path
-    self.movieclip.audio = audio.loadSound(path_audio)  
+  self.glob.setupSound = function(self,_vocale)
+    local sound_path_l = _vocale:upper()..'_L.mp3'
+    local sound_path_s = _vocale:upper()..'_S.mp3'
+    local path_audio_l = 'media/audio/vocali/' .. sound_path_l
+    local path_audio_s = 'media/audio/vocali/' .. sound_path_s
+    self.movieclip.audio_l = audio.loadSound(path_audio_l)  
+    self.movieclip.audio_s = audio.loadSound(path_audio_s)  
   end
+
 
   self.glob.tapped = function(event)
     print("---> TAPPED")
     if event.y < 544 then
       local movie_clip = event.target
-      if (movie_clip.is_going == false and movie_clip.alpha == 1) then
-        movie_clip:playGlob()
-        --movie_clip:fadeOutWithDelay()
-      end
+      movie_clip:chooseSequence()
+
+      movie_clip:playGlob()
     end
   end
 
   self.glob.create = function(self, _vocale)
-    --local sound_path = vocale_upper..'_'....'.mp3'   
+    
     self:setupAnimationPath(_vocale, _long_or_short)
 
     self:createMovieClip()
-    
-    --self:setupSound(sound_path)
+    self:setupSound(_vocale)
     self.movieclip:addEventListener("tap", self.tapped)
    
     local stage = display.getCurrentStage()
