@@ -1,5 +1,6 @@
 local Storyboard = require( "storyboard" )
 local Glob = require("src.confronto.glob")
+local glob = {}
 local Letter = require("src.confronto.Letter")
 local LetterLinks = require("src.confronto.LetterLinks")
 local Combination = require('src.confronto.Combination')
@@ -35,6 +36,9 @@ end
 function createGlobs(group)
   glob = Glob:new(_G.vocale)
   group:insert(glob)
+  glob.alpha = 0
+  glob:scale(0,0)
+  transition.to(glob, { time=300, alpha=1, xScale=1,yScale=1,delay=1050 , transition=easing.outInSine})
 end
 
 function createLetters( group )
@@ -78,7 +82,6 @@ function confronto:createScene( event )
   setupListener()
   createTornaIndietro(self.view)
 
-  transition.to(glob_2, { time=800, alpha=1, xScale=1,yScale=1,delay=900, transition=easing.inOutElastic })
 end
 
 --confronto:addEventListener( "destroyScene", confronto )
