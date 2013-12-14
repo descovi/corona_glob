@@ -7,13 +7,13 @@ LetterLinks.new = function(vocale, number)
     local widget = require( "widget" )
     local circle = widget.newButton
     {
-      defaultFile = "media/menu_iniziale/background-button-white/default.png",
-      overFile = "media/menu_iniziale/background-button-white/over.png"
+      defaultFile = "media/menu_iniziale/background-button-white/default-big.png",
+      overFile = "media/menu_iniziale/background-button-white/over-big.png"
     }
     circle:setFillColor(255,255,255)
+    circle:scale(.5,.5)
     circle.x = letter_link.x
-    circle.y = letter_link.y - 10
-    circle:scale(1.5,1.5)
+    circle.y = letter_link.y
     group.circle = circle
     group:insert(circle)
   end
@@ -23,18 +23,18 @@ LetterLinks.new = function(vocale, number)
     local letter_link = display.newText(
       _vocale,
       display.contentWidth/2,
-      display.contentHeight-130,
+      display.contentHeight/2-50,
       _G.font_bold,
       35
     )
     if number == 1 then
       letter_link.text = vocale .. "+" .. combination[number]
-      letter_link.x = letter_link.x - 170
+      letter_link.x = letter_link.x - 370
       group.text_raw = combination[number]
     end
     if number == 2 then
       letter_link.text = vocale .. "+" .. combination[number] 
-      letter_link.x = letter_link.x + 150
+      letter_link.x = letter_link.x + 350
       group.text_raw = combination[number]
     end
     
@@ -69,16 +69,41 @@ LetterLinks.new = function(vocale, number)
   
     local timing = 200
     local delay = 1000
-    local original_scale_text = 1
-    local original_scale = 1.5
-    local scale = 2
-    local scale_text = 1.5
-
-    transition.to(self.circle,     { time=timing, xScale=scale, yScale=scale,delay=_delay})
-    transition.to(self.letter_link,{ time=timing, xScale=scale_text, yScale=scale_text,delay=_delay})
     
-    transition.to(self.circle, { time=timing,xScale=original_scale, yScale=original_scale,delay=_delay+timing})
-    transition.to(self.letter_link, { time=timing, xScale=original_scale_text,yScale=original_scale_text,delay=_delay+timing})
+    
+    local original_scale = 0.5
+    local scale = 0.7
+
+    local original_scale_text = 1
+    local scale_text = 1.5
+    
+    -- CIRCLE
+    transition.to(self.circle,{
+      time=timing, 
+      xScale=scale, 
+      yScale=scale,
+      delay=_delay+470
+    })
+    transition.to(self.circle,{ 
+      time=timing,
+      xScale=original_scale, 
+      yScale=original_scale,
+      delay=_delay+timing+470
+    })
+
+    -- TEXT
+    transition.to(self.letter_link,{ 
+      time=timing, 
+      xScale=scale_text, 
+      yScale=scale_text,
+      delay=_delay+470
+    })
+    transition.to(self.letter_link, { 
+      time=timing, 
+      xScale=original_scale_text,
+      yScale=original_scale_text,
+      delay=_delay+timing+470
+    })
     
   end
 

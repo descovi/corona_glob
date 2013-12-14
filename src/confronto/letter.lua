@@ -14,18 +14,18 @@ Letter.new = function(vocale)
     local original_size = self.size
     local timing = 200
     -- first time
-    transition.to(self, { time=timing,size=original_size*2 })  
-    transition.to(self, { time=timing,delay=timing,size=original_size}) 
+    transition.to(self, { time=timing,size=original_size*2 ,delay=470})  
+    transition.to(self, { time=timing,delay=timing+470,size=original_size}) 
     -- second time
     transition.to(self, { 
       time=timing,
       size=original_size*2,
-      delay=_delay
+      delay=_delay+470
     })  
     transition.to(self, { 
       time=timing,
       size=original_size,
-      delay=_delay+timing,
+      delay=_delay+timing+470,
     }) 
   end
 
