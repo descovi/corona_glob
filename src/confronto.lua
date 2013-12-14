@@ -51,11 +51,11 @@ function createLinkLetters( group )
   letter_links_1 = LetterLinks.new(_G.vocale,1)
   group:insert(letter_links_1)
   letter_links_1:fadeOut()
-  letter_links_1.alpha = 0
+  
   if (Combination.is_more_than_one()) then
     letter_links_2 = LetterLinks.new(_G.vocale,2)
     group:insert(letter_links_2)
-    letter_links_2.alpha = 0
+    letter_links_2:fadeOut()  
   end
 end
 
@@ -73,6 +73,16 @@ function setupListener()
   if (Combination.is_more_than_one()) then
     letter_links_2:addEventListener("tap",links_clicked)
   end
+
+  glob:addEventListener("GlobStartPlay",globPlayedStart)
+end
+
+function globPlayedStart(event)
+  letter:zoom(glob.duration_anim_totale/2)
+  letter_links_1:fadeToogle(glob.duration_anim_totale/2) 
+  if letter_links_2.alpha~=nil then
+    letter_links_2:fadeToogle(glob.duration_anim_totale/2)
+  end
 end
 
 function confronto:createScene( event )
@@ -86,7 +96,7 @@ end
 
 --confronto:addEventListener( "destroyScene", confronto )
 --confronto:addEventListener( "enterScene",  confronto )
-confronto:addEventListener("exitScene",function (  )
+confronto:addEventListener("exitScene",function()
   print("Exit Scene <----")
 end)
 confronto:addEventListener( "createScene", confronto )
