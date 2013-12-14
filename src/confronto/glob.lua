@@ -45,6 +45,7 @@ Glob.new = function(self, vocale)
     sprite_sheet.x = 100
     sprite_sheet.y = 100
     self.movieclip = sprite_sheet
+    self.movieclip.genitore = self
   end
 
 
@@ -116,15 +117,17 @@ Glob.new = function(self, vocale)
     self.movieclip.audio_s = audio.loadSound(path_audio_s)  
   end
 
+  self.glob.start_sequence = function (self)
+    if (self.movieclip.isPlaying == false) then
+      self.movieclip:chooseSequence()
+      self.movieclip:playGlob()
+    end
+  end
 
   self.glob.tapped = function(event)
-    print("---> TAPPED")
-    local movie_clip = event.target
-    if (event.y < 544 and movie_clip.isPlaying == false) then
-      
-      movie_clip:chooseSequence()
-
-      movie_clip:playGlob()
+    if (event.y < 544) then 
+      local movie_clip = event.target
+      movie_clip.genitore:start_sequence()
     end
   end
 

@@ -73,7 +73,9 @@ function setupListener()
   if (Combination.is_more_than_one()) then
     letter_links_2:addEventListener("tap",links_clicked)
   end
-
+  letter:addEventListener("tap",function(event)
+    glob.genitore:start_sequence()
+  end)
   glob:addEventListener("GlobStartPlay",globPlayedStart)
 end
 
