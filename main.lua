@@ -12,7 +12,7 @@ display.setStatusBar( display.HiddenStatusBar )
 -- Create a storyboard scene for this module
 local scene = storyboard.newScene()
 storyboard.isDebug = false
-storyboard.gotoScene( "src.menu_iniziale" )
+storyboard.gotoScene( "src.intro" )
 
 local gurgle = audio.loadSound('media/audio/GURGLE.wav')
 --audio.play( gurgle )
