@@ -32,8 +32,11 @@ Glob.new = function(self, vocale)
 
     local duration_anim_totale = 2000
     local sequence_data = {
+      
       {name="standard", start=1,count=total_frames,loopCount=1,time=duration_anim_totale},
+      
       {name="reverse",frames= frames_, loopCount=1,time=duration_anim_totale}
+
     }
     local sprite_sheet = display.newSprite(image_sheet, sequence_data)
     sprite_sheet.duration_anim_totale = duration_anim_totale
@@ -47,11 +50,9 @@ Glob.new = function(self, vocale)
 
   self.glob.createMovieClip = function(self, _anim_list)
     self.movieclip.name = "glob-movieclip"
-    self.movieclip.is_going = false
 
     -- playGlob (sound and animation)
     self.movieclip.playGlob = function (self)
-      self.is_going = true
       self:playAnimation()
       self:playSound()
       self:dispatchEvent({name="GlobStartPlay",target=self})
@@ -62,24 +63,25 @@ Glob.new = function(self, vocale)
     end
 
     self.movieclip.playSound = function (self)
-      if self.sequence == "reverse" then
 
-        timer.performWithDelay(100,function()
-          audio.play(self.audio_l)
-        end)
-        
-        timer.performWithDelay(self.duration_anim_totale/2,function()
+      if self.sequence == "standard" then
+        -- 1° ANIMATION
+        timer.performWithDelay(470,function()
           audio.play(self.audio_s)
+        end)
+        -- 
+        timer.performWithDelay(1650,function()
+          audio.play(self.audio_l)
         end)
 
       else
-
-        timer.performWithDelay(100,function()
-          audio.play(self.audio_s)
+        -- 2° ANIMATION
+        timer.performWithDelay(470,function()
+          audio.play(self.audio_l)
         end)
         
-        timer.performWithDelay(self.duration_anim_totale/2,function()
-          audio.play(self.audio_l)
+        timer.performWithDelay(1360,function()
+          audio.play(self.audio_s)
         end)
 
       end
@@ -117,8 +119,9 @@ Glob.new = function(self, vocale)
 
   self.glob.tapped = function(event)
     print("---> TAPPED")
-    if event.y < 544 then
-      local movie_clip = event.target
+    local movie_clip = event.target
+    if (event.y < 544 and movie_clip.isPlaying == false) then
+      
       movie_clip:chooseSequence()
 
       movie_clip:playGlob()
