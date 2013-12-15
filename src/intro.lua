@@ -8,11 +8,23 @@ function click_over_video( event )
   storyboard.gotoScene("src.menu_iniziale")
 end
 
+local function videoListener( event )
+  print( "Event phase: " .. event.phase )
+  if event.phase == "ended" then
+    video:play()
+  end
+  if event.errorCode then
+    native.showAlert( "Error!", event.errorMessage, { "OK" } )
+  end
+end
+
+
 function intro:createScene( event )
   local group = self.view
   
   video:load("media/video.m4v")
   video:play()
+  video:addEventListener( "video", videoListener )
 
   local bkgd = display.newRect( 0, 0, display.contentWidth, display.contentHeight )
   bkgd:setFillColor( 0, 0, 0 )
