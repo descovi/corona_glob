@@ -90,7 +90,7 @@ function colonna:createScene( event )
   vocabolario.update_current_path(anim.animation_path_counter)
 
   anim.group.alpha = 0
-  transition.to(anim.group, { time=800, alpha=1, delay=800 })
+  transition.to(anim.group, { time=2000, alpha=1, delay=1000 })
 end
 
 colonna:addEventListener( "createScene" , colonna )
