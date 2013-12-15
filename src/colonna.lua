@@ -45,7 +45,7 @@ local function go_dn(event)
 end
 
 local function load_game()
-  Storyboard.gotoScene("src.game")
+  Storyboard.gotoScene("src.game",{effect="slideUp",params={user_from_menu_iniziale=false}})
 end
 
 function colonna:createScene( event )
