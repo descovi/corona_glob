@@ -29,7 +29,7 @@ Pulsantone.new = function()
 
   pulsantone.setupHintMessage = function ( self )
     local size = 40
-    self.hint_message = display.newText(self.group, "Vowel?", self.glow.x+150, self.glow.y-size, _G.font, size)
+    self.hint_message = display.newText(self.group, "vowel ?", self.glow.x+150, self.glow.y-size, _G.font_bold, size)
     self.hint_message.alpha = 0
   end
 

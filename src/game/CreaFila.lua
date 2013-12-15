@@ -29,7 +29,7 @@ function CreaFila(long_or_short, vocali, path, x_pos, all_globuli)
     group:insert(globo)
 
     if long_or_short == "short-" then
-    local label = display.newText(vocali[i], 100,480,_G.font,30)
+    local label = display.newText(vocali[i], 100,480,_G.font_bold,30)
       label.x = globo.x
       label.y = globo.y+100
       label.y = globo.y-100
@@ -39,7 +39,7 @@ function CreaFila(long_or_short, vocali, path, x_pos, all_globuli)
     
   end
   -- short long
-  local label = display.newText(group, long_or_short:gsub("-",""), group.x+group.width+80,group.y,_G.font,30)
+  local label = display.newText(group, long_or_short:gsub("-",""), group.x+group.width+80,group.y+group.height/4,_G.font,20)
 
   return group
 end
