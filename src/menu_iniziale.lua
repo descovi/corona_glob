@@ -1,6 +1,8 @@
 local ButtonToGo = require 'src.menu_iniziale.button_to_go'
 require 'src.menu_iniziale.manipulate_order'
 
+local widget = require( "widget" )
+
 local storyboard = require ( "storyboard" )
 local Globulo = require("src.menu_iniziale.Globulo")
 local menu_iniziale = storyboard.newScene()
@@ -16,7 +18,6 @@ local x_pos = {
 local globulo_x_pos = {}
 local all_globuli = {}
 local all_globuli_order_inverted = {}
-local ascolta_tutti_label = {}
 local animazione_partita = false
 
 function create_globulo(shor_or_long, vocale)
@@ -27,7 +28,7 @@ function create_globulo(shor_or_long, vocale)
   globulo = Globulo.new(filename,sound_filename)
   -- posizionamento
   local pos_x = (x_pos[#all_globuli+1]*2) - 50
-  globulo.x = (pos_x + globulo.width/2)+10
+  globulo.x = (pos_x + globulo.width/2)+25
   table.insert(globulo_x_pos,globulo.x)
   if #all_globuli+1 > 5 then
     group_1:insert(globulo)
@@ -69,21 +70,31 @@ local function ascolta_tutti(event)
   end
 end
 
-function setup_ascolta_tutti()
-  local widget = require( "widget" )
-  ascolta_tutti_label = widget.newButton
+function setup_ascolta_tutti(_group)
+  local button = widget.newButton
   {
       defaultFile = "media/menu_iniziale/play-button/default.png",
-      overFile = "media/menu_iniziale/play-button/over.png",
+      overFile = "media/menu_iniziale/play-button/over.png"
   }
-  ascolta_tutti_label:addEventListener("tap",ascolta_tutti)
-  group:insert(ascolta_tutti_label)
+  button:addEventListener("tap",ascolta_tutti)
+  _group:insert(button)
   local size = 100
-  --ascolta_tutti_label.width = size
-  --ascolta_tutti_label.height = size
-  ascolta_tutti_label.x = 500
-  ascolta_tutti_label.y = 700
+  button.x = display.contentWidth/2 - button.width/2
+  button.y = display.contentHeight -button.height - 5
   manipulate_order_invert_group(all_globuli, all_globuli_order_inverted)
+end
+
+function setup_btn_game(_group)
+  local button = widget.newButton{
+    defaultFile = "media/menu_iniziale/game-button/default.png",
+    overFile = "media/menu_iniziale/game-button/over.png"
+  }
+  _group:insert(button)
+  button.x = display.contentWidth/2 + button.width/2
+  button.y = display.contentHeight-button.height - 5
+  button:addEventListener("tap",function( )
+    storyboard.gotoScene("src.game")
+  end)
 end
 
 --Create the scene
@@ -91,19 +102,24 @@ function menu_iniziale:createScene( event )
   group = self.view
   group:insert(group_1)
   group:insert(group_2)
-  group_1.y = 50
-  group_2.y = 230
+  group_1.y = 70
+  group_2.y = 250
+
   for i=1,#vocali do
     create_globulo('long',vocali[i])
   end
   for i=1,#vocali do
     create_globulo('short',vocali[i])
   end
+  
   for i=1,5 do
     ButtonToGo.new(self.view, vocali, globulo_x_pos, i)
   end
-  setup_ascolta_tutti()
-  
+
+
+  setup_ascolta_tutti(group)
+  setup_btn_game(group)
+
 end
 
 --Add the createScene listener
