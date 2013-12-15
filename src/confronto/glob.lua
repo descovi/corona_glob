@@ -26,8 +26,11 @@ Glob.new = function(self, vocale)
     local frames_ = {}
     local total_frames = 37
     
-    for i=0,total_frames do
-      table.insert(frames_,total_frames-i)
+    for i=1,total_frames do
+      num_frame = total_frames-i
+      if num_frame > 0 then
+        table.insert(frames_,num_frame)
+      end
     end
 
     local duration_anim_totale = 2000
