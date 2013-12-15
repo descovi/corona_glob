@@ -31,7 +31,7 @@ Globulo.new = function(file_name, _audio_url)
   end
 
   globulo_container.setup = function(file_name)  
-    local globulo_size = 150
+    local globulo_size = 180
     -- dati
     local path = 'media/menu_iniziale/'
     local final_path = path .. file_name .. "-150/1.png"
