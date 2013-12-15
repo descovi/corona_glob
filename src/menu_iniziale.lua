@@ -9,7 +9,10 @@ local group
 local group_1 = display.newGroup()
 local group_2 = display.newGroup()
 --local y_pos = {350,150}
-local x_pos = {0, 100, 200, 300, 400, 0, 100, 200, 300, 400}
+local x_pos = {
+  0, 90, 190, 290, 390, 
+  0, 90, 190, 290, 390
+}
 local globulo_x_pos = {}
 local all_globuli = {}
 local all_globuli_order_inverted = {}
@@ -24,7 +27,7 @@ function create_globulo(shor_or_long, vocale)
   globulo = Globulo.new(filename,sound_filename)
   -- posizionamento
   local pos_x = (x_pos[#all_globuli+1]*2) - 50
-  globulo.x = pos_x + globulo.width/2
+  globulo.x = (pos_x + globulo.width/2)+10
   table.insert(globulo_x_pos,globulo.x)
   if #all_globuli+1 > 5 then
     group_1:insert(globulo)
@@ -89,7 +92,7 @@ function menu_iniziale:createScene( event )
   group:insert(group_1)
   group:insert(group_2)
   group_1.y = 50
-  group_2.y = 200
+  group_2.y = 230
   for i=1,#vocali do
     create_globulo('long',vocali[i])
   end
