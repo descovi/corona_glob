@@ -93,7 +93,10 @@ function setup_btn_game(_group)
   button.x = display.contentWidth/2 + button.width/2
   button.y = display.contentHeight-button.height - 5
   button:addEventListener("tap",function( )
-    storyboard.gotoScene("src.game")
+    storyboard.gotoScene("src.game",{
+      effect = "zoomOutInFade",
+       params = { user_from_menu_iniziale = true }
+    })
   end)
 end
 
