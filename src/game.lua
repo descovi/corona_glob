@@ -155,11 +155,16 @@ function crea_pulsantone()
 end
 
 local function go_bk(event) 
-  Storyboard.gotoScene( "src.colonna" )
+  if user_from_menu_iniziale == false then
+    Storyboard.gotoScene( "src.colonna",{effect = "slideDown" } )
+  else
+    Storyboard.gotoScene( "src.menu_iniziale",{effect = "zoomOutInFade" })
+  end
 end
 
 function game:createScene(event)
-  print("game:createScene")
+  local params = event.params
+  user_from_menu_iniziale = params.user_from_menu_iniziale
   fila_short = CreaFila("short-", vocali, path, x_pos, all_globuli)
   fila_long = CreaFila("long-", vocali, path, x_pos, all_globuli)
   fila_group = display.newGroup()
