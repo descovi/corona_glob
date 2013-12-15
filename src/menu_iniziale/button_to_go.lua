@@ -61,12 +61,18 @@ ButtonToGo.new = function(view,vocale,x_pos,index)
     self.testo = display.newText(options_testo)
     self.testo:setReferencePoint( display.CenterReferencePoint )
     self.testo.x = self.cerchio.x + 2
-    self.testo.y = self.cerchio.y
+    
+    if self.testo.text == "i" then
+      self.testo.y = self.cerchio.y +1
+    else
+      self.testo.y = self.cerchio.y - 2
+    end
 
     self.racconto = display.newText(options_racconto)
     self.racconto:setReferencePoint( display.CenterReferencePoint )
     self.racconto.x = self.cerchio.x
     self.racconto.y = self.cerchio.y + 120
+    self.racconto.alpha = 0
 
     self.testo:setTextColor(0, 0, 0)
     
@@ -85,7 +91,7 @@ ButtonToGo.new = function(view,vocale,x_pos,index)
     }
 
     self.cerchio.x = x_pos[index]+75
-    self.cerchio.y = 450
+    self.cerchio.y = 470
 
   end
   button_to_go.setup_display_list = function(self,view)
