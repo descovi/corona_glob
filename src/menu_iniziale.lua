@@ -10,7 +10,7 @@ local group_1 = display.newGroup()
 local group_2 = display.newGroup()
 --local y_pos = {350,150}
 local x_pos = {
-  0, 90, 190, 290, 390
+  0, 95, 190, 285, 375, 
   0, 95, 190, 285, 375
 }
 local globulo_x_pos = {}
