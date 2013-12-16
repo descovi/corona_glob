@@ -107,9 +107,7 @@ function answer_clicked_is_correct()
 
 
       -- score
-      if score > 9 then
-        punteggio.x = punteggio.x + 2
-      end
+      
       animate_score()
       -- # score
   audio.play(audio_right, {onComplete=choose_random_globulo_and_play_audio })
@@ -155,7 +153,7 @@ function crea_pulsantone()
 end
 
 local function go_bk(event) 
-  if user_from_menu_iniziale == false then
+  if user_from_menu_iniziale == "false" then
     Storyboard.gotoScene( "src.colonna",{effect = "slideDown" } )
   else
     Storyboard.gotoScene( "src.menu_iniziale",{effect = "zoomOutInFade" })
