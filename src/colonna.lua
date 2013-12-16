@@ -45,7 +45,11 @@ local function go_dn(event)
 end
 
 local function load_game()
-  Storyboard.gotoScene("src.game",{effect="slideUp",params={user_from_menu_iniziale=false}})
+  Storyboard.removeScene("src.game")
+  Storyboard.gotoScene("src.game",{
+    effect = "slideUp",
+    params = { user_from_menu_iniziale = "false" }
+  })
 end
 
 function colonna:createScene( event )
@@ -90,7 +94,7 @@ function colonna:createScene( event )
   vocabolario.update_current_path(anim.animation_path_counter)
 
   anim.group.alpha = 0
-  transition.to(anim.group, { time=2000, alpha=1, delay=1000 })
+  transition.to(anim.group, { time=1000, alpha=1, delay=1000 })
 end
 
 colonna:addEventListener( "createScene" , colonna )
