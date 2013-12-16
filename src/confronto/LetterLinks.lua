@@ -13,7 +13,7 @@ LetterLinks.new = function(vocale, number)
     circle:setFillColor(255,255,255)
     circle:scale(.5,.5)
     circle.x = letter_link.x
-    circle.y = letter_link.y
+    circle.y = letter_link.y + 3
     group.circle = circle
     group:insert(circle)
   end
@@ -69,7 +69,6 @@ LetterLinks.new = function(vocale, number)
   
     local timing = 200
     local delay = 1000
-    
     
     local original_scale = 0.5
     local scale = 0.7

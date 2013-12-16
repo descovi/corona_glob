@@ -21,7 +21,6 @@ local renable_click = function(e)
 end
 
 function goto_menuiniziale(e)
-  Storyboard.removeAll()
   Storyboard.gotoScene("src.menu_iniziale",{
     effect = "slideDown",
     time = 800})
@@ -38,7 +37,7 @@ function createGlobs(group)
   group:insert(glob)
   glob.alpha = 0
   glob:scale(0,0)
-  transition.to(glob, { time=500, alpha=1, xScale=1,yScale=1,delay=1550})
+  transition.to(glob, { time=1000, alpha=1, xScale=1,yScale=1,delay=1000})
 end
 
 function createLetters( group )
