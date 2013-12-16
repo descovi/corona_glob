@@ -5,7 +5,7 @@ local video = native.newVideo(0,0,1024,768)
 function click_over_video( event )
   video:removeSelf()
   storyboard.removeScene("src.intro")
-  storyboard.gotoScene("src.menu_iniziale")
+  storyboard.gotoScene("src.menu_iniziale",{effects="crossFade"})
 end
 
 local function videoListener( event )
