@@ -12,9 +12,11 @@ local arrow_up    = Arrow.newSprite()
 local arrow_dn    = Arrow.newSprite()
 local vocabolario = Vocabolario.newSprite()
 local anim        = Anim.newSprite()
-local gioca       = display.newText("GAME",100,480,_G.font_bold,40)
-
-
+local widget = require( "widget" )
+  local gioca = widget.newButton{
+    defaultFile = "media/menu_iniziale/game-button/default.png",
+    overFile = "media/menu_iniziale/game-button/over.png"
+  }
 local function go_bk(event) 
   -- Storyboard.removeAllScene()
   Storyboard.gotoScene( "src.confronto",{
