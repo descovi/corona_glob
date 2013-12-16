@@ -148,7 +148,7 @@ end
 function crea_pulsantone()
   local pulsantone = Pulsantone.new()
   pulsantone:addEventListener("tap", play_audio_globulo_attuale)
-  timer.performWithDelay( 1000, choose_random_globulo_and_play_audio)
+  
   return pulsantone
 end
 
@@ -161,8 +161,7 @@ local function go_bk(event)
 end
 
 function game:createScene(event)
-  local params = event.params
-  user_from_menu_iniziale = params.user_from_menu_iniziale
+  
   fila_short = CreaFila("short-", vocali, path, x_pos, all_globuli)
   fila_long = CreaFila("long-", vocali, path, x_pos, all_globuli)
   fila_group = display.newGroup()
@@ -193,6 +192,13 @@ function play_audio_globulo_attuale()
   end
 end
 
+function game:enterScene (event )
+  local params = event.params
+  user_from_menu_iniziale = params.user_from_menu_iniziale
+  timer.performWithDelay( 400, choose_random_globulo_and_play_audio)
+end
+
 game:addEventListener( "createScene", game_created )
+game:addEventListener( "enterScene", game_entered )
 
 return game
