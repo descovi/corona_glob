@@ -1,6 +1,7 @@
 function CreaFila(long_or_short, vocali, path, x_pos, all_globuli)
   local group = display.newGroup()
-  for i=1,5 do
+  
+  for i=1, #vocali do
     local single_path = path .. long_or_short ..vocali[i] .. "-150/1.png"
     local globo = display.newImage(single_path)
     globo.x = x_pos[i]*1.5 + globo.width
@@ -37,7 +38,8 @@ function CreaFila(long_or_short, vocali, path, x_pos, all_globuli)
     end
 
     
-  end
+  end -- END FOR
+
   -- short long
   local label = display.newText(group, long_or_short:gsub("-",""), group.x+group.width+80,group.y+group.height/4,_G.font,20)
 
