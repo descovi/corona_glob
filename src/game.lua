@@ -2,11 +2,12 @@ local Storyboard = require("storyboard")
 local game = Storyboard.newScene()
 local Stat = require('src.utils.Stat')
 local Pulsantone = require('src.game.Pulsantone')
-
+local stage_of_game
+local fila_group
 require('src.game.CreaFila')
 
 local pulsantone = {}
-local vocali = {"a","e","i","o","u"}
+local vocali = {"a"}
 local x_pos = {0, 100, 200, 300, 400}
 local all_globuli = {}
 
@@ -15,11 +16,6 @@ local path = 'media/menu_iniziale/'
 local globulo_scelto
 local score = 0
 local back_btn = button_to_go_back()
---back_btn.y = 50
---back_btn.width = 60
---back_btn.height = 60
-
-
 
 -- punteggio massimo / record
 local size_table_score        = 20
@@ -38,6 +34,7 @@ record_punteggio_group.y      = 30
 -- audio - right - wrong
 local audio_right= audio.loadSound("media/audio/right.mp3")
 local audio_wrong = audio.loadSound("media/audio/wrong.mp3")
+local audio_level = audio.loadSound("media/audio/level.wav")
 
 -- tentativi
 local tentativo_debug = display.newText("3", 200, 350, _G.font, 40)
@@ -104,16 +101,27 @@ function answer_clicked_is_correct()
       record.text = punteggio_massimo
     end
   end
-
-
-      -- score
-      
-      animate_score()
-      -- # score
+  -- score    
+  animate_score()
+  -- # score
   audio.play(audio_right, {onComplete=choose_random_globulo_and_play_audio })
   punteggio:setTextColor(0,255,0,255)
   punteggio.text = score
   
+  if score == 1 then
+    vocali = {"a","e"}
+    setup_pulsanti_per_rispondere(stage_of_game, "true")
+  elseif score == 4 then
+    vocali = {"a","e","i"}
+    setup_pulsanti_per_rispondere(stage_of_game, "true")
+  elseif score == 8 then
+    vocali = {"a","e","i","o"}
+    setup_pulsanti_per_rispondere(stage_of_game, "true")
+  elseif score == 12 then
+    vocali = {"a","e","i","o","u"}
+    setup_pulsanti_per_rispondere(stage_of_game, "true")
+  
+  end
 end
 
 function answer_clicked_is_wrong()
@@ -137,7 +145,7 @@ function answer_clicked(event)
     print("- obbiettivo: " .. globulo_scelto.vocale)
     print("- scelto: " .. event.target.vocale)
     print(" ")
-    if (globulo_scelto == event.target) then
+    if (globulo_scelto.vocale == event.target.vocale) then
       answer_clicked_is_correct()
     else
       answer_clicked_is_wrong()
@@ -160,41 +168,46 @@ local function go_bk(event)
   end
 end
 
-function game:createScene(event)
-  
+function setup_pulsanti_per_rispondere(_group, _sound)
+  if fila_group ~= nil then
+    _group:remove(fila_group)
+  end
   fila_short = CreaFila("short-", vocali, path, x_pos, all_globuli)
   fila_long = CreaFila("long-", vocali, path, x_pos, all_globuli)
   fila_group = display.newGroup()
   fila_group:insert(fila_short)
   fila_group:insert(fila_long)
-  fila_group.y = 300
-
-  pulsantone = crea_pulsantone()
-  --pulsantone:play()
-
-  self.view:insert(back_btn)
-  self.view:insert(fila_group)
-  
-
-  self.view:insert(pulsantone)
-  self.view:insert(record_punteggio_group)
   fila_short.y = 140
   fila_long.y = 300
+  fila_group.y = 300
+  _group:insert(fila_group)
+  if _sound == "true" then
+    audio.play(audio_level)
+  end
+end
+
+function game:createScene(event)
+  setup_pulsanti_per_rispondere(self.view)
+  pulsantone = crea_pulsantone()
+  --pulsantone:play()
+  self.view:insert(pulsantone)
+  self.view:insert(back_btn)
+  self.view:insert(record_punteggio_group)
+  stage_of_game = self.view
   back_btn:addEventListener("tap", go_bk)
 end
 
 function play_audio_globulo_attuale()
-  print("play_anim_globulo_attuale")
   audio.play(globulo_scelto.audio)
-  -- check if pulsantone is defined
-  if pulsantone.x then
-    pulsantone:play()
-  end
+  pulsantone:play()
 end
 
-function game:enterScene (event )
+function game:enterScene (event)
+
   local params = event.params
-  user_from_menu_iniziale = params.user_from_menu_iniziale
+  if params ~= nil then
+    user_from_menu_iniziale = params.user_from_menu_iniziale
+  end
   timer.performWithDelay( 400, choose_random_globulo_and_play_audio)
 end
 
