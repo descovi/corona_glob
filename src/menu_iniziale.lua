@@ -88,8 +88,8 @@ function setup_ascolta_tutti(_group)
   button:addEventListener("tap",ascolta_tutti)
   _group:insert(button)
   local size = 100
-  button.x = display.contentWidth/2 - button.width/2
-  button.y = display.contentHeight -button.height - 25
+  button.x = display.contentWidth/2 - button.width/2 - 25
+  button.y = display.contentHeight-button.height / 2 - 100
   manipulate_order_invert_group(all_globuli, all_globuli_order_inverted)
 end
 
@@ -99,8 +99,8 @@ function setup_btn_game(_group)
     overFile = "media/menu_iniziale/game-button/over.png"
   }
   _group:insert(button)
-  button.x = display.contentWidth/2 + button.width/2
-  button.y = display.contentHeight-button.height - 25
+  button.x = display.contentWidth/2 + button.width/2 + 25
+  button.y = display.contentHeight-button.height / 2 - 100
   button:addEventListener("tap",function( )
     storyboard.gotoScene("src.game",{
       effect = "zoomOutInFade",
