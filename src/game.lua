@@ -49,9 +49,24 @@ function choose_random_globulo_and_play_audio()
   blocca_interazione = false
   tentativi_rimasti = 3
   tentativo_debug.text = tentativi_rimasti
-  globulo_scelto = all_globuli[math.random(#all_globuli)]
+  globulo_scelto = chosse_random(globulo_scelto)
+  
+
   print("NEW RANDOM LETTER !! -->"..globulo_scelto.vocale)
   play_audio_globulo_attuale()
+end
+
+function chosse_random(_globulo_old )
+
+  if _globulo_old == nil then
+    return all_globuli[math.random(#all_globuli)]
+  end
+
+  nuovo_globulo = all_globuli[math.random(#all_globuli)]
+  if nuovo_globulo.vocale == _globulo_old.vocale then
+    nuovo_globulo = chosse_random(_globulo_old)
+  end
+  return nuovo_globulo
 end
 
 function play_anim(target)
@@ -68,16 +83,30 @@ function play_anim_globulo_attuale(event)
   play_anim(event.target)
 end
 
-function fx_true_or_right_handler(event)
-  tentativi_rimasti = tentativi_rimasti -1
-  if tentativi_rimasti == 0 then
-    tentativo_debug.text = tentativi_rimasti
-    choose_random_globulo_and_play_audio()
-  else
-    tentativo_debug.text = tentativi_rimasti
-    play_audio_globulo_attuale()
-  end
+function question(_next_or_the_same)
   blocca_interazione = false
+  
+  if level_is_changed == true then
+    level_is_changed = false
+    tentativi_rimasti = 3
+    return choose_random_globulo_and_play_audio()
+  end 
+  
+  if _next_or_the_same == "next" then
+    return choose_random_globulo_and_play_audio()
+  end
+
+  if _next_or_the_same == "same" then
+    tentativi_rimasti = tentativi_rimasti -1
+    if tentativi_rimasti == 0 then
+      tentativo_debug.text = tentativi_rimasti
+      choose_random_globulo_and_play_audio()
+    else
+      tentativo_debug.text = tentativi_rimasti
+      play_audio_globulo_attuale()
+    end
+  end
+  
 end
 
 function animate_score()
@@ -89,53 +118,66 @@ function animate_score()
   transition.to(punteggio,{time=time,xScale=1.5,yScale=1.5,onComplete=restore})
 
 end
-
-function answer_clicked_is_correct()
-  print "Giusto!"
-  score = score+1
-  if (score > punteggio_massimo) then
-    punteggio_massimo = score
-    record_saved = Stat.read()
-    if (record_saved < punteggio_massimo) then
-      Stat.write(punteggio_massimo)
-      record.text = punteggio_massimo
-    end
-  end
-  -- score    
-  animate_score()
-  -- # score
-  audio.play(audio_right, {onComplete=choose_random_globulo_and_play_audio })
-  punteggio:setTextColor(0,255,0,255)
-  punteggio.text = score
-  
-  if score == 1 then
+function change_level(_score)
+   if _score == 1 then
+    vocali = {"a"}
+    setup_pulsanti_per_rispondere(stage_of_game)
+    level_is_changed= true
+   elseif _score == 3 then
     vocali = {"a","e"}
     setup_pulsanti_per_rispondere(stage_of_game, "true")
-  elseif score == 4 then
+    level_is_changed= true
+  elseif _score == 6 then
     vocali = {"a","e","i"}
     setup_pulsanti_per_rispondere(stage_of_game, "true")
-  elseif score == 8 then
+    level_is_changed= true
+  elseif _score == 12 then
     vocali = {"a","e","i","o"}
     setup_pulsanti_per_rispondere(stage_of_game, "true")
-  elseif score == 12 then
+    level_is_changed= true
+  elseif _score == 16 then
     vocali = {"a","e","i","o","u"}
     setup_pulsanti_per_rispondere(stage_of_game, "true")
-  
+    level_is_changed= true
   end
+  
+end
+
+function update_score(answer_correct)
+  if answer_correct == true then
+    score = score+1
+    if (score > punteggio_massimo) then
+      punteggio_massimo = score
+      record_saved = Stat.read()
+      if (record_saved < punteggio_massimo) then
+        Stat.write(punteggio_massimo)
+        record.text = punteggio_massimo
+      end
+    end
+    punteggio:setTextColor(0,255,0,255)
+  elseif answer_correct == false then
+    if score > 0 then
+      score = score-1
+    end
+    punteggio:setTextColor(255,0,0,255)
+  end
+  punteggio.text = score
+end
+
+function answer_clicked_is_correct()
+  print("answer_clicked_is_correct")
+  update_score(true)
+  animate_score()
+  audio.play(audio_right)
+  
 end
 
 function answer_clicked_is_wrong()
-  print "Sbagliato!"
-  if score > 0 then
-    score = score-1
-  end
   print("answer_clicked_is_wrong")
-  print(globulo_scelto.vocale)
-  print("----")
-  pulsantone.explainer:fade_in_out(globulo_scelto.vocale)
-  audio.play(audio_wrong, {onComplete=fx_true_or_right_handler })
-  punteggio:setTextColor(255,0,0,255)
-  punteggio.text = score
+  local explainer = pulsantone.explainer
+  explainer:fade_in_out(globulo_scelto.vocale)
+  update_score(false)
+  audio.play(audio_wrong)
 end
 
 function answer_clicked(event)
@@ -145,11 +187,21 @@ function answer_clicked(event)
     print("- obbiettivo: " .. globulo_scelto.vocale)
     print("- scelto: " .. event.target.vocale)
     print(" ")
-    if (globulo_scelto.vocale == event.target.vocale) then
+    if (globulo_scelto.vocale == event.target.vocale) then  
       answer_clicked_is_correct()
+      change_level(score)
+      timer.performWithDelay( 1000,function()
+        question("next")
+      end)
     else
       answer_clicked_is_wrong()
+      change_level(score)
+      timer.performWithDelay(1000,function (  )
+        question("same")
+      end)
+      
     end
+    
   end
 end
 
@@ -209,6 +261,7 @@ function game:enterScene (event)
     user_from_menu_iniziale = params.user_from_menu_iniziale
   end
   timer.performWithDelay( 400, choose_random_globulo_and_play_audio)
+  math.randomseed(os.time())
 end
 
 game:addEventListener( "createScene", game_created )
