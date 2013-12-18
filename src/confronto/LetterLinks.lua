@@ -12,7 +12,7 @@ LetterLinks.new = function(vocale, number)
     }
     circle:setFillColor(255,255,255)
     circle:scale(.5,.5)
-    circle.x = letter_link.x
+    circle.x = letter_link.x - 2
     circle.y = letter_link.y + 3
     group.circle = circle
     group:insert(circle)
