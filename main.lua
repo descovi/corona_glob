@@ -12,8 +12,8 @@ display.setStatusBar( display.HiddenStatusBar )
 -- Create a storyboard scene for this module
 local scene = storyboard.newScene()
 storyboard.isDebug = false
-storyboard.gotoScene( "src.intro" )
+storyboard.gotoScene( "src.game" )
 
 local gurgle = audio.loadSound('media/audio/GURGLE.wav')
-audio.play( gurgle,{channel=2} )
-audio.setVolume( 0.15, { channel=2 } ) 
+audio.play( gurgle,{channel=4, loops=-1} )
+audio.setVolume( 0.15, { channel=4 } ) 
