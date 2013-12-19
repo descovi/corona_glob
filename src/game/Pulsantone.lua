@@ -22,7 +22,9 @@ Pulsantone.new = function()
 
   pulsantone.setupGlow = function(self)
     self.glow = display.newImage(self.group,"media/game/globo_asker/glow.png")
-    self.glow.x = self.sprite.x
+    
+    self.glow:scale(.8,.8)
+    self.glow.x = self.sprite.x -5
     self.glow.y = self.sprite.y
     self.glow.alpha = 0
   end
@@ -30,7 +32,7 @@ Pulsantone.new = function()
   pulsantone.setupHintMessage = function ( self )
     local size = 40
     self.hint_message = display.newText(self.group, "vowel ?", self.glow.x+150, self.glow.y-size, _G.font_bold, size)
-    self.hint_message.alpha = 0
+    --self.hint_message.alpha = 0
   end
 
   pulsantone.hintMessageInOutGlow = function (self)
