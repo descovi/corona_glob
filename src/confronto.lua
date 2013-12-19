@@ -37,7 +37,7 @@ function createGlobs(group)
   group:insert(glob)
   glob.alpha = 0
   glob:scale(0,0)
-  transition.to(glob, { time=1000, alpha=1, xScale=1,yScale=1,delay=1000})
+  transition.to(glob, { time=500, alpha=1, xScale=1,yScale=1,delay=1000})
 end
 
 function createLetters( group )
