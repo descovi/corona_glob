@@ -2,12 +2,15 @@ local Storyboard = require("storyboard")
 local game = Storyboard.newScene()
 local Stat = require('src.utils.Stat')
 local Pulsantone = require('src.game.Pulsantone')
+local Life = require('src.game.Life')
+local life = {}
 local stage_of_game
 local fila_group
 require('src.game.CreaFila')
 
 local pulsantone = {}
 local vocali = {"a"}
+local current_level = 1
 local x_pos = {0, 100, 200, 300, 400}
 local all_globuli = {}
 
@@ -37,7 +40,7 @@ local audio_wrong = audio.loadSound("media/audio/wrong.mp3")
 local audio_level = audio.loadSound("media/audio/level.wav")
 
 -- tentativi
-local tentativo_debug = display.newText("3", 200, 350, _G.font, 40)
+local tentativo_debug = display.newText("3", display.contentWidth-100, display.contentHeight/2, _G.font, 40)
 tentativo_debug.alpha = 0
 local tentativi_rimasti = 3
 
@@ -47,16 +50,16 @@ local blocca_interazione = false
 -- Loading sound
 function choose_random_globulo_and_play_audio()
   blocca_interazione = false
-  tentativi_rimasti = 3
-  tentativo_debug.text = tentativi_rimasti
-  globulo_scelto = chosse_random(globulo_scelto)
+  life:set_life(3)
+  globulo_scelto = choose_random(globulo_scelto)
   
-
+  print("NUMERIIIII:")
+  print(#all_globuli)
   print("NEW RANDOM LETTER !! -->"..globulo_scelto.vocale)
   play_audio_globulo_attuale()
 end
 
-function chosse_random(_globulo_old )
+function choose_random(_globulo_old )
 
   if _globulo_old == nil then
     return all_globuli[math.random(#all_globuli)]
@@ -64,7 +67,7 @@ function chosse_random(_globulo_old )
 
   nuovo_globulo = all_globuli[math.random(#all_globuli)]
   if nuovo_globulo.vocale == _globulo_old.vocale then
-    nuovo_globulo = chosse_random(_globulo_old)
+    nuovo_globulo = choose_random(_globulo_old)
   end
   return nuovo_globulo
 end
@@ -88,7 +91,6 @@ function question(_next_or_the_same)
   
   if level_is_changed == true then
     level_is_changed = false
-    tentativi_rimasti = 3
     return choose_random_globulo_and_play_audio()
   end 
   
@@ -97,12 +99,10 @@ function question(_next_or_the_same)
   end
 
   if _next_or_the_same == "same" then
-    tentativi_rimasti = tentativi_rimasti -1
-    if tentativi_rimasti == 0 then
-      tentativo_debug.text = tentativi_rimasti
+    
+    if life.life_count == 0 then
       choose_random_globulo_and_play_audio()
     else
-      tentativo_debug.text = tentativi_rimasti
       play_audio_globulo_attuale()
     end
   end
@@ -112,35 +112,41 @@ end
 function animate_score()
   local time = 200
   local function restore()
-     transition.to(punteggio,{time=time,xScale=1,yScale=1})
+    transition.to(punteggio,{time=time,xScale=1,yScale=1})
+  end
+  transition.to(punteggio,{time=time,xScale=1.5,yScale=1.5,onComplete=restore})
+end
+
+function change_level(_score)
+   if _score == 1 or _score == 2 then
+    actual_level = 1
+    vocali = {"a"}
+   elseif _score == 3 or _score == 5 then
+    actual_level = 2
+    vocali = {"a","e"}
+  elseif _score == 6 or _score == 11 then
+    actual_level = 3
+    vocali = {"a","e","i"}
+  elseif _score == 12 or _score == 15 then
+    actual_level = 4
+    vocali = {"a","e","i","o"}
+  elseif _score == 16 then
+    actual_level = 5
+    vocali = {"a","e","i","o","u"}
   end
 
-  transition.to(punteggio,{time=time,xScale=1.5,yScale=1.5,onComplete=restore})
+  if current_level ~= nil and actual_level ~= nil then
+    if actual_level > current_level then
+      audio.play(audio_level,{channel=2})
+    end
+  end
 
-end
-function change_level(_score)
-   if _score == 1 then
-    vocali = {"a"}
-    setup_pulsanti_per_rispondere(stage_of_game)
+  if actual_level ~= current_level then
     level_is_changed= true
-   elseif _score == 3 then
-    vocali = {"a","e"}
-    setup_pulsanti_per_rispondere(stage_of_game, "true")
-    level_is_changed= true
-  elseif _score == 6 then
-    vocali = {"a","e","i"}
-    setup_pulsanti_per_rispondere(stage_of_game, "true")
-    level_is_changed= true
-  elseif _score == 12 then
-    vocali = {"a","e","i","o"}
-    setup_pulsanti_per_rispondere(stage_of_game, "true")
-    level_is_changed= true
-  elseif _score == 16 then
-    vocali = {"a","e","i","o","u"}
-    setup_pulsanti_per_rispondere(stage_of_game, "true")
-    level_is_changed= true
+    current_level = actual_level
   end
   
+  setup_pulsanti_per_rispondere(stage_of_game)
 end
 
 function update_score(answer_correct)
@@ -168,16 +174,18 @@ function answer_clicked_is_correct()
   print("answer_clicked_is_correct")
   update_score(true)
   animate_score()
-  audio.play(audio_right)
+  audio.play(audio_right,{channel=2})
   
 end
 
 function answer_clicked_is_wrong()
   print("answer_clicked_is_wrong")
-  local explainer = pulsantone.explainer
-  explainer:fade_in_out(globulo_scelto.vocale)
+  if current_level ~= 1 and current_level ~= 3 then
+    local explainer = pulsantone.explainer
+    explainer:fade_in_out(globulo_scelto.vocale)
+  end
   update_score(false)
-  audio.play(audio_wrong)
+  audio.play(audio_wrong,{channel=2})
 end
 
 function answer_clicked(event)
@@ -196,6 +204,7 @@ function answer_clicked(event)
     else
       answer_clicked_is_wrong()
       change_level(score)
+      life:set_life(life.life_count-1)
       timer.performWithDelay(1000,function (  )
         question("same")
       end)
@@ -219,23 +228,51 @@ local function go_bk(event)
     Storyboard.gotoScene( "src.menu_iniziale",{effect = "zoomOutInFade" })
   end
 end
-
-function setup_pulsanti_per_rispondere(_group, _sound)
+function update_all_globuli_index()
+  all_globuli = {}
+  local short = update_index(all_globuli,fila_short)
+  local long = update_index(all_globuli,fila_long)
+  all_globuli = joinMyTables(short,long)
+end
+function update_index(_new_container,_from)
+  _new_container = {}
+  for i=1,_from.numChildren do
+    local el = _from[i]
+    if el.name == "glob" then
+      table.insert(_new_container,el)
+    end
+  end
+  return _new_container
+end
+function joinMyTables(t1, t2)
+ 
+   for k,v in ipairs(t2) do
+      table.insert(t1, v)
+   end 
+ 
+   return t1
+end
+function setup_pulsanti_per_rispondere(_group, _new_level)
+  -- rimuovi se c'è fila group
   if fila_group ~= nil then
     _group:remove(fila_group)
   end
-  fila_short = CreaFila("short-", vocali, path, x_pos, all_globuli)
-  fila_long = CreaFila("long-", vocali, path, x_pos, all_globuli)
+
+  -- crea la nuova file
+  fila_short = CreaFila("short-", vocali, path, x_pos)
+  fila_long = CreaFila("long-", vocali, path, x_pos)
   fila_group = display.newGroup()
   fila_group:insert(fila_short)
   fila_group:insert(fila_long)
+  _group:insert(fila_group)
+  
+  update_all_globuli_index()
+
   fila_short.y = 140
   fila_long.y = 300
   fila_group.y = 300
-  _group:insert(fila_group)
-  if _sound == "true" then
-    audio.play(audio_level)
-  end
+  
+  
 end
 
 function game:createScene(event)
@@ -245,8 +282,14 @@ function game:createScene(event)
   self.view:insert(pulsantone)
   self.view:insert(back_btn)
   self.view:insert(record_punteggio_group)
+  life = Life.new()
+  life.x = 340
+  life.y = 239
+  self.view:insert(life)
   stage_of_game = self.view
+  globulo_scelto = choose_random(globulo_scelto)
   back_btn:addEventListener("tap", go_bk)
+  audio.setVolume( 0.5, { channel=2 } ) 
 end
 
 function play_audio_globulo_attuale()
@@ -255,12 +298,12 @@ function play_audio_globulo_attuale()
 end
 
 function game:enterScene (event)
-
+  
   local params = event.params
   if params ~= nil then
     user_from_menu_iniziale = params.user_from_menu_iniziale
   end
-  timer.performWithDelay( 400, choose_random_globulo_and_play_audio)
+  timer.performWithDelay( 1000, choose_random_globulo_and_play_audio)
   math.randomseed(os.time())
 end
 
