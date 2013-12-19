@@ -17,7 +17,8 @@ Globulo.new = function(file_name, _audio_url)
     y_start = target.y
     difference = 20
     _time = 180
-    transition.to(target, { time=_time, y=y_start+difference })
+    
+    transition.to(target, { time=_time, y=y_start+difference})
     transition.to(target, { time=_time, y=y_start-difference, delay=_time})
     transition.to(target, { time=_time, y=y_start, delay=_time*2, onComplete= globulo_container.anim_completed})
   end
@@ -30,16 +31,45 @@ Globulo.new = function(file_name, _audio_url)
     end
   end
 
+  
+
   globulo_container.setup = function(file_name)  
     local globulo_size = 180
     -- dati
     local path = 'media/menu_iniziale/'
     local final_path = path .. file_name .. "-150/1.png"
     local globulo = display.newImage(globulo_container, final_path)
+    globulo_container:addEventListener('tap',globulo_container.tapped)
+
+    globulo.welcome_animation = function (self)
+      local min_time = 2000
+      local max_time = 4000
+      transition.to( self, { 
+        time=math.random(min_time,max_time), 
+        rotation=math.random(-30,30),
+        transition=easing.outElastic, 
+        delay=200,
+        onComplete=function()
+          transition.to( globulo, { 
+            time=math.random(min_time,max_time), 
+            rotation=0,  
+            transition=easing.outElastic,
+            onComplete=function(_obj)
+              _obj:welcome_animation()
+            end
+          })
+        
+        end
+      })
+    end
     globulo.width  = globulo_size
     globulo.height = globulo_size
-    globulo_container:addEventListener('tap',globulo_container.tapped)
+    globulo:welcome_animation()
+    
+
   end
+
+
   
   globulo_container.setup_audio = function(_audio_url)
     local path_audio = 'media/audio/vocali/'
