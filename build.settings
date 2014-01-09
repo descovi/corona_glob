@@ -33,7 +33,8 @@ settings =
       UIStatusBarHidden = false,
       UIAppFonts = {"hiragino_W3.otf","hiragino_W8.otf"},
       --CFBundleIconFiles = { },
-      MinimumOSVersion = "5.1.0"
+      MinimumOSVersion = "5.1.0",
+      CFBundleDisplayName = "We Pronounce"
     }
   }
 }

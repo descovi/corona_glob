@@ -1,3 +1,6 @@
+require('src.utils.button_to_go_back')
+
+
 local ButtonToGo = require 'src.menu_iniziale.button_to_go'
 require 'src.menu_iniziale.manipulate_order'
 
@@ -7,9 +10,7 @@ local storyboard = require ( "storyboard" )
 local Globulo = require("src.menu_iniziale.Globulo")
 local menu_iniziale = storyboard.newScene()
 local vocali = {"a","e","i","o","u"}
-local group
-local group_1 = display.newGroup()
-local group_2 = display.newGroup()
+
 --local y_pos = {350,150}
 local x_pos = {
   0, 95, 190, 285, 375, 
@@ -20,7 +21,7 @@ local all_globuli = {}
 local all_globuli_order_inverted = {}
 local animazione_partita = false
 
-function create_globulo(shor_or_long, vocale)
+function create_globulo(shor_or_long, vocale, _group_1, _group_2)
   --
   local filename = shor_or_long.."-"..vocale
   local short_or_long_convertita = string.sub(shor_or_long,1,1)
@@ -31,17 +32,9 @@ function create_globulo(shor_or_long, vocale)
   globulo.x = (pos_x + globulo.width/2)+25
   table.insert(globulo_x_pos,globulo.x)
   if #all_globuli+1 > 5 then
-    local coil = display.newImage("media/menu_iniziale/coil.png")
-    local scale_v = .6
-    coil:scale(.4,scale_v)
-    coil.y = coil.y - 80
-    local coil_x = globulo.x + globulo.width/2 - 15
-    coil.x = coil_x
-
-    group_1:insert(globulo)
-    group_1:insert(1,coil)
+    _group_1:insert(globulo)
   else
-    group_2:insert(globulo)
+    _group_2:insert(globulo)
   end
   table.insert(all_globuli,globulo)
 
@@ -88,8 +81,8 @@ function setup_ascolta_tutti(_group)
   button:addEventListener("tap",ascolta_tutti)
   _group:insert(button)
   local size = 100
-  button.x = display.contentWidth/2 - button.width/2
-  button.y = display.contentHeight -button.height - 25
+  button.x = display.contentWidth/2 - button.width/2 - 25
+  button.y = display.contentHeight-button.height / 2 - 100
   manipulate_order_invert_group(all_globuli, all_globuli_order_inverted)
 end
 
@@ -99,8 +92,8 @@ function setup_btn_game(_group)
     overFile = "media/menu_iniziale/game-button/over.png"
   }
   _group:insert(button)
-  button.x = display.contentWidth/2 + button.width/2
-  button.y = display.contentHeight-button.height - 25
+  button.x = display.contentWidth/2 + button.width/2 + 25
+  button.y = display.contentHeight-button.height / 2 - 100
   button:addEventListener("tap",function( )
     storyboard.gotoScene("src.game",{
       effect = "zoomOutInFade",
@@ -109,8 +102,21 @@ function setup_btn_game(_group)
   end)
 end
 
+local function create_coil(_group,_group_2,index)
+  local coil = display.newImage("media/menu_iniziale/coil.png")
+  local scale_v = .6
+  coil:scale(.4,scale_v)
+  coil.y = _group_2.y+_group_2[index].height/4
+  local coil_x = _group_2[index].x + globulo.width/2 - 15
+  coil.x = coil_x
+  _group:insert(1,coil)
+end
+
 --Create the scene
 function menu_iniziale:createScene( event )
+  local group
+local group_1 = display.newGroup()
+local group_2 = display.newGroup()
   group = self.view
   group:insert(group_1)
   group:insert(group_2)
@@ -118,18 +124,25 @@ function menu_iniziale:createScene( event )
   group_2.y = 250
 
   for i=1,#vocali do
-    create_globulo('long',vocali[i])
+    create_globulo('long',vocali[i], group_1,group_2)
   end
   for i=1,#vocali do
-    create_globulo('short',vocali[i])
+    create_globulo('short',vocali[i], group_1,group_2)
+  end
+
+  for i=1,#vocali do
+    create_coil(group,group_2,i)
   end
   
   for i=1,5 do
     ButtonToGo.new(self.view, vocali, globulo_x_pos, i)
   end
-  storyboard.loadScene( "src.game" )
+  
   setup_ascolta_tutti(group)
   setup_btn_game(group)
+  local rgmeter = require "rgmeter.rgmeter"
+rgmeter.create()
+
 end
 
 --Add the createScene listener

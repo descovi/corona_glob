@@ -1,8 +1,9 @@
 local Glob = {}
 
 Glob.new = function(self, vocale)
-
+  
   self.glob = {}
+    local duration_anim_totale = 3000
 
   self.glob.path_to_animation = function (self, vocale)
     local origin_path = "media/vocali/"
@@ -24,7 +25,7 @@ Glob.new = function(self, vocale)
    
     local image_sheet = graphics.newImageSheet(sheet_png, SheetInfo:getSheet())
     local frames_ = {}
-    local total_frames = 37
+    local total_frames = 43
     
     for i=1,total_frames do
       num_frame = total_frames-i
@@ -33,7 +34,6 @@ Glob.new = function(self, vocale)
       end
     end
 
-    local duration_anim_totale = 2000
     local sequence_data = {
       
       {name="standard", start=1,count=total_frames,loopCount=1,time=duration_anim_totale},
@@ -63,6 +63,7 @@ Glob.new = function(self, vocale)
     end
 
     self.movieclip.playAnimation = function ( self )
+      local _time = 180      
       self:play()
     end
 
@@ -70,21 +71,21 @@ Glob.new = function(self, vocale)
 
       if self.sequence == "standard" then
         -- 1° ANIMATION
-        timer.performWithDelay(470,function()
+        timer.performWithDelay(670,function()
           audio.play(self.audio_s)
         end)
         -- 
-        timer.performWithDelay(1650,function()
+        timer.performWithDelay(2000,function()
           audio.play(self.audio_l)
         end)
 
       else
         -- 2° ANIMATION
-        timer.performWithDelay(470,function()
+        timer.performWithDelay(670,function()
           audio.play(self.audio_l)
         end)
         
-        timer.performWithDelay(1360,function()
+        timer.performWithDelay(2000,function()
           audio.play(self.audio_s)
         end)
 

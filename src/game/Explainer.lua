@@ -28,7 +28,7 @@ Explainer.new = function()
   explainer.group.fade_in_out = function(self, letter)
     self.text_tf.text = self.choose_words(letter)
     transition.to(self, { time=100, alpha=1})
-    transition.to(self, { time=500, alpha=0, delay=2000 })
+    transition.to(self, { time=500, alpha=0, delay=2500 })
   end
 
   explainer.setup = function(self)
