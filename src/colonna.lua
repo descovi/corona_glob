@@ -1,3 +1,5 @@
+require('src.utils.button_to_go_back')
+
 local Anim        = require('src.colonna.Anim')
 local Arrow       = require('src.colonna.Arrow')
 
@@ -5,8 +7,7 @@ local Vocabolario = require('src.colonna.Vocabolario')
 local Storyboard  = require("storyboard")
 -- display objects
 local colonna     = Storyboard.newScene()
-local background_path = "media/sfondi/".._G.vocale..".png"
-local background  = display.newImage(background_path)
+
 local back_btn    = button_to_go_back()
 local arrow_up    = Arrow.newSprite()
 local arrow_dn    = Arrow.newSprite()
@@ -55,6 +56,12 @@ local function load_game()
 end
 
 function colonna:createScene( event )
+  local background_path = "media/sfondi/".._G.vocale..".png"
+  local background  = display.newImage(background_path)
+  background.width = display.contentWidth
+  background.height = display.contentHeight
+  background.x = display.contentWidth/2
+  background.y = display.contentHeight/2
   self.view:insert(background)
   self.view:insert(anim.group)
   self.view:insert(arrow_up)
