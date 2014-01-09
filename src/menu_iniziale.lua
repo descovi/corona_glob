@@ -140,8 +140,8 @@ local group_2 = display.newGroup()
   
   setup_ascolta_tutti(group)
   setup_btn_game(group)
-  local rgmeter = require "rgmeter.rgmeter"
-rgmeter.create()
+  --local rgmeter = require "rgmeter.rgmeter"
+  --rgmeter.create()
 
 end
 
