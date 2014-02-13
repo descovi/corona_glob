@@ -14,10 +14,8 @@ local arrow_dn    = Arrow.newSprite()
 local vocabolario = Vocabolario.newSprite()
 local anim        = Anim.newSprite()
 local widget = require( "widget" )
-  local gioca = widget.newButton{
-    defaultFile = "media/menu_iniziale/game-button/default.png",
-    overFile = "media/menu_iniziale/game-button/over.png"
-  }
+local gioca
+
 local function go_bk(event) 
   -- Storyboard.removeAllScene()
   Storyboard.gotoScene( "src.confronto",{
@@ -62,6 +60,12 @@ function colonna:createScene( event )
   background.height = display.contentHeight
   background.x = display.contentWidth/2
   background.y = display.contentHeight/2
+
+  gioca = widget.newButton{
+    defaultFile = "media/menu_iniziale/game-button/default.png",
+    overFile = "media/menu_iniziale/game-button/over.png"
+  }
+  
   self.view:insert(background)
   self.view:insert(anim.group)
   self.view:insert(arrow_up)
@@ -88,6 +92,8 @@ function colonna:createScene( event )
   gioca.y = arrow_dn.y + 100
   gioca.isVisible = false
   gioca:addEventListener("tap", load_game)
+
+  
   print("-------")
   print("_G.vocale")
   print(_G.vocale)

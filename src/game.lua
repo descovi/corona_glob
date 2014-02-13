@@ -175,7 +175,6 @@ function answer_clicked_is_correct()
   update_score(true)
   animate_score()
   audio.play(audio_right,{channel=2})
-  
 end
 
 function answer_clicked_is_wrong()
