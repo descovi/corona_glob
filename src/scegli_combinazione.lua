@@ -76,9 +76,9 @@ function scegli_combinazione:createScene( event )
   local lettera_ml_1    = display.newText(group_sopra, _lettera_ml_1, x2-20,      y1, _font, _size)
   local equal           = display.newText(group_sopra, _equal,        x_equal, y1, _font, _size)
   local lettera_dx_1    = display.newText(group_sopra, _lettera_dx_1, x3,      y1-10, _font, _size)
-  lettera_sx_1:setTextColor(200, 0, 0, 255)
-  lettera_ml_1:setTextColor(0, 0, 0, 255)
-  lettera_dx_1:setTextColor(0, 180, 0, 255)
+  lettera_sx_1:setFillColor(0, 0, 0, 1)
+  lettera_ml_1:setFillColor(0, 0, 0, 1)
+  lettera_dx_1:setFillColor(0, .7, 0, 1)
   if _lettera_ml_1 == "a" then
     lettera_ml_1.x = lettera_ml_1.x - 25
   elseif _lettera_ml_1 == "e" then
@@ -88,19 +88,19 @@ function scegli_combinazione:createScene( event )
   elseif _lettera_ml_1 == "o" then
     lettera_ml_1.x = lettera_ml_2.x + 20
   end
-  
+
   --- riga 2
   if _G.vocale == 'a' or _G.vocale == 'e' or _G.vocale == 'o' then
     local lettera_sx_2    = display.newText(group_sotto, _lettera_sx_0, x1,      y2-10, _font, _size)
     local plus            = display.newText(group_sotto, _plus,         x_plus,  y2, _font, _size)
     local lettera_ml_2    = display.newText(group_sotto, _lettera_ml_2, x2-40,      y2, _font, _size)
     local equal           = display.newText(group_sotto, _equal,        x_equal, y2, _font, _size)
-    local lettera_dx_2    = display.newText(group_sotto, _lettera_dx_2, x3,      y2-19, _font, _size)  
-    lettera_sx_2:setTextColor(200, 0, 0, 255)
-    lettera_ml_2:setTextColor(0, 0, 0, 255)
-    lettera_dx_2:setTextColor(0, 180, 0, 255)  
+    local lettera_dx_2    = display.newText(group_sotto, _lettera_dx_2, x3,      y2-19, _font, _size)
+    lettera_sx_2:setFillColor(.7, 0, 0, 1)
+    lettera_ml_2:setFillColor(0, 0, 0, 1)
+    lettera_dx_2:setFillColor(0, .5, 0, 1)
     if _lettera_ml_2 == "a" then
-      lettera_ml_2.x = lettera_ml_2.x 
+      lettera_ml_2.x = lettera_ml_2.x
     elseif _lettera_ml_2 == "e" then
       lettera_ml_2.x = lettera_ml_2.x - 5
     elseif _lettera_ml_2 == "i" then
@@ -112,7 +112,7 @@ function scegli_combinazione:createScene( event )
     white_circle_2.alpha = 0
     group_sopra.y = display.contentHeight / 2 - group_sopra.height
   end
-  
+
   group_sopra:addEventListener("tap", goto_sopra)
   group_sotto:addEventListener("tap", goto_sotto)
 
@@ -121,7 +121,7 @@ function scegli_combinazione:createScene( event )
   torna_indietro:addEventListener("tap", goto_confronto)
   group:insert(torna_indietro)
 end
-  
+
 scegli_combinazione:addEventListener( "createScene", scene )
 goto_confronto = function ( event )
   storyboard.gotoScene("src.confronto")
