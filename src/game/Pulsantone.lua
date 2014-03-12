@@ -22,7 +22,7 @@ Pulsantone.new = function()
 
   pulsantone.setupGlow = function(self)
     self.glow = display.newImage(self.group,"media/game/globo_asker/glow.png")
-    
+
     self.glow:scale(.8,.8)
     self.glow.x = self.sprite.x -5
     self.glow.y = self.sprite.y
@@ -31,7 +31,7 @@ Pulsantone.new = function()
 
   pulsantone.setupHintMessage = function ( self )
     local size = 40
-    self.hint_message = display.newText(self.group, "vowel ?", self.glow.x+150, self.glow.y-size, _G.font_bold, size)
+    self.hint_message = display.newText(self.group, "vowel ?", self.glow.x+220, self.glow.y-size, _G.font_bold, size)
     --self.hint_message.alpha = 0
   end
 
@@ -40,7 +40,7 @@ Pulsantone.new = function()
     transition.to(self.hint_message, { time=time, alpha=0 })
     transition.to(self.hint_message, { time=time, alpha=1, delay=time })
   end
-  
+
   pulsantone.fadeInOutGlow = function ( self )
     local time = 300
     transition.to(self.glow, { time=time, alpha=1 })
@@ -55,9 +55,9 @@ Pulsantone.new = function()
     --self.sprite.x = 200
     self.sprite.y = display.contentHeight/2-160
   end
-  
+
   pulsantone.tapped = function ( event )
-    pulsantone.group.play()    
+    pulsantone.group.play()
   end
 
   pulsantone.group.play = function(self)
@@ -69,10 +69,10 @@ Pulsantone.new = function()
   pulsantone.setupExplainer = function(self)
 
     self.group.explainer = Explainer.new( )
-    
+
     self.group:insert(self.group.explainer)
     self.group.explainer[1].x = self.hint_message.x + self.hint_message.width + 60
-    self.group.explainer[1].y = self.hint_message.y 
+    self.group.explainer[1].y = self.hint_message.y
 
   end
 

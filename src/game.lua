@@ -26,12 +26,10 @@ local font_table_score        = _G.font
 local record_punteggio_group  = display.newGroup()
 
 local punteggio_massimo       = 0
-local punteggio_label         = display.newText(record_punteggio_group, "score",  0,   0,  font_table_score, size_table_score)
-local punteggio               = display.newText(record_punteggio_group, "0",      punteggio_label.width+10,  0, font_table_score, size_table_score)
-local record_label            = display.newText(record_punteggio_group, "record", punteggio.x+punteggio.width+20, 0,  font_table_score, size_table_score)
+local punteggio               = display.newText(record_punteggio_group, "Score 0", 20, 20, font_table_score, size_table_score)
 local record_from_data        = Stat.read()
-local record                  = display.newText(record_punteggio_group, record_from_data, record_label.x+40, 0,  font_table_score, size_table_score)
-record_punteggio_group.x      = 100 
+local record                  = display.newText(record_punteggio_group, "Score "..record_from_data, punteggio.x+punteggio.width+40, 20,  font_table_score, size_table_score)
+record_punteggio_group.x      = 100
 record_punteggio_group.y      = 30
 
 -- audio - right - wrong
@@ -52,7 +50,7 @@ function choose_random_globulo_and_play_audio()
   blocca_interazione = false
   life:set_life(3)
   globulo_scelto = choose_random(globulo_scelto)
-  
+
   print("NUMERIIIII:")
   print(#all_globuli)
   print("NEW RANDOM LETTER !! -->"..globulo_scelto.vocale)
@@ -74,7 +72,7 @@ end
 
 function play_anim(target)
   if target ~= nil then
-    local myclosure = function() 
+    local myclosure = function()
       target:nextFrame()
     end
     timer.performWithDelay(5,myclosure,24)
@@ -88,25 +86,25 @@ end
 
 function question(_next_or_the_same)
   blocca_interazione = false
-  
+
   if level_is_changed == true then
     level_is_changed = false
     return choose_random_globulo_and_play_audio()
-  end 
-  
+  end
+
   if _next_or_the_same == "next" then
     return choose_random_globulo_and_play_audio()
   end
 
   if _next_or_the_same == "same" then
-    
+
     if life.life_count == 0 then
       choose_random_globulo_and_play_audio()
     else
       play_audio_globulo_attuale()
     end
   end
-  
+
 end
 
 function animate_score()
@@ -145,7 +143,7 @@ function change_level(_score)
     level_is_changed= true
     current_level = actual_level
   end
-  
+
   setup_pulsanti_per_rispondere(stage_of_game)
 end
 
@@ -160,14 +158,14 @@ function update_score(answer_correct)
         record.text = punteggio_massimo
       end
     end
-    punteggio:setTextColor(0,255,0,255)
+    punteggio:setFillColor(0,255,0,255)
   elseif answer_correct == false then
     if score > 0 then
       score = score-1
     end
-    punteggio:setTextColor(255,0,0,255)
+    punteggio:setFillColor(255,0,0,255)
   end
-  punteggio.text = score
+  punteggio.text = "Score "..score
 end
 
 function answer_clicked_is_correct()
@@ -194,7 +192,7 @@ function answer_clicked(event)
     print("- obbiettivo: " .. globulo_scelto.vocale)
     print("- scelto: " .. event.target.vocale)
     print(" ")
-    if (globulo_scelto.vocale == event.target.vocale) then  
+    if (globulo_scelto.vocale == event.target.vocale) then
       answer_clicked_is_correct()
       change_level(score)
       timer.performWithDelay( 1000,function()
@@ -207,20 +205,20 @@ function answer_clicked(event)
       timer.performWithDelay(1000,function (  )
         question("same")
       end)
-      
+
     end
-    
+
   end
 end
 
 function crea_pulsantone()
   local pulsantone = Pulsantone.new()
   pulsantone:addEventListener("tap", play_audio_globulo_attuale)
-  
+
   return pulsantone
 end
 
-local function go_bk(event) 
+local function go_bk(event)
   if user_from_menu_iniziale == "false" then
     Storyboard.gotoScene( "src.colonna",{effect = "slideDown" } )
   else
@@ -244,11 +242,11 @@ function update_index(_new_container,_from)
   return _new_container
 end
 function joinMyTables(t1, t2)
- 
+
    for k,v in ipairs(t2) do
       table.insert(t1, v)
-   end 
- 
+   end
+
    return t1
 end
 function setup_pulsanti_per_rispondere(_group, _new_level)
@@ -264,14 +262,14 @@ function setup_pulsanti_per_rispondere(_group, _new_level)
   fila_group:insert(fila_short)
   fila_group:insert(fila_long)
   _group:insert(fila_group)
-  
+
   update_all_globuli_index()
 
   fila_short.y = 140
   fila_long.y = 300
-  fila_group.y = 300
-  
-  
+  fila_group.y = 350
+
+
 end
 
 function game:createScene(event)
@@ -288,7 +286,7 @@ function game:createScene(event)
   stage_of_game = self.view
   globulo_scelto = choose_random(globulo_scelto)
   back_btn:addEventListener("tap", go_bk)
-  audio.setVolume( 0.5, { channel=2 } ) 
+  audio.setVolume( 0.5, { channel=2 } )
 end
 
 function play_audio_globulo_attuale()
@@ -297,7 +295,7 @@ function play_audio_globulo_attuale()
 end
 
 function game:enterScene (event)
-  
+
   local params = event.params
   if params ~= nil then
     user_from_menu_iniziale = params.user_from_menu_iniziale
