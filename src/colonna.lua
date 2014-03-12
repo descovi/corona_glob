@@ -16,7 +16,7 @@ local anim        = Anim.newSprite()
 local widget = require( "widget" )
 local gioca
 
-local function go_bk(event) 
+local function go_bk(event)
   -- Storyboard.removeAllScene()
   Storyboard.gotoScene( "src.confronto",{
     effect = "slideDown",
@@ -34,7 +34,7 @@ local function go_up(event)
   arrow_dn.show()
 end
 
-local function go_dn(event) 
+local function go_dn(event)
   anim.next()
   --vocabolario.set(anim.counter) # x quando il vocabolario non era ad immagini
   vocabolario.update_current_path(anim.animation_path_counter)
@@ -65,7 +65,7 @@ function colonna:createScene( event )
     defaultFile = "media/menu_iniziale/game-button/default.png",
     overFile = "media/menu_iniziale/game-button/over.png"
   }
-  
+
   self.view:insert(background)
   self.view:insert(anim.group)
   self.view:insert(arrow_up)
@@ -86,14 +86,14 @@ function colonna:createScene( event )
   arrow_up:addEventListener("tap", go_up)
   arrow_dn.show()
   arrow_up.hide()
-  arrow_up.y = 20
-  arrow_dn.y = display.contentHeight - arrow_dn.height - 20
-  gioca.x = arrow_dn.x + 80
-  gioca.y = arrow_dn.y + 100
+  arrow_up.y = arrow_up.height*.5 + 20
+  arrow_dn.y = display.contentHeight - arrow_dn.height /2 - 20
+  gioca.x = arrow_dn.x
+  gioca.y = arrow_dn.y
   gioca.isVisible = false
   gioca:addEventListener("tap", load_game)
 
-  
+
   print("-------")
   print("_G.vocale")
   print(_G.vocale)
