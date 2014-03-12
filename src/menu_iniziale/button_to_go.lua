@@ -33,10 +33,10 @@ ButtonToGo.new = function(view,vocale,x_pos,index)
     end
     self.racconto.align = "center"
   end
-  
+
   button_to_go.setup_text = function (self )
-    
-    local options_testo = 
+
+    local options_testo =
     {
       text = self.vocale,
       x = 0,
@@ -45,10 +45,10 @@ ButtonToGo.new = function(view,vocale,x_pos,index)
       fontSize = 30
 
     }
-    
-    local options_racconto = 
+
+    local options_racconto =
     {
-      text = "fad fade\nbat bait",     
+      text = "fad fade\nbat bait",
       x = self.cerchio.x,
       y = self.cerchio.y+80,
       width = 300,
@@ -57,11 +57,13 @@ ButtonToGo.new = function(view,vocale,x_pos,index)
       fontSize = 20,
       align = "center"
     }
-    
+
     self.testo = display.newText(options_testo)
-    self.testo:setReferencePoint( display.CenterReferencePoint )
+    --self.testo:setReferencePoint( display.CenterReferencePoint )
+    self.testo.anchorX = .5
+    self.testo.anchorY = .5
     self.testo.x = self.cerchio.x + 2
-    
+
     if self.testo.text == "i" then
       self.testo.y = self.cerchio.y +1
     else
@@ -69,13 +71,15 @@ ButtonToGo.new = function(view,vocale,x_pos,index)
     end
 
     self.racconto = display.newText(options_racconto)
-    self.racconto:setReferencePoint( display.CenterReferencePoint )
+    --self.racconto:setReferencePoint( display.CenterReferencePoint )
+    self.racconto.anchorX = .5
+    self.racconto.anchorY = .5
     self.racconto.x = self.cerchio.x
     self.racconto.y = self.cerchio.y + 120
     self.racconto.alpha = 0
 
     self.testo:setTextColor(0, 0, 0)
-    
+
   end
   button_to_go.setup = function (self,x_pos,index)
     --self.cerchio = display.newCircle(x_pos[index]+75, 450, 60)
@@ -90,7 +94,7 @@ ButtonToGo.new = function(view,vocale,x_pos,index)
         overFile = "media/menu_iniziale/background-button-white/over.png",
     }
 
-    self.cerchio.x = x_pos[index]+75
+    self.cerchio.x = x_pos[index]
     self.cerchio.y = 470
 
   end

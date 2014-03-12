@@ -13,7 +13,7 @@ local vocali = {"a","e","i","o","u"}
 
 --local y_pos = {350,150}
 local x_pos = {
-  0, 95, 190, 285, 375, 
+  0, 95, 190, 285, 375,
   0, 95, 190, 285, 375
 }
 local globulo_x_pos = {}
@@ -29,7 +29,7 @@ function create_globulo(shor_or_long, vocale, _group_1, _group_2)
   globulo = Globulo.new(filename,sound_filename)
   -- posizionamento
   local pos_x = (x_pos[#all_globuli+1]*2) - 50
-  globulo.x = (pos_x + globulo.width/2)+25
+  globulo.x = (pos_x + globulo.width)+25
   table.insert(globulo_x_pos,globulo.x)
   if #all_globuli+1 > 5 then
     _group_1:insert(globulo)
@@ -106,8 +106,8 @@ local function create_coil(_group,_group_2,index)
   local coil = display.newImage("media/menu_iniziale/coil.png")
   local scale_v = .6
   coil:scale(.4,scale_v)
-  coil.y = _group_2.y+_group_2[index].height/4
-  local coil_x = _group_2[index].x + globulo.width/2 - 15
+  coil.y = _group_2.y
+  local coil_x = _group_2[index].x
   coil.x = coil_x
   _group:insert(1,coil)
 end
@@ -120,24 +120,24 @@ local group_2 = display.newGroup()
   group = self.view
   group:insert(group_1)
   group:insert(group_2)
-  group_1.y = 70
-  group_2.y = 250
+  group_1.y = 160
+  group_2.y = 320
 
   for i=1,#vocali do
-    create_globulo('long',vocali[i], group_1,group_2)
+    create_globulo('long',vocali[i], group_1, group_2)
   end
   for i=1,#vocali do
-    create_globulo('short',vocali[i], group_1,group_2)
+    create_globulo('short',vocali[i], group_1, group_2)
   end
 
   for i=1,#vocali do
     create_coil(group,group_2,i)
   end
-  
+
   for i=1,5 do
     ButtonToGo.new(self.view, vocali, globulo_x_pos, i)
   end
-  
+
   setup_ascolta_tutti(group)
   setup_btn_game(group)
   --local rgmeter = require "rgmeter.rgmeter"
