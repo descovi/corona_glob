@@ -11,8 +11,8 @@ display.setStatusBar( display.HiddenStatusBar )
 
 -- Create a storyboard scene for this module
 local scene = storyboard.newScene()
-storyboard.isDebug = false
-storyboard.gotoScene( "src.intro" )
+storyboard.isDebug = true
+storyboard.gotoScene( "src.menu_iniziale" )
 
 local gurgle = audio.loadSound('media/audio/gurgle.wav')
 local drop = audio.loadSound('media/audio/drop.mp3')
@@ -24,12 +24,12 @@ function play_background_drop()
       play_background_drop()
     end)
   end} )
-  audio.setVolume( 0.3, { channel=canale } ) 
+  audio.setVolume( 0.3, { channel=canale } )
 end
 
 function play_background_gurgle()
   audio.play( gurgle,{channel=4,loops=-1})
-  audio.setVolume( 0.05, { channel=4 } ) 
+  audio.setVolume( 0.05, { channel=4 } )
 end
 
 play_background_drop()
