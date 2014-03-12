@@ -7,13 +7,13 @@ Vocabolario.newSprite = function()
 
   local group = display.newGroup()
   group.animation_path_counter = ""
-  
+
   group.create_icon = function ( container )
     icon = display.newImage("media/vocabolario.png")
     container:insert(icon)
     container.icon = icon
     icon.x = 80
-    icon.y = h - 80    
+    icon.y = h - 80
   end
 
 
@@ -21,6 +21,8 @@ Vocabolario.newSprite = function()
     local white_screen = display.newRect( container, 0, 0, w, h)
     white_screen:setFillColor(0, 0, 0)
     white_screen.alpha = 0
+    white_screen.x = w/2
+    white_screen.y = h/2
     container.white_screen = white_screen
     container:insert(white_screen)
   end
@@ -34,6 +36,8 @@ Vocabolario.newSprite = function()
       object.alpha = alpha
       local path_vocabolario = group.animation_path_counter..'/vocabolario.png'
       group.image = display.newImage(path_vocabolario)
+      group.image.x = w/2
+      group.image.y = h/2
       group:insert(group.image)
     end
   end
@@ -55,7 +59,7 @@ Vocabolario.newSprite = function()
 
 
   -- used from external for update number slide
-  group.set = function(_counter)    
+  group.set = function(_counter)
     group.counter = _counter
   end
 
