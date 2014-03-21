@@ -155,7 +155,7 @@ function update_score(answer_correct)
       record_saved = Stat.read()
       if (record_saved < punteggio_massimo) then
         Stat.write(punteggio_massimo)
-        record.text = punteggio_massimo
+        record.text = "Record "..punteggio_massimo
       end
     end
     punteggio:setFillColor(0,255,0,255)
